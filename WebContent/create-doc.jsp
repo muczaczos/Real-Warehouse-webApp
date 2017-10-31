@@ -29,9 +29,9 @@
 		<div id="content">
 		
 		<ul>
-  			<li><a href="#Create doc">Documents</a></li>
+  			<li><a href="create-customer.jsp">Documents</a></li>
  			<li><a href="#Add customer">Invoices</a></li>
-  			<li><a href="#Add reciepient">Customers</a></li>
+  			<li><a href="create-customer.jsp">Customers</a></li>
   			<li><a href="#Add product">Reciepient</a></li>
   			<li><a href="#Add product">Products</a></li>
   			<li><a href="#Add product">Price List</a></li>
@@ -232,6 +232,56 @@
 	</table>		
 
 		</form>
+			
+			
+			<br>
+			<br>
+			<table>
+				
+				<tr>
+					<th> Id </th>
+					<th> Date </th>
+					<th> Customer</th>
+					<th> Reciepient </th>
+					<th> Doc no. </th>
+					<th> Action </th>
+				</tr>
+			
+				<c:forEach var="tempDoc" items="${DOCUMENTS_LIST}">
+				
+					<!-- set up a link for each student -->
+					<c:url var="tempLink" value="StudentControllerServlet">
+						<c:param name="command" value="LOAD"/>
+						<c:param name="studentId" value="${tempDoc.id}"/>
+					</c:url>
+				
+					<!-- set up a link to delete a student -->
+					<c:url var="deleteLink" value="StudentControllerServlet">
+						<c:param name="command" value="DELETE"/>
+						<c:param name="studentId" value="${tempDoc.id}"/>
+					</c:url>
+					
+					<tr>
+					
+						<td>${tempDoc.id} </td>
+						<td>${tempDoc.date} </td>
+						<td>${tempDoc.customer} </td>
+						<td>${tempDoc.reciepient} </td>
+						<td>${tempDoc.noOfDoc} </td>
+						
+						<td> <a href="${tempLink}">Update</a>
+							|
+							<a href="${deleteLink}"
+							onClick="if (!(confirm('Are you sure you want to delete this student?'))) return false">
+							Delete</a>
+						</td>
+						
+					</tr>
+					
+				</c:forEach>
+
+				
+			</table>
 			
 		</div>
 		

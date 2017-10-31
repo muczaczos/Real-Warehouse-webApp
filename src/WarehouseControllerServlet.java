@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 
+
 /**
  * Servlet implementation class WarehouseControllerServlet
  */
@@ -71,6 +72,10 @@ public class WarehouseControllerServlet extends HttpServlet {
 				addProduct(request, response);
 				break;
 				
+			case "ADD-CUSTOMER":
+				addCustomer(request, response);
+				break;
+				
 			case "LOAD-PRODUCT":
 				loadProduct(request, response);
 				break;
@@ -95,6 +100,25 @@ public class WarehouseControllerServlet extends HttpServlet {
 			throw new ServletException(exc);
 		}
 		
+		
+	}
+
+	private void addCustomer(HttpServletRequest request, HttpServletResponse response) 
+		throws Exception{
+			
+		// read student info from form data
+		String name = request.getParameter("name");
+		String address = request.getParameter("address");
+		String telephone = request.getParameter("telephone");		
+				
+		// create a new student object
+		Customer theCustomer = new Customer(name, address, telephone);
+				
+		// add the student to the database
+		warehouseDbUtil.addCustomer(theCustomer);
+						
+		// send back to main page (the student list)
+		listCustomers(request, response);
 		
 	}
 
@@ -136,7 +160,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		request.setAttribute("CUSTOMERS_LIST", customers);
 		
 		// send to JSP page (view)
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/create-doc.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/create-customer.jsp");
 		dispatcher.forward(request, response);
 		
 	}
@@ -168,16 +192,19 @@ public class WarehouseControllerServlet extends HttpServlet {
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyy");
 		request.setAttribute("TODAY_DATE", sdf.format(date).toString());
+	
+		// get document from db util
+		List<Documents> documents = warehouseDbUtil.getDocuments();
+		// add products to the request
+		request.setAttribute("DOCUMENTS_LIST", documents);
 		
 		// get products from db util
 		List<Customer> customers = warehouseDbUtil.getCustomers();
-				
 		// add products to the request
 		request.setAttribute("CUSTOMERS_LIST", customers);
 				
 		// get products from db util
-		List<Reciepient> reciepients = warehouseDbUtil.getReciepients();
-						
+		List<Reciepient> reciepients = warehouseDbUtil.getReciepients();		
 		// add products to the request
 		request.setAttribute("RECIEPIENTS_LIST", reciepients);
 		

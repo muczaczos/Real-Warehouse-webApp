@@ -176,6 +176,102 @@ public class WarehouseDbUtil {
 	}
 
 
+	public List<Documents> getDocuments() 
+		throws Exception {
+
+		List<Documents> documents = new ArrayList<>();
+		
+		Connection myConn = null;
+		Statement myStmt = null;
+		ResultSet myRs = null;
+		
+		try {
+			// get a connection
+			myConn = dataSource.getConnection();
+			
+			// create sql statement
+			String sql = "select * from documents";
+			
+			myStmt = myConn.createStatement();
+			
+			// execute query
+			myRs = myStmt.executeQuery(sql);
+			
+			// process result set
+			while (myRs.next()) {
+				
+				// retrieve data from result set row
+				int id = myRs.getInt("id");
+				String customer = myRs.getString("customer");
+				String reciepient = myRs.getString("reciepient");
+				int docId = myRs.getInt("docId");
+				String date = myRs.getString("date");
+				String product1 = myRs.getString("product1");
+				int qty1 = myRs.getInt("qty1");
+				String product2 = myRs.getString("product2");
+				int qty2 = myRs.getInt("qty2");
+				String product3 = myRs.getString("product3");
+				int qty3 = myRs.getInt("qty3");
+				String product4 = myRs.getString("product4");
+				int qty4 = myRs.getInt("qty4");
+				String product5 = myRs.getString("product5");
+				int qty5 = myRs.getInt("qty5");
+				String product6 = myRs.getString("product6");
+				int qty6 = myRs.getInt("qty6");
+				String product7 = myRs.getString("product7");
+				int qty7 = myRs.getInt("qty7");
+				String info = myRs.getString("info");
+				
+				// create new student object
+				Documents tempDocument = new Documents(true, id, customer, reciepient, docId, date, product1, qty1, product2, qty2, product3, qty3, product4, qty4, 
+						product5, qty5, product6, qty6, product7, qty7, info);
+				
+				// add it to the list of students
+				documents.add(tempDocument);				
+			}
+			
+			return documents;		
+		}
+		finally {
+			// close JDBC objects
+			close(myConn, myStmt, myRs);
+		}	
+	}
+
+
+	public void addCustomer(Customer theCustomer) 
+		throws Exception{
+
+		Connection myConn = null;
+		PreparedStatement myStmt = null;
+		
+		try {
+			// get db connection
+			myConn = dataSource.getConnection();
+			
+			// create sql for insert
+			String sql = "insert into customers "
+					   + "(name, address, telephone) "
+					   + "values (?, ?, ?)";
+			
+			myStmt = myConn.prepareStatement(sql);
+			
+			// set the param values for the student
+			myStmt.setString(1, theCustomer.getName());
+			myStmt.setString(2, theCustomer.getAddress());
+			myStmt.setString(3, theCustomer.getTelephone());
+			
+			// execute sql insert
+			myStmt.execute();
+		}
+		finally {
+			// clean up JDBC objects
+			close(myConn, myStmt, null);
+		}
+		
+	}
+
+
 
 
 	
