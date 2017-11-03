@@ -1,8 +1,10 @@
+package com.muczo.mvc.warehouse;
 
 
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 
@@ -44,6 +47,8 @@ public class WarehouseControllerServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
+		
+		
 		try {
 			// read the "command" parameter
 			String theCommand = request.getParameter("command");
@@ -64,16 +69,28 @@ public class WarehouseControllerServlet extends HttpServlet {
 				listCustomers(request, response);
 				break;
 				
+			case "ADD-CUSTOMER":
+				addCustomer(request, response);
+				break;
+			
+			case "UPDATE-CUSTOMER":
+				updateCustomer(request, response);
+				break;
+				
+			case "LOAD-CUSTOMER":
+				loadCustomer(request, response);
+				break;
+				
+			case "DEL-CUSTOMER":
+				delCustomer(request, response);
+				break;
+				
 			case "LIST-RECIEPIENTS":
 				listReciepients(request, response);
 				break;
 				
 			case "ADD-PRODUCT":
 				addProduct(request, response);
-				break;
-				
-			case "ADD-CUSTOMER":
-				addCustomer(request, response);
 				break;
 				
 			case "LOAD-PRODUCT":
@@ -100,6 +117,50 @@ public class WarehouseControllerServlet extends HttpServlet {
 			throw new ServletException(exc);
 		}
 		
+		
+	}
+
+	private void loadCustomer(HttpServletRequest request, HttpServletResponse response) 
+		throws Exception{
+				
+				// read customer id from form data
+				String theCustomerId = request.getParameter("customerId");
+				
+				// get customer from database (db util)
+				Customer theCusdtomer = warehouseDbUtil.getCustomer(theCustomerId);
+				
+				// place student in the request attribute
+				request.setAttribute("THE_CUSTOMER", theCusdtomer);
+				
+				// send to jsp page: update-student-form.jsp
+				RequestDispatcher dispatcher = 
+						request.getRequestDispatcher("/update-customer-form.jsp");
+				dispatcher.forward(request, response);	
+		
+	}
+
+	private void delCustomer(HttpServletRequest request, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void updateCustomer(HttpServletRequest request, HttpServletResponse response)
+		throws Exception{
+		
+				// read customer info from form data
+				int id = Integer.parseInt(request.getParameter("customerId"));
+				String name = request.getParameter("Name");
+				String address = request.getParameter("Address");
+				String telephone = request.getParameter("Telephone");
+				
+				// create a new customer object
+				Customer theCustomer = new Customer(id, name, address, telephone);
+				
+				// perform update on database
+				warehouseDbUtil.updateCustomer(theCustomer);
+				
+				// send them back to the "list students" page
+				listCustomers(request, response);
 		
 	}
 
@@ -188,6 +249,13 @@ public class WarehouseControllerServlet extends HttpServlet {
 	private void listProducts(HttpServletRequest request, HttpServletResponse response)
 		throws Exception{
 		
+		List<String> comboList = new ArrayList<>();
+		comboList.add("---select---");
+		comboList.add("magazyn");
+		comboList.add("magazyn-produkcji");
+		comboList.add("magazyn-czecha");
+		comboList.add("magazyn-produkcji-tacek");
+		request.setAttribute("COMBO_LIST", comboList);
 		
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyy");
@@ -202,6 +270,9 @@ public class WarehouseControllerServlet extends HttpServlet {
 		List<Customer> customers = warehouseDbUtil.getCustomers();
 		// add products to the request
 		request.setAttribute("CUSTOMERS_LIST", customers);
+		
+		HttpSession session = request.getSession();
+		session.setAttribute("Customers", customers);
 				
 		// get products from db util
 		List<Reciepient> reciepients = warehouseDbUtil.getReciepients();		

@@ -1,7 +1,7 @@
+package com.muczo.mvc.warehouse;
 import java.io.Serializable;
 
-public class Customer implements Serializable {
-	
+public class Product implements Serializable {
 
 	/////////////////////////////////////////////////////////////////////
 	/////////////////////////////// Main variables///////////////////////
@@ -9,27 +9,24 @@ public class Customer implements Serializable {
 	private static int count = 0;
 
 	private int id;
-	private String name;
-	private String address;
-	private String telephone;
+	private String productName;
+	private String warehouse;
 
 	/////////////////////////////////////////////////////////////////////
 	//////////////////////////// Constructors ///////////////////////////
 	////////////////////////////////////////////////////////////////////
-	public Customer(int id, String name, String address, String telephone) {
+	public Product(int id, String productName, String warehouse) {
 
 		this.id = id;
-		this.name = name;
-		this.address = address;
-		this.telephone = telephone;
+		this.productName = productName;
+		this.warehouse = warehouse;
 
 	}
 	
-	public Customer(String name, String address, String telephone) {
+	public Product( String productName, String warehouse) {
 
-		this.name = name;
-		this.address = address;
-		this.telephone = telephone;
+		this.productName = productName;
+		this.warehouse = warehouse;
 
 	}
 
@@ -45,28 +42,21 @@ public class Customer implements Serializable {
 	}
 
 	public String getName() {
-		return name;
+		return productName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setName(String productName) {
+		this.productName = productName;
 	}
 
-	public String getAddress() {
-		return address;
+	public String getWarehouse() {
+		return warehouse;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setWarehouse(String warehouse) {
+		this.warehouse = warehouse;
 	}
 
-	public String getTelephone() {
-		return telephone;
-	}
-
-	public void setTelephone(String telephone) {
-		this.telephone = telephone;
-	}
-
-
+	
+	
 }

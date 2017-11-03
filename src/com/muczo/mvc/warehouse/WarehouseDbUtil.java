@@ -1,3 +1,4 @@
+package com.muczo.mvc.warehouse;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -6,6 +7,7 @@ import java.util.List;
 import java.sql.PreparedStatement;
 
 import javax.sql.DataSource;
+
 
 public class WarehouseDbUtil {
 	
@@ -269,6 +271,92 @@ public class WarehouseDbUtil {
 			close(myConn, myStmt, null);
 		}
 		
+	}
+
+
+	public void updateCustomer(Customer theCustomer) throws Exception {
+		
+		Connection myConn = null;
+		PreparedStatement myStmt = null;
+		
+		try {
+			// get db connection
+			myConn = dataSource.getConnection();
+
+			// create SQL update statement
+			String sql = "update customers "
+					    + "set name=?, address=?, telephone=? "
+					    + "where id=?";
+
+			// prepare statement
+			myStmt = myConn.prepareStatement(sql);
+
+			// set params
+			myStmt.setString(1, theCustomer.getName());
+			myStmt.setString(2, theCustomer.getAddress());
+			myStmt.setString(3, theCustomer.getTelephone());
+			myStmt.setInt(4, theCustomer.getId());
+
+			// execute SQL statement
+			myStmt.execute();
+		
+		} finally {
+			// clean up JDBC objects
+
+			close(myConn, myStmt, null);
+
+		}
+		
+	}
+
+
+	public Customer getCustomer(String theCustomerId) 
+		throws Exception{
+
+		Customer theCustomer = null;
+
+		Connection myConn = null;
+		PreparedStatement myStmt = null;
+		ResultSet myRs = null;
+		int customerId;
+
+		try {
+
+			// convert student id to int
+			customerId = Integer.parseInt(theCustomerId);
+
+			// get connection to database
+			myConn = dataSource.getConnection();
+
+			// create sql to get selected student
+			String sql = "select * from customers where id=?";
+
+			// create prepared statement
+			myStmt = myConn.prepareStatement(sql);
+
+			// set params
+			myStmt.setInt(1, customerId);
+
+			// execute statement
+			myRs = myStmt.executeQuery();
+
+			// retrive data from result set row
+			if (myRs.next()) {
+				String name = myRs.getString("name");
+				String address = myRs.getString("address");
+				String telephone = myRs.getString("telephone");
+
+				// use the studentId during construction
+				theCustomer = new Customer(customerId, name, address, telephone);
+			} else {
+				throw new Exception("Could not find customer id: " + customerId);
+			}
+
+			return theCustomer;
+		} finally {
+			// clean up JDBC objects
+			close(myConn, myStmt, myRs);
+		}
 	}
 
 

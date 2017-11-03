@@ -1,3 +1,4 @@
+package com.muczo.mvc.warehouse;
 
 
 import java.io.IOException;

@@ -1,3 +1,4 @@
+package com.muczo.mvc.warehouse;
 import java.io.Serializable;
 
 public class Documents implements Serializable {
