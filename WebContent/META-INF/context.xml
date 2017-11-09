@@ -1,6 +1,6 @@
 <Context>
 
-  <Resource name="jdbc/kp" 
+  <Resource name="jdbc/kp_warehouse_documents" 
   			auth="Container" type="javax.sql.DataSource"
                maxActive="20" maxIdle="5" maxWait="10000"
                username="root" password="robaczek" 

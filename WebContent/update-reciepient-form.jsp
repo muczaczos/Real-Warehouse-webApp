@@ -11,20 +11,20 @@
 <html>
 
 <head>
-	<title><fmt:message key="label.title.update-customer"/></title>
+	<title><fmt:message key="label.title.update-reciepient"/></title>
 
 	<link type="text/css" rel="stylesheet" href="css/style.css">
 	<link type="text/css" rel="stylesheet" href="css/add-student-style.css">	
 </head>
 
 <body>
-	<a href="update-customer-form.jsp?theLocale=en_US">English (US)</a>
+	<a href="update-reciepient-form.jsp?theLocale=en_US">English (US)</a>
 	|
-	<a href="update-customer-form.jsp?theLocale=pl_PL">Polski (PL)</a>
+	<a href="update-reciepient-form.jsp?theLocale=pl_PL">Polski (PL)</a>
 	
 	<div id="wrapper">
 		<div id="header">
-			<h2><fmt:message key="label.title.update-customer"/>...</h2>
+			<h2><fmt:message key="label.title.update-reciepient"/>...</h2>
 		</div>
 	</div>
 	
@@ -33,28 +33,28 @@
 		
 		<form action="WarehouseControllerServlet" method="GET">
 		
-			<input type="hidden" name="command" value="UPDATE-CUSTOMER" />
+			<input type="hidden" name="command" value="UPDATE-RECIEPIENT" />
 
-			<input type="hidden" name="customerId" value="${THE_CUSTOMER.id}" />
+			<input type="hidden" name="customerId" value="${THE_RECIEPIENT.id}" />
 			
 			<table>
 				<tbody>
 					<tr>
 						<td><label><fmt:message key="label.customer.name"/>:</label></td>
 						<td><input type="text" name="name" 
-								   value="${THE_CUSTOMER.name}" /></td>
+								   value="${THE_RECIEPIENT.name}" /></td>
 					</tr>
 
 					<tr>
 						<td><label><fmt:message key="label.address"/>:</label></td>
 						<td><input type="text" name="address" 
-								   value="${THE_CUSTOMER.address}" /></td>
+								   value="${THE_RECIEPIENT.address}" /></td>
 					</tr>
 
 					<tr>
 						<td><label><fmt:message key="label.telephone"/>:</label></td>
 						<td><input type="text" name="telephone" 
-								   value="${THE_CUSTOMER.telephone}" /></td>
+								   value="${THE_RECIEPIENT.telephone}" /></td>
 					</tr>
 					
 					<tr>
@@ -69,7 +69,7 @@
 		<div style="clear: both;"></div>
 		
 		<p>
-			<a href="create-customer.jsp"><fmt:message key="label.back.customer"/></a>
+			<a href="create-reciepient.jsp"><fmt:message key="label.back.reciepient"/></a>
 		</p>
 	</div>
 </body>

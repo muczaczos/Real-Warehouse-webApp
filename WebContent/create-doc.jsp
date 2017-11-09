@@ -44,7 +44,7 @@
   			<li><a href="create-customer.jsp"><fmt:message key="label.menu.doc"/></a></li>
  			<li><a href="#Add customer"><fmt:message key="label.menu.inv"/></a></li>
   			<li><a href="create-customer.jsp"><fmt:message key="label.menu.cus"/></a></li>
-  			<li><a href="#Add product"><fmt:message key="label.menu.rec"/></a></li>
+  			<li><a href="create-reciepient.jsp"><fmt:message key="label.menu.rec"/></a></li>
   			<li><a href="#Add product"><fmt:message key="label.menu.pro"/></a></li>
   			<li><a href="#Add product"><fmt:message key="label.menu.pri"/></a></li>
   			<li><a href="#Add product"><fmt:message key="label.menu.emp"/></a></li>
