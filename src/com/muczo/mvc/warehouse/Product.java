@@ -41,11 +41,11 @@ public class Product implements Serializable {
 		this.id = id;
 	}
 
-	public String getName() {
+	public String getProductName() {
 		return productName;
 	}
 
-	public void setName(String productName) {
+	public void setProductName(String productName) {
 		this.productName = productName;
 	}
 

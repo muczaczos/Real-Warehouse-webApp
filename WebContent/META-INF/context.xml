@@ -2,7 +2,7 @@
 
   <Resource name="jdbc/kp_warehouse_documents" 
   			auth="Container" type="javax.sql.DataSource"
-               maxActive="20" maxIdle="5" maxWait="10000"
+               maxTotal="100" maxIdle="30" maxWaitMillis="10000"
                username="root" password="robaczek" 
                driverClassName="com.mysql.jdbc.Driver"
                url="jdbc:mysql://localhost:3306/kp?useSSL=false"/>
