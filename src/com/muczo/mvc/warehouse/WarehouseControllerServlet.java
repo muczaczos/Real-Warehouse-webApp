@@ -89,6 +89,27 @@ public class WarehouseControllerServlet extends HttpServlet {
 				deleteDocument(request, response);
 				break;
 
+			///////////////////// Documents2....//////////////
+			case "LIST-DOCUMENTS2":
+				listDocuments2(request, response);
+				break;
+
+			case "ADD-DOCUMENT2":
+				addDocument2(request, response);
+				break;
+
+			case "LOAD-DOCUMENT2":
+				loadDocument2(request, response);
+				break;
+
+			case "UPDATE-DOCUMENT2":
+				updateDocument2(request, response);
+				break;
+
+			case "DELETE-DOCUMENT2":
+				deleteDocument2(request, response);
+				break;
+
 			///////////////////// Invoices....//////////////
 			case "LIST-INVOICES":
 				listInvoices(request, response);
@@ -141,6 +162,27 @@ public class WarehouseControllerServlet extends HttpServlet {
 
 			case "PRINT-DOCUMENT":
 				printDocument(request, response);
+				break;
+
+			///////////////////// Providers....///////////////
+			case "LIST-PROVIDERS":
+				listProviders(request, response);
+				break;
+
+			case "ADD-PROVIDER":
+				addProvider(request, response);
+				break;
+
+			case "LOAD-PROVIDER":
+				loadProvider(request, response);
+				break;
+
+			case "UPDATE-PROVIDER":
+				updateProvider(request, response);
+				break;
+
+			case "DELETE-PROVIDER":
+				deleteProvider(request, response);
 				break;
 
 			///////////////////// Customers....///////////////
@@ -271,6 +313,13 @@ public class WarehouseControllerServlet extends HttpServlet {
 		// add documents to the request
 		request.setAttribute("DOCUMENTS_LIST", documents);
 
+		// get providers from db util
+		List<Provider> providers = warehouseDbUtil.getProviders();
+		// add customers to the request
+		request.setAttribute("PROVIDERS_LIST", providers);
+
+		session.setAttribute("Providers", providers);
+
 		// get customers from db util
 		List<Customer> customers = warehouseDbUtil.getCustomers();
 		// add customers to the request
@@ -369,7 +418,6 @@ public class WarehouseControllerServlet extends HttpServlet {
 		// send to JSP page (view)
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/create-doc.jsp");
 		dispatcher.forward(request, response);
-		
 
 	}
 
@@ -427,7 +475,6 @@ public class WarehouseControllerServlet extends HttpServlet {
 
 		// send back to main page (the documents list)
 		listDocuments(request, response);
-		
 
 	}
 
@@ -501,10 +548,98 @@ public class WarehouseControllerServlet extends HttpServlet {
 	private void printDocument(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		warehouseDbUtil.printDocument(request.getParameter("documentId"));
-		
-		//Process p = Runtime.getRuntime().exec("wscript test.vbs");
-		
+
+		// Process p = Runtime.getRuntime().exec("wscript test.vbs");
+
 	}
+
+	////////////////////////////////////////////////////////////////////////////////
+	////////////////////////// DOCUMENTS2 ZONE ////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	private void listDocuments2(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		// get price from db util
+		List<Document2> documents = warehouseDbUtil.getDocuments2();
+
+		// add prices to the request
+		request.setAttribute("DOCUMENTS2_LIST", documents);
+
+		HttpSession session = request.getSession();
+		session.setAttribute("Documents2", documents);
+
+		// send to JSP page (view)
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/create-doc2.jsp");
+		dispatcher.forward(request, response);
+
+	}
+
+	private void addDocument2(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		// read document2 info from form data
+		String provider = request.getParameter("provider");
+		String product = request.getParameter("product");
+		int qty = Integer.parseInt(request.getParameter("qty"));
+
+		// create a new price object
+		Document2 theDocument2 = new Document2(provider, product, qty);
+
+		// add the price to the database
+		warehouseDbUtil.addDocument2(theDocument2);
+
+		// send back to main page (the reciepient list)
+		listPrices(request, response);
+
+	}
+
+	private void loadDocument2(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		// read price id from form data
+		String theDocument2id = request.getParameter("document2id");
+
+		// get price from database (db util)
+		Document2 theDocument2 = warehouseDbUtil.getDocument2(theDocument2id);
+
+		// place price in the request attribute
+		request.setAttribute("THE_DOCUMENT2", theDocument2);
+
+		// send to jsp page: update-price-form.jsp
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/update-document2-form.jsp");
+		dispatcher.forward(request, response);
+
+	}
+
+	private void updateDocument2(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		// read document2 info from form data
+		int id = Integer.parseInt(request.getParameter("document2id"));
+		String provider = request.getParameter("provider");
+		String product = request.getParameter("product");
+		int qty = Integer.parseInt(request.getParameter("qty"));
+
+		// create a new price object
+		Document2 theDocument = new Document2(id, provider, product, qty);
+
+		// perform update on database
+		warehouseDbUtil.updateDocument2(theDocument);
+
+		// send them back to the "list price" page
+		listDocuments(request, response);
+
+	}
+
+	private void deleteDocument2(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		// read price info from form data
+		int id = Integer.parseInt(request.getParameter("document2id"));
+
+		// perform delete on database
+		warehouseDbUtil.deleteDocument2(id);
+
+		// send them back to the "list price" page
+		listDocuments(request, response);
+
+	}
+
 	////////////////////////////////////////////////////////////////////////////////
 	////////////////////////// INVOICES ZONE ///////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////
@@ -602,8 +737,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 
 			sb.append(element.getProduct() + "    szt." + element.getQty() + "     "
 					+ warehouseDbUtil.loadPriceForCustomer(element.getProduct(), theCustomer) + "z³" + "\n");
-			sb.append(
-					element.getQty() * warehouseDbUtil.loadPriceForCustomer(element.getProduct(), theCustomer));
+			sb.append(element.getQty() * warehouseDbUtil.loadPriceForCustomer(element.getProduct(), theCustomer));
 			sum += element.getQty() * warehouseDbUtil.loadPriceForCustomer(element.getProduct(), theCustomer);
 
 		}
@@ -630,7 +764,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		String invoice = sb.toString();
 		HttpSession session = request.getSession();
 		session.setAttribute("amount", invoice);
-		
+
 		// send to JSP page (view)
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/create-invoice.jsp");
 		dispatcher.forward(request, response);
@@ -639,9 +773,10 @@ public class WarehouseControllerServlet extends HttpServlet {
 
 	private void precreateInvoice(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	//	request.getSession().setAttribute("theLocale", request.getParameter("theLocale"));
+		// request.getSession().setAttribute("theLocale",
+		// request.getParameter("theLocale"));
 		System.out.println(request.getParameter("theLocale"));
-		
+
 		String theCustomer = request.getParameter("invcustomer");
 
 		request.setAttribute("invcustomer", theCustomer);
@@ -690,7 +825,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		String warehouse = request.getParameter("warehouse");
 
 		// create a new product object
-		Product theProduct = new Product(name, warehouse);
+		Product theProduct = new Product(name, warehouse, 0);
 
 		// add the product to the database
 		warehouseDbUtil.addProduct(theProduct);
@@ -724,7 +859,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		String warehouse = request.getParameter("warehouse");
 
 		// create a new product object
-		Product theProduct = new Product(id, name, warehouse);
+		Product theProduct = new Product(id, name, warehouse, 0);
 
 		// perform update on database
 		warehouseDbUtil.updateProduct(theProduct);
@@ -743,7 +878,94 @@ public class WarehouseControllerServlet extends HttpServlet {
 		warehouseDbUtil.deleteProduct(id);
 
 		// send them back to the "list product" page
-		listCustomers(request, response);
+		listProducts(request, response);
+
+	}
+
+	/////////////////////////////////////////////////////////////////////////////////
+	////////////////////////// PROVIDERS ZONE //////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////
+	private void listProviders(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		// get provider from db util
+		List<Provider> providers = warehouseDbUtil.getProviders();
+
+		// add provider to the request
+		request.setAttribute("PROVIDERS_LIST", providers);
+
+		HttpSession session = request.getSession();
+		session.setAttribute("Providers", providers);
+
+		// send to JSP page (view)
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/create-provider.jsp");
+		dispatcher.forward(request, response);
+
+	}
+
+	private void addProvider(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		// read provider info from form data
+		String name = request.getParameter("name");
+		String address = request.getParameter("address");
+		String telephone = request.getParameter("telephone");
+
+		// create a new provider object
+		Provider theProvider = new Provider(name, address, telephone);
+
+		// add the provider to the database
+		warehouseDbUtil.addProvider(theProvider);
+
+		// send back to main page (the provider list)
+		listProviders(request, response);
+
+	}
+
+	private void loadProvider(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		// read provider id from form data
+		String theProviderId = request.getParameter("providerId");
+
+		// get provider from database (db util)
+		Provider theProvider = warehouseDbUtil.getProvider(theProviderId);
+
+		// place provider in the request attribute
+		request.setAttribute("THE_PROVIDER", theProvider);
+
+		// send to jsp page: update-provider-form.jsp
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/update-provider-form.jsp");
+		dispatcher.forward(request, response);
+
+	}
+
+	private void updateProvider(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		// read provider info from form data
+		int id = Integer.parseInt(request.getParameter("providerId"));
+		String name = request.getParameter("name");
+		String address = request.getParameter("address");
+		String telephone = request.getParameter("telephone");
+
+		// create a new provider object
+		Provider theProvider = new Provider(id, name, address, telephone);
+
+		// perform update on database
+		warehouseDbUtil.updateProvider(theProvider);
+
+		// send them back to the "list providers" page
+		listProviders(request, response);
+
+	}
+
+	private void deleteProvider(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		// read provider info from form data
+		int id = Integer.parseInt(request.getParameter("providerId"));
+
+		// perform delete on database
+		warehouseDbUtil.deleteProvider(id);
+
+		// send them back to the "list providers" page
+		listProviders(request, response);
 
 	}
 

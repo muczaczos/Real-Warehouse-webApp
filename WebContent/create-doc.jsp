@@ -3,10 +3,13 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 
 
-<c:set var="theLocale" value="${not empty param.theLocale ? param.theLocale : not empty theLocale ? theLocale
- : pageContext.request.locale}" scope="session" />
+<c:set var="theLocale"
+	value="${not empty param.theLocale ? param.theLocale : not empty theLocale ? theLocale
+ : pageContext.request.locale}"
+	scope="session" />
 <fmt:setLocale value="${theLocale}" />
-<fmt:setBundle basename="com.muczo.mvc.warehouse.i18h.resources.mylabels" />
+<fmt:setBundle
+	basename="com.muczo.mvc.warehouse.i18h.resources.mylabels" />
 
 
 <!DOCTYPE html>
@@ -46,8 +49,12 @@
 			<ul>
 				<li><a href="WarehouseControllerServlet"><fmt:message
 							key="label.menu.doc" /></a></li>
+				<li><a href="create-doc2.jsp"><fmt:message
+							key="label.menu.doc2" /></a></li>
 				<li><a href="create-invoice.jsp"><fmt:message
 							key="label.menu.inv" /></a></li>
+				<li><a href="create-provider.jsp"><fmt:message
+							key="label.menu.prov" /></a></li>
 				<li><a href="create-customer.jsp"><fmt:message
 							key="label.menu.cus" /></a></li>
 				<li><a href="create-reciepient.jsp"><fmt:message
@@ -61,6 +68,7 @@
 				<li><a href="create-warehouse.jsp"><fmt:message
 							key="label.menu.war" /></a></li>
 			</ul>
+
 			<br> <br>
 			<form action="WarehouseControllerServlet" method="GET">
 				<input type="hidden" name="command" value="FIRST-LIST" />
@@ -138,7 +146,7 @@
 				<!-- put new button: precreate doc -->
 				<input type="submit"
 					value="<fmt:message key="label.button.precreate"/>">
-				
+
 			</form>
 
 			<br> <br>
@@ -215,7 +223,7 @@
 							value="<fmt:message key="label.button.save"/>">
 						<td align="left"><label><fmt:message key="label.info" />:</label>
 							<textarea name="info" cols="60" rows="10"></textarea></td>
-				
+
 
 					</tr>
 

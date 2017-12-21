@@ -15,28 +15,27 @@
 
 <head>
 <head>
-<title><fmt:message key="label.title.create-reciepient" /></title>
+<title><fmt:message key="label.title.create-provider" /></title>
 
 <link type="text/css" rel="stylesheet" href="css/style2.css">
 <link type="text/css" rel="stylesheet" href="css/add.css">
 </head>
 
 <body>
-	<a href="create-reciepient.jsp?theLocale=en_US">Polski (PL)</a> |
-	<a href="create-reciepient.jsp?theLocale=pl_PL">English (US)</a>
+	<a href="create-provider.jsp?theLocale=en_US">Polski (PL)</a> |
+	<a href="create-provider.jsp?theLocale=pl_PL">English (US)</a>
 
 	<hr>
 
 	<div id="wrapper">
 		<div id="header">
 			<h2>
-				<fmt:message key="label.h2.create-reciepient" />
+				<fmt:message key="label.h2.create-provider" />
 			</h2>
 		</div>
 	</div>
 
 	<div id="container">
-
 		<br>
 		<ul>
 			<li><a href="WarehouseControllerServlet"><fmt:message
@@ -62,7 +61,7 @@
 		</ul>
 		<br> <br>
 		<form action="WarehouseControllerServlet" method="GET">
-			<input type="hidden" name="command" value="ADD-RECIEPIENT" />
+			<input type="hidden" name="command" value="ADD-PROVIDER" />
 
 			<table>
 				<tbody>
@@ -106,25 +105,25 @@
 					<th><fmt:message key="label.action" /></th>
 				</tr>
 
-				<c:forEach var="tempRec" items="${Reciepients}">
+				<c:forEach var="tempProv" items="${Providers}">
 					<!-- set up a link for each customers  -->
 					<c:url var="tempLink" value="WarehouseControllerServlet">
-						<c:param name="command" value="LOAD-RECIEPIENT" />
-						<c:param name="reciepientId" value="${tempRec.id}" />
+						<c:param name="command" value="LOAD-PROVIDER" />
+						<c:param name="providerId" value="${tempProv.id}" />
 					</c:url>
 
 					<!-- set up a link to delete a document -->
 					<c:url var="deleteLink" value="WarehouseControllerServlet">
-						<c:param name="command" value="DELETE-RECIEPIENT" />
-						<c:param name="reciepientId" value="${tempRec.id}" />
+						<c:param name="command" value="DELETE-PROVIDER" />
+						<c:param name="providerId" value="${tempProv.id}" />
 					</c:url>
 
 					<tr>
 
-						<td>${tempRec.id}</td>
-						<td>${tempRec.name}</td>
-						<td>${tempRec.address}</td>
-						<td>${tempRec.telephone}</td>
+						<td>${tempProv.id}</td>
+						<td>${tempProv.name}</td>
+						<td>${tempProv.address}</td>
+						<td>${tempProv.telephone}</td>
 
 						<td><a href="${tempLink}"><fmt:message key="label.update" /></a>
 							| <a href="${deleteLink}"

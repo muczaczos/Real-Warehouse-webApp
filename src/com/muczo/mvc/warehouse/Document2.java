@@ -1,36 +1,42 @@
 package com.muczo.mvc.warehouse;
+
 import java.io.Serializable;
 
-public class Product implements Serializable {
+public class Document2 implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3206798103583708156L;
 	/////////////////////////////////////////////////////////////////////
 	/////////////////////////////// Main variables///////////////////////
 	/////////////////////////////////////////////////////////////////////
-	private static int count = 0;
-
 	private int id;
-	private String productName;
-	private String warehouse;
+	private String provider;
+	private String product;
 	private int qty;
+
+
 
 	/////////////////////////////////////////////////////////////////////
 	//////////////////////////// Constructors ///////////////////////////
 	////////////////////////////////////////////////////////////////////
-	public Product(int id, String productName, String warehouse, int qty) {
+	public Document2(int id, String provider, String product, int qty) {
 
+	
 		this.id = id;
-		this.productName = productName;
-		this.warehouse = warehouse;
+		this.provider = provider;
+		this.product = product;
 		this.qty = qty;
-
+		
 	}
 	
-	public Product( String productName, String warehouse, int qty) {
+	public Document2(String provider, String product, int qty) {
 
-		this.productName = productName;
-		this.warehouse = warehouse;
+		this.provider = provider;
+		this.product = product;
 		this.qty = qty;
-
+		
 	}
 
 	/////////////////////////////////////////////////////////////////////
@@ -44,20 +50,20 @@ public class Product implements Serializable {
 		this.id = id;
 	}
 
-	public String getProductName() {
-		return productName;
+	public String getProvider() {
+		return provider;
 	}
 
-	public void setProductName(String productName) {
-		this.productName = productName;
+	public void setProvider(String provider) {
+		this.provider = provider;
 	}
 
-	public String getWarehouse() {
-		return warehouse;
+	public String getProduct() {
+		return product;
 	}
 
-	public void setWarehouse(String warehouse) {
-		this.warehouse = warehouse;
+	public void setProduct(String product) {
+		this.product = product;
 	}
 
 	public int getQty() {
@@ -67,9 +73,7 @@ public class Product implements Serializable {
 	public void setQty(int qty) {
 		this.qty = qty;
 	}
-	
-	
 
-	
-	
+
+
 }

@@ -14,7 +14,7 @@
 <html>
 
 <head>
-<title><fmt:message key="label.title.update-price" /></title>
+<title><fmt:message key="label.title.update-provider" /></title>
 
 <link type="text/css" rel="stylesheet" href="css/style2.css">
 <link type="text/css" rel="stylesheet" href="css/add.css">
@@ -22,17 +22,17 @@
 
 <body>
 	<a
-		href="update-price-form.jsp?command=LOAD-PRICE&priceId=${THE_PRICE.id}&theLocale=en_US">Polski
+		href="update-provider-form.jsp?command=LOAD-PROVIDER&providerId=${THE_CUSTOMER.id}&theLocale=en_US">Polski
 		(PL)</a> |
 	<a
-		href="update-price-form.jsp?command=LOAD-PRICE&priceId=${THE_PRICE.id}&theLocale=pl_PL">English
+		href="update-provider-form.jsp?command=LOAD-PROVIDER&providerId=${THE_CUSTOMER.id}&theLocale=pl_PL">English
 		(US)</a>
-	
+
 	<hr>
 	<div id="wrapper">
 		<div id="header">
 			<h2>
-				<fmt:message key="label.title.update-price" />
+				<fmt:message key="label.title.update-provider" />
 			</h2>
 		</div>
 	</div>
@@ -42,27 +42,27 @@
 		<br> <br> <br>
 		<form action="WarehouseControllerServlet" method="GET">
 
-			<input type="hidden" name="command" value="UPDATE-PRICE" /> <input
-				type="hidden" name="priceId" value="${THE_PRICE.id}" />
+			<input type="hidden" name="command" value="UPDATE-PROVIDER" /> <input
+				type="hidden" name="providerId" value="${THE_PROVIDER.id}" />
 
 			<table>
 				<tbody>
 					<tr>
-						<td><label><fmt:message key="label.customer" />:</label></td>
-						<td><input type="text" name="customer"
-							value="${THE_PRICE.customer}" /></td>
+						<td><label><fmt:message key="label.customer.name" />:</label></td>
+						<td><input type="text" name="name"
+							value="${THE_PROVIDER.name}" /></td>
 					</tr>
 
 					<tr>
-						<td><label><fmt:message key="label.product" />:</label></td>
-						<td><input type="text" name="product"
-							value="${THE_PRICE.product}" /></td>
+						<td><label><fmt:message key="label.address" />:</label></td>
+						<td><input type="text" name="address"
+							value="${THE_PROVIDER.address}" /></td>
 					</tr>
 
 					<tr>
-						<td><label><fmt:message key="label.price" />:</label></td>
-						<td><input type="text" name="price"
-							value="${THE_PRICE.price}" /></td>
+						<td><label><fmt:message key="label.telephone" />:</label></td>
+						<td><input type="text" name="telephone"
+							value="${THE_PROVIDER.telephone}" /></td>
 					</tr>
 
 					<tr>
@@ -78,7 +78,8 @@
 		<div style="clear: both;"></div>
 
 		<p>
-			<a href="create-price.jsp"><fmt:message key="label.back.price" /></a>
+			<a href="create-provider.jsp"><fmt:message
+					key="label.back.provider" /></a>
 		</p>
 	</div>
 </body>
