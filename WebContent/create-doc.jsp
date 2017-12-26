@@ -29,6 +29,12 @@
 
 
 <body>
+
+<a href="LogoutServlet">Wyloguj</a>
+
+<hr>
+	Jesteś zalogowany jako ${userName}
+	<br>
 	<a href="WarehouseControllerServlet?theLocale=en_US">Polski (PL)</a> |
 	<a href="WarehouseControllerServlet?theLocale=pl_PL">English (US)</a>
 

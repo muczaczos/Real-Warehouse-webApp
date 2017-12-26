@@ -27,6 +27,8 @@
 
 
 <body>
+<a href="LogoutServlet">Wyloguj</a>
+<hr>
 	<a href="create-invoice.jsp?theLocale=en_US">Polski (PL)</a> |
 	<a href="create-invoice.jsp?theLocale=pl_PL">English (US)</a>
 

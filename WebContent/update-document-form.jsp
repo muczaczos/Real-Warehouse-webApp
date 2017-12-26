@@ -23,6 +23,8 @@
 </head>
 
 <body>
+<a href="LogoutServlet">Wyloguj</a>
+<hr>
 	<a
 		href="update-document-form.jsp?command=LOAD-DOCUMENT&documentId=${THE_DOCUMENT.id}&theLocale=en_US">Polski
 		(PL)</a> |

@@ -14,27 +14,29 @@
 <html>
 
 <head>
-<title><fmt:message key="label.title.update-price" /></title>
+
+<title><fmt:message key="label.title.update-product" /></title>
 
 <link type="text/css" rel="stylesheet" href="css/style2.css">
 <link type="text/css" rel="stylesheet" href="css/add.css">
+
 </head>
 
 <body>
 <a href="LogoutServlet">Wyloguj</a>
 <hr>
 	<a
-		href="update-price-form.jsp?command=LOAD-PRICE&priceId=${THE_PRICE.id}&theLocale=en_US">Polski
+		href="update-document2-form.jsp?command=LOAD-DOCUMENT2&productId=${THE_DOCUMENT2.id}&theLocale=en_US">Polski
 		(PL)</a> |
 	<a
-		href="update-price-form.jsp?command=LOAD-PRICE&priceId=${THE_PRICE.id}&theLocale=pl_PL">English
+		href="update-document2-form.jsp?command=LOAD-DOCUMENT2&productId=${THE_DOCUMENT2.id}&theLocale=pl_PL">English
 		(US)</a>
 	
 	<hr>
 	<div id="wrapper">
 		<div id="header">
 			<h2>
-				<fmt:message key="label.title.update-price" />
+				<fmt:message key="label.title.update-document2" />
 			</h2>
 		</div>
 	</div>
@@ -44,27 +46,27 @@
 		<br> <br> <br>
 		<form action="WarehouseControllerServlet" method="GET">
 
-			<input type="hidden" name="command" value="UPDATE-PRICE" /> <input
-				type="hidden" name="priceId" value="${THE_PRICE.id}" />
+			<input type="hidden" name="command" value="UPDATE-DOCUMENT2" /> <input
+				type="hidden" name="doc2Id" value="${THE_DOCUMENT2.id}" />
 
 			<table>
 				<tbody>
 					<tr>
-						<td><label><fmt:message key="label.customer" />:</label></td>
-						<td><input type="text" name="customer"
-							value="${THE_PRICE.customer}" /></td>
+						<td><label><fmt:message key="label.provider" />:</label></td>
+						<td><input type="text" name="provider"
+							value="${THE_DOCUMENT2.provider}" /></td>
 					</tr>
 
 					<tr>
 						<td><label><fmt:message key="label.product" />:</label></td>
 						<td><input type="text" name="product"
-							value="${THE_PRICE.product}" /></td>
+							value="${THE_DOCUMENT2.product}" /></td>
 					</tr>
-
+					
 					<tr>
-						<td><label><fmt:message key="label.price" />:</label></td>
-						<td><input type="text" name="price"
-							value="${THE_PRICE.price}" /></td>
+						<td><label><fmt:message key="label.qty" />:</label></td>
+						<td><input type="text" name="qty"
+							value="${THE_DOCUMENT2.qty}" /></td>
 					</tr>
 
 					<tr>
@@ -80,7 +82,8 @@
 		<div style="clear: both;"></div>
 
 		<p>
-			<a href="create-price.jsp"><fmt:message key="label.back.price" /></a>
+			<a href="create-doc2.jsp"><fmt:message
+					key="label.back.doc2" /></a>
 		</p>
 	</div>
 </body>

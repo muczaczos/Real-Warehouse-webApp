@@ -22,6 +22,8 @@
 </head>
 
 <body>
+<a href="LogoutServlet">Wyloguj</a>
+<hr>
 	<a href="create-product.jsp?theLocale=en_US">Polski (PL)</a> |
 	<a href="create-product.jsp?theLocale=pl_PL">English (US)</a>
 

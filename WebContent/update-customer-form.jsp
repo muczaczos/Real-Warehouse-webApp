@@ -24,7 +24,8 @@
 </head>
 
 <body>
-
+<a href="LogoutServlet">Wyloguj</a>
+<hr>
 	<a
 		href="update-customer-form.jsp?command=LOAD-CUSTOMER&customerId=${THE_CUSTOMER.id}&theLocale=en_US">Polski
 		(PL)</a> |

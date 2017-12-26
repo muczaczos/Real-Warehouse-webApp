@@ -22,7 +22,8 @@
 </head>
 
 <body>
-
+<a href="LogoutServlet">Wyloguj</a>
+<hr>
 	<a
 		href="update-employee-form.jsp?command=LOAD-EMPLOYEE&employeeId=${THE_EMPLOYEE.id}&theLocale=en_US">Polski
 		(PL)</a> |

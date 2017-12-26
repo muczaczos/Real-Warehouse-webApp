@@ -61,7 +61,7 @@ public class WarehouseDbUtil {
 			myConn = dataSource.getConnection();
 
 			// create sql statement
-			String sql = "select * from documents";
+			String sql = "select * from documents ORDER BY id DESC LIMIT 50";
 
 			myStmt = myConn.createStatement();
 
@@ -208,6 +208,48 @@ public class WarehouseDbUtil {
 			myStmt.setString(17, theDocument.getProduct7());
 			myStmt.setInt(18, theDocument.getQty7());
 			myStmt.setString(19, theDocument.getInfo());
+			if (theDocument.getQty1() > 0) {
+				Product product = getProductByName(theDocument.getProduct1());
+				int qty = product.getQty() - theDocument.getQty1();
+				product.setQty(qty);
+				updateProductQty(product);
+				if (theDocument.getQty2() > 0) {
+					Product product2 = getProductByName(theDocument.getProduct2());
+					int qty2 = product.getQty() - theDocument.getQty2();
+					product.setQty(qty2);
+					updateProductQty(product2);
+					if (theDocument.getQty3() > 0) {
+						Product product3 = getProductByName(theDocument.getProduct3());
+						int qty3 = product.getQty() - theDocument.getQty3();
+						product.setQty(qty3);
+						updateProductQty(product3);
+						if (theDocument.getQty4() > 0) {
+							Product product4 = getProductByName(theDocument.getProduct4());
+							int qty4 = product.getQty() - theDocument.getQty4();
+							product.setQty(qty4);
+							updateProductQty(product4);
+							if (theDocument.getQty5() > 0) {
+								Product product5 = getProductByName(theDocument.getProduct5());
+								int qty5 = product.getQty() - theDocument.getQty5();
+								product.setQty(qty5);
+								updateProductQty(product5);
+								if (theDocument.getQty6() > 0) {
+									Product product6 = getProductByName(theDocument.getProduct6());
+									int qty6 = product.getQty() - theDocument.getQty6();
+									product.setQty(qty6);
+									updateProductQty(product6);
+									if (theDocument.getQty7() > 0) {
+										Product product7 = getProductByName(theDocument.getProduct7());
+										int qty7 = product.getQty() - theDocument.getQty7();
+										product.setQty(qty7);
+										updateProductQty(product7);
+									}
+								}
+							}
+						}
+					}
+				}
+			}
 
 			// execute sql insert
 			myStmt.execute();
@@ -987,7 +1029,7 @@ public class WarehouseDbUtil {
 	////////////////////////// DOCUMENTS2 ZONE ////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////
 	public List<Document2> getDocuments2() throws Exception {
-		
+
 		List<Document2> documents2 = new ArrayList<>();
 
 		Connection myConn = null;
@@ -1046,6 +1088,14 @@ public class WarehouseDbUtil {
 			myStmt.setString(1, theDocument2.getProvider());
 			myStmt.setString(2, theDocument2.getProduct());
 			myStmt.setDouble(3, theDocument2.getQty());
+			if (theDocument2.getQty() > 0) {
+
+				Product product = getProductByName(theDocument2.getProduct());
+				int qty = product.getQty() + theDocument2.getQty();
+				product.setQty(qty);
+				updateProductQty(product);
+
+			}
 
 			// execute sql insert
 			myStmt.execute();
@@ -1057,7 +1107,7 @@ public class WarehouseDbUtil {
 	}
 
 	public Document2 getDocument2(String theDocument2id) throws Exception {
-		
+
 		Document2 document2 = null;
 
 		Connection myConn = null;
@@ -1105,7 +1155,7 @@ public class WarehouseDbUtil {
 	}
 
 	public void updateDocument2(Document2 theDocument) throws Exception {
-		
+
 		Connection myConn = null;
 		PreparedStatement myStmt = null;
 
@@ -1137,8 +1187,8 @@ public class WarehouseDbUtil {
 
 	}
 
-	public void deleteDocument2(int id) throws Exception{
-		
+	public void deleteDocument2(int id) throws Exception {
+
 		Connection myConn = null;
 		PreparedStatement myStmt = null;
 
@@ -1336,6 +1386,52 @@ public class WarehouseDbUtil {
 		}
 	}
 
+	public Product getProductByName(String theProductName) throws Exception {
+
+		Product theProduct = null;
+
+		Connection myConn = null;
+		PreparedStatement myStmt = null;
+		ResultSet myRs = null;
+		int productId;
+
+		try {
+
+			// get connection to database
+			myConn = dataSource.getConnection();
+
+			// create sql to get selected product
+			String sql = "select * from products where name=?";
+
+			// create prepared statement
+			myStmt = myConn.prepareStatement(sql);
+
+			// set params
+			myStmt.setString(1, theProductName);
+
+			// execute statement
+			myRs = myStmt.executeQuery();
+
+			// retrive data from result set row
+			if (myRs.next()) {
+				int id = myRs.getInt("id");
+				String name = myRs.getString("name");
+				String warehouse = myRs.getString("warehouse");
+				int qty = myRs.getInt("qty");
+
+				// use the studentId during construction
+				theProduct = new Product(id, name, warehouse, qty);
+			} else {
+				throw new Exception("Could not find product id: " + theProductName);
+			}
+
+			return theProduct;
+		} finally {
+			// clean up JDBC objects
+			close(myConn, myStmt, myRs);
+		}
+	}
+
 	public void updateProduct(Product theProduct) throws Exception {
 
 		Connection myConn = null;
@@ -1355,6 +1451,37 @@ public class WarehouseDbUtil {
 			myStmt.setString(1, theProduct.getProductName());
 			myStmt.setString(2, theProduct.getWarehouse());
 			myStmt.setInt(3, theProduct.getId());
+
+			// execute SQL statement
+			myStmt.execute();
+
+		} finally {
+			// clean up JDBC objects
+
+			close(myConn, myStmt, null);
+
+		}
+
+	}
+
+	public void updateProductQty(Product theProduct) throws Exception {
+
+		Connection myConn = null;
+		PreparedStatement myStmt = null;
+
+		try {
+			// get db connection
+			myConn = dataSource.getConnection();
+
+			// create SQL update statement
+			String sql = "update products " + "set qty=?" + " where id=?";
+
+			// prepare statement
+			myStmt = myConn.prepareStatement(sql);
+
+			// set params
+			myStmt.setInt(1, theProduct.getQty());
+			myStmt.setInt(2, theProduct.getId());
 
 			// execute SQL statement
 			myStmt.execute();
@@ -2555,6 +2682,52 @@ public class WarehouseDbUtil {
 
 		}
 
+	}
+
+	//////////////////////////////////////////////////////////////////////////////
+	////////////////////////// OTHER ZONE ////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////
+	public User getUserByName(String theUserName) throws Exception {
+
+		User theUser = null;
+
+		Connection myConn = null;
+		PreparedStatement myStmt = null;
+		ResultSet myRs = null;
+
+		try {
+			// get connection to database
+			myConn = dataSource.getConnection();
+
+			// create sql to get selected product
+			String sql = "select * from users where name=?";
+
+			// create prepared statement
+			myStmt = myConn.prepareStatement(sql);
+
+			// set params
+			myStmt.setString(1, theUserName);
+
+			// execute statement
+			myRs = myStmt.executeQuery();
+
+			// retrive data from result set row
+			if (myRs.next()) {
+				String name = myRs.getString("name");
+				String password = myRs.getString("password");
+				int id = myRs.getInt("id");
+
+				// use the studentId during construction
+				theUser = new User(id, name, password);
+			} else {
+				//throw new Exception("Could not find user name: " + theUserName);
+			}
+
+			return theUser;
+		} finally {
+			// clean up JDBC objects
+			close(myConn, myStmt, myRs);
+		}
 	}
 
 	//////////////////////////////////////////////////////////////////////////////

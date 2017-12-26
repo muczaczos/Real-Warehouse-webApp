@@ -1,6 +1,7 @@
 package com.muczo.mvc.warehouse;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.NumberFormat;
@@ -20,7 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
-import javax.swing.JOptionPane;
 
 /**
  * Servlet implementation class WarehouseControllerServlet
@@ -51,253 +51,264 @@ public class WarehouseControllerServlet extends HttpServlet {
 	///////////////////////////////////////////////////////////////////////////////
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		request.getRequestDispatcher("link.html").include(request, response);
 
-		try {
-			// read the "command" parameter
-			String theCommand = request.getParameter("command");
+		HttpSession session = request.getSession(false);
+		if (session != null) {
 
-			// if the command is missing, then default to listing students
-			if (theCommand == null) {
-				theCommand = "FIRST-LIST";
+			try {
+				// read the "command" parameter
+				String theCommand = request.getParameter("command");
+
+				// if the command is missing, then default to listing students
+				if (theCommand == null) {
+					theCommand = "FIRST-LIST";
+				}
+
+				// route to the appropriate method
+				switch (theCommand) {
+
+				case "FIRST-LIST":
+					firstList(request, response);
+					break;
+
+				///////////////////// Documents....//////////////
+				case "LIST-DOCUMENTS":
+					listDocuments(request, response);
+					break;
+
+				case "ADD-DOCUMENT":
+					addDocument(request, response);
+					break;
+
+				case "LOAD-DOCUMENT":
+					loadDocument(request, response);
+					break;
+
+				case "UPDATE-DOCUMENT":
+					updateDocument(request, response);
+					break;
+
+				case "DELETE-DOCUMENT":
+					deleteDocument(request, response);
+					break;
+
+				///////////////////// Documents2....//////////////
+				case "LIST-DOCUMENTS2":
+					listDocuments2(request, response);
+					break;
+
+				case "ADD-DOCUMENT2":
+					addDocument2(request, response);
+					break;
+
+				case "LOAD-DOCUMENT2":
+					loadDocument2(request, response);
+					break;
+
+				case "UPDATE-DOCUMENT2":
+					updateDocument2(request, response);
+					break;
+
+				case "DELETE-DOCUMENT2":
+					deleteDocument2(request, response);
+					break;
+
+				///////////////////// Invoices....//////////////
+				case "LIST-INVOICES":
+					listInvoices(request, response);
+					break;
+
+				case "PRECREATE-INVOICE":
+					precreateInvoice(request, response);
+					break;
+
+				case "CALCULATE-INVOICE":
+					calculateInvoice(request, response);
+					break;
+
+				case "ADD-INVOICE":
+					addInvoice(request, response);
+					break;
+
+				case "LOAD-INVOICE":
+					loadInvoice(request, response);
+					break;
+
+				case "UPDATE-INVOICE":
+					updateInvoice(request, response);
+					break;
+
+				case "DELETE-INVOICE":
+					deleteInvoice(request, response);
+					break;
+
+				///////////////////// Products....///////////////
+				case "LIST-PRODUCTS":
+					listProducts(request, response);
+					break;
+
+				case "ADD-PRODUCT":
+					addProduct(request, response);
+					break;
+
+				case "LOAD-PRODUCT":
+					loadProduct(request, response);
+					break;
+
+				case "UPDATE-PRODUCT":
+					updateProduct(request, response);
+					break;
+
+				case "DELETE-PRODUCT":
+					deleteProduct(request, response);
+					break;
+
+				case "PRINT-DOCUMENT":
+					printDocument(request, response);
+					break;
+
+				///////////////////// Providers....///////////////
+				case "LIST-PROVIDERS":
+					listProviders(request, response);
+					break;
+
+				case "ADD-PROVIDER":
+					addProvider(request, response);
+					break;
+
+				case "LOAD-PROVIDER":
+					loadProvider(request, response);
+					break;
+
+				case "UPDATE-PROVIDER":
+					updateProvider(request, response);
+					break;
+
+				case "DELETE-PROVIDER":
+					deleteProvider(request, response);
+					break;
+
+				///////////////////// Customers....///////////////
+				case "LIST-CUSTOMERS":
+					listCustomers(request, response);
+					break;
+
+				case "ADD-CUSTOMER":
+					addCustomer(request, response);
+					break;
+
+				case "LOAD-CUSTOMER":
+					loadCustomer(request, response);
+					break;
+
+				case "UPDATE-CUSTOMER":
+					updateCustomer(request, response);
+					break;
+
+				case "DELETE-CUSTOMER":
+					deleteCustomer(request, response);
+					break;
+
+				///////////////////// Reciepients....///////////////
+				case "LIST-RECIEPIENTS":
+					listReciepients(request, response);
+					break;
+
+				case "ADD-RECIEPIENT":
+					addReciepient(request, response);
+					break;
+
+				case "LOAD-RECIEPIENT":
+					loadReciepient(request, response);
+					break;
+
+				case "UPDATE-RECIEPIENT":
+					updateReciepient(request, response);
+					break;
+
+				case "DELETE-RECIEPIENT":
+					deleteReciepient(request, response);
+					break;
+
+				///////////////////// Price List....///////////////
+				case "LIST-PRICE":
+					listPrices(request, response);
+					break;
+
+				case "ADD-PRICE":
+					addPrice(request, response);
+					break;
+
+				case "LOAD-PRICE":
+					loadPrice(request, response);
+					break;
+
+				case "UPDATE-PRICE":
+					updatePrice(request, response);
+					break;
+
+				case "DELETE-PRICE":
+					deletePrice(request, response);
+					break;
+
+				///////////////////// Employees List....///////////
+				case "LIST-EMPLOYEE":
+					listEmployees(request, response);
+					break;
+
+				case "ADD-EMPLOYEE":
+					addEmployee(request, response);
+					break;
+
+				case "LOAD-EMPLOYEE":
+					loadEmployee(request, response);
+					break;
+
+				case "UPDATE-EMPLOYEE":
+					updateEmployee(request, response);
+					break;
+
+				case "DELETE-EMPLOYEE":
+					deleteEmployee(request, response);
+					break;
+
+				///////////////////// Warehouses List....///////////
+				case "LIST-WAREHOUSES":
+					listWarehouses(request, response);
+					break;
+
+				case "ADD-WAREHOUSE":
+					addWarehouse(request, response);
+					break;
+
+				case "LOAD-WAREHOUSE":
+					loadWarehouse(request, response);
+					break;
+
+				case "UPDATE-WAREHOUSE":
+					updateWarehouse(request, response);
+					break;
+
+				case "DELETE-WAREHOUSE":
+					deleteWarehouse(request, response);
+					break;
+
+				default:
+					listProducts(request, response);
+				}
+
+			} catch (Exception exc) {
+				throw new ServletException(exc);
 			}
-
-			// route to the appropriate method
-			switch (theCommand) {
-
-			case "FIRST-LIST":
-				firstList(request, response);
-				break;
-
-			///////////////////// Documents....//////////////
-			case "LIST-DOCUMENTS":
-				listDocuments(request, response);
-				break;
-
-			case "ADD-DOCUMENT":
-				addDocument(request, response);
-				break;
-
-			case "LOAD-DOCUMENT":
-				loadDocument(request, response);
-				break;
-
-			case "UPDATE-DOCUMENT":
-				updateDocument(request, response);
-				break;
-
-			case "DELETE-DOCUMENT":
-				deleteDocument(request, response);
-				break;
-
-			///////////////////// Documents2....//////////////
-			case "LIST-DOCUMENTS2":
-				listDocuments2(request, response);
-				break;
-
-			case "ADD-DOCUMENT2":
-				addDocument2(request, response);
-				break;
-
-			case "LOAD-DOCUMENT2":
-				loadDocument2(request, response);
-				break;
-
-			case "UPDATE-DOCUMENT2":
-				updateDocument2(request, response);
-				break;
-
-			case "DELETE-DOCUMENT2":
-				deleteDocument2(request, response);
-				break;
-
-			///////////////////// Invoices....//////////////
-			case "LIST-INVOICES":
-				listInvoices(request, response);
-				break;
-
-			case "PRECREATE-INVOICE":
-				precreateInvoice(request, response);
-				break;
-
-			case "CALCULATE-INVOICE":
-				calculateInvoice(request, response);
-				break;
-
-			case "ADD-INVOICE":
-				addInvoice(request, response);
-				break;
-
-			case "LOAD-INVOICE":
-				loadInvoice(request, response);
-				break;
-
-			case "UPDATE-INVOICE":
-				updateInvoice(request, response);
-				break;
-
-			case "DELETE-INVOICE":
-				deleteInvoice(request, response);
-				break;
-
-			///////////////////// Products....///////////////
-			case "LIST-PRODUCTS":
-				listProducts(request, response);
-				break;
-
-			case "ADD-PRODUCT":
-				addProduct(request, response);
-				break;
-
-			case "LOAD-PRODUCT":
-				loadProduct(request, response);
-				break;
-
-			case "UPDATE-PRODUCT":
-				updateProduct(request, response);
-				break;
-
-			case "DELETE-PRODUCT":
-				deleteProduct(request, response);
-				break;
-
-			case "PRINT-DOCUMENT":
-				printDocument(request, response);
-				break;
-
-			///////////////////// Providers....///////////////
-			case "LIST-PROVIDERS":
-				listProviders(request, response);
-				break;
-
-			case "ADD-PROVIDER":
-				addProvider(request, response);
-				break;
-
-			case "LOAD-PROVIDER":
-				loadProvider(request, response);
-				break;
-
-			case "UPDATE-PROVIDER":
-				updateProvider(request, response);
-				break;
-
-			case "DELETE-PROVIDER":
-				deleteProvider(request, response);
-				break;
-
-			///////////////////// Customers....///////////////
-			case "LIST-CUSTOMERS":
-				listCustomers(request, response);
-				break;
-
-			case "ADD-CUSTOMER":
-				addCustomer(request, response);
-				break;
-
-			case "LOAD-CUSTOMER":
-				loadCustomer(request, response);
-				break;
-
-			case "UPDATE-CUSTOMER":
-				updateCustomer(request, response);
-				break;
-
-			case "DELETE-CUSTOMER":
-				deleteCustomer(request, response);
-				break;
-
-			///////////////////// Reciepients....///////////////
-			case "LIST-RECIEPIENTS":
-				listReciepients(request, response);
-				break;
-
-			case "ADD-RECIEPIENT":
-				addReciepient(request, response);
-				break;
-
-			case "LOAD-RECIEPIENT":
-				loadReciepient(request, response);
-				break;
-
-			case "UPDATE-RECIEPIENT":
-				updateReciepient(request, response);
-				break;
-
-			case "DELETE-RECIEPIENT":
-				deleteReciepient(request, response);
-				break;
-
-			///////////////////// Price List....///////////////
-			case "LIST-PRICE":
-				listPrices(request, response);
-				break;
-
-			case "ADD-PRICE":
-				addPrice(request, response);
-				break;
-
-			case "LOAD-PRICE":
-				loadPrice(request, response);
-				break;
-
-			case "UPDATE-PRICE":
-				updatePrice(request, response);
-				break;
-
-			case "DELETE-PRICE":
-				deletePrice(request, response);
-				break;
-
-			///////////////////// Employees List....///////////
-			case "LIST-EMPLOYEE":
-				listEmployees(request, response);
-				break;
-
-			case "ADD-EMPLOYEE":
-				addEmployee(request, response);
-				break;
-
-			case "LOAD-EMPLOYEE":
-				loadEmployee(request, response);
-				break;
-
-			case "UPDATE-EMPLOYEE":
-				updateEmployee(request, response);
-				break;
-
-			case "DELETE-EMPLOYEE":
-				deleteEmployee(request, response);
-				break;
-
-			///////////////////// Warehouses List....///////////
-			case "LIST-WAREHOUSES":
-				listWarehouses(request, response);
-				break;
-
-			case "ADD-WAREHOUSE":
-				addWarehouse(request, response);
-				break;
-
-			case "LOAD-WAREHOUSE":
-				loadWarehouse(request, response);
-				break;
-
-			case "UPDATE-WAREHOUSE":
-				updateWarehouse(request, response);
-				break;
-
-			case "DELETE-WAREHOUSE":
-				deleteWarehouse(request, response);
-				break;
-
-			default:
-				listProducts(request, response);
-			}
-
-		} catch (Exception exc) {
-			throw new ServletException(exc);
+			
+			
+		} else {
+			out.print("Proszê siê najpierw zalogowaæ!");
 		}
-
+		out.close();
 	}
 
 	private void firstList(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -312,6 +323,13 @@ public class WarehouseControllerServlet extends HttpServlet {
 		List<Document> documents = warehouseDbUtil.getDocuments();
 		// add documents to the request
 		request.setAttribute("DOCUMENTS_LIST", documents);
+
+		// get documents from db util
+		List<Document2> documents2 = warehouseDbUtil.getDocuments2();
+		// add documents to the request
+		request.setAttribute("DOCUMENTS2_LIST", documents2);
+
+		session.setAttribute("documents2", documents2);
 
 		// get providers from db util
 		List<Provider> providers = warehouseDbUtil.getProviders();
@@ -587,14 +605,14 @@ public class WarehouseControllerServlet extends HttpServlet {
 		warehouseDbUtil.addDocument2(theDocument2);
 
 		// send back to main page (the reciepient list)
-		listPrices(request, response);
+		listDocuments2(request, response);
 
 	}
 
 	private void loadDocument2(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		// read price id from form data
-		String theDocument2id = request.getParameter("document2id");
+		String theDocument2id = request.getParameter("doc2Id");
 
 		// get price from database (db util)
 		Document2 theDocument2 = warehouseDbUtil.getDocument2(theDocument2id);
@@ -611,7 +629,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 	private void updateDocument2(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		// read document2 info from form data
-		int id = Integer.parseInt(request.getParameter("document2id"));
+		int id = Integer.parseInt(request.getParameter("doc2Id"));
 		String provider = request.getParameter("provider");
 		String product = request.getParameter("product");
 		int qty = Integer.parseInt(request.getParameter("qty"));
@@ -623,20 +641,20 @@ public class WarehouseControllerServlet extends HttpServlet {
 		warehouseDbUtil.updateDocument2(theDocument);
 
 		// send them back to the "list price" page
-		listDocuments(request, response);
+		listDocuments2(request, response);
 
 	}
 
 	private void deleteDocument2(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		// read price info from form data
-		int id = Integer.parseInt(request.getParameter("document2id"));
+		int id = Integer.parseInt(request.getParameter("doc2Id"));
 
 		// perform delete on database
 		warehouseDbUtil.deleteDocument2(id);
 
 		// send them back to the "list price" page
-		listDocuments(request, response);
+		listDocuments2(request, response);
 
 	}
 

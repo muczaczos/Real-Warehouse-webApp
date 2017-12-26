@@ -22,6 +22,8 @@
 </head>
 
 <body>
+<a href="LogoutServlet">Wyloguj</a>
+<hr>
 	<a href="create-reciepient.jsp?theLocale=en_US">Polski (PL)</a> |
 	<a href="create-reciepient.jsp?theLocale=pl_PL">English (US)</a>
 

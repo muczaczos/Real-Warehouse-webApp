@@ -22,6 +22,10 @@
 </head>
 
 <body>
+<a href="LogoutServlet">Wyloguj</a>
+<hr>
+	Jesteś zalogowany jako ${userName}
+	<br>
 	<a href="create-doc2.jsp?theLocale=en_US">Polski (PL)</a> |
 	<a href="create-doc2.jsp?theLocale=pl_PL">English (US)</a>
 
@@ -63,7 +67,7 @@
 		<br> <br>
 
 		<form action="WarehouseControllerServlet" method="GET">
-			<input type="hidden" name="command" value="ADD-DOC2" />
+			<input type="hidden" name="command" value="ADD-DOCUMENT2" />
 
 			<table>
 				<tbody>
@@ -116,7 +120,7 @@
 					<th><fmt:message key="label.action" /></th>
 				</tr>
 
-				<c:forEach var="tempDoc2" items="${Documents2}">
+				<c:forEach var="tempDoc2" items="${documents2}">
 					<!-- set up a link for each customers  -->
 					<c:url var="tempLink" value="WarehouseControllerServlet">
 						<c:param name="command" value="LOAD-DOCUMENT2" />
@@ -126,15 +130,15 @@
 					<!-- set up a link to delete a document -->
 					<c:url var="deleteLink" value="WarehouseControllerServlet">
 						<c:param name="command" value="DELETE-DOCUMENT2" />
-						<c:param name="doc2Id" value="${tempDoc.id}" />
+						<c:param name="doc2Id" value="${tempDoc2.id}" />
 					</c:url>
 
 					<tr>
 
-						<td>${tempPri.id}</td>
-						<td>${tempPri.provider}</td>
-						<td>${tempPri.product}</td>
-						<td>${tempPri.qty}</td>
+						<td>${tempDoc2.id}</td>
+						<td>${tempDoc2.provider}</td>
+						<td>${tempDoc2.product}</td>
+						<td>${tempDoc2.qty}</td>
 
 						<td><a href="${tempLink}"><fmt:message key="label.update" /></a>
 							| <a href="${deleteLink}"

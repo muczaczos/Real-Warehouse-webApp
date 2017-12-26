@@ -21,6 +21,8 @@
 </head>
 
 <body>
+<a href="LogoutServlet">Wyloguj</a>
+<hr>
 	<a
 		href="update-reciepient-form.jsp?command=LOAD-RECIEPIENT&reciepientId=${THE_RECIEPIENT.id}&theLocale=en_US">Polski
 		(PL)</a> |

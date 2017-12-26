@@ -21,6 +21,8 @@
 </head>
 
 <body>
+<a href="LogoutServlet">Wyloguj</a>
+<hr>
 	<a
 		href="update-warehouse-form.jsp?command=LOAD-WAREHOUSE&warehouseId=${THE_WAREHOUSE.id}&theLocale=en_US">Polski
 		(PL)</a> |

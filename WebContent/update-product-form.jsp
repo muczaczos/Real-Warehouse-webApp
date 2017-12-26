@@ -23,6 +23,8 @@
 </head>
 
 <body>
+<a href="LogoutServlet">Wyloguj</a>
+<hr>
 	<a
 		href="update-product-form.jsp?command=LOAD-PRODUCT&productId=${THE_PRODUCT.id}&theLocale=en_US">Polski
 		(PL)</a> |
