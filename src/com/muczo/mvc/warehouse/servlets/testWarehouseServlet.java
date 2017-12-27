@@ -1,4 +1,4 @@
-package com.muczo.mvc.warehouse;
+package com.muczo.mvc.warehouse.servlets;
 
 
 import java.io.IOException;

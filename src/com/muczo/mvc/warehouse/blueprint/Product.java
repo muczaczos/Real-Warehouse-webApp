@@ -1,8 +1,7 @@
-package com.muczo.mvc.warehouse;
+package com.muczo.mvc.warehouse.blueprint;
 import java.io.Serializable;
 
-public class Customer implements Serializable {
-	
+public class Product implements Serializable {
 
 	/////////////////////////////////////////////////////////////////////
 	/////////////////////////////// Main variables///////////////////////
@@ -10,27 +9,27 @@ public class Customer implements Serializable {
 	private static int count = 0;
 
 	private int id;
-	private String name;
-	private String address;
-	private String telephone;
+	private String productName;
+	private String warehouse;
+	private int qty;
 
 	/////////////////////////////////////////////////////////////////////
 	//////////////////////////// Constructors ///////////////////////////
 	////////////////////////////////////////////////////////////////////
-	public Customer(int id, String name, String address, String telephone) {
+	public Product(int id, String productName, String warehouse, int qty) {
 
 		this.id = id;
-		this.name = name;
-		this.address = address;
-		this.telephone = telephone;
+		this.productName = productName;
+		this.warehouse = warehouse;
+		this.qty = qty;
 
 	}
 	
-	public Customer(String name, String address, String telephone) {
+	public Product( String productName, String warehouse, int qty) {
 
-		this.name = name;
-		this.address = address;
-		this.telephone = telephone;
+		this.productName = productName;
+		this.warehouse = warehouse;
+		this.qty = qty;
 
 	}
 
@@ -45,29 +44,32 @@ public class Customer implements Serializable {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getProductName() {
+		return productName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
 
-	public String getAddress() {
-		return address;
+	public String getWarehouse() {
+		return warehouse;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setWarehouse(String warehouse) {
+		this.warehouse = warehouse;
 	}
 
-	public String getTelephone() {
-		return telephone;
+	public int getQty() {
+		return qty;
 	}
 
-	public void setTelephone(String telephone) {
-		this.telephone = telephone;
+	public void setQty(int qty) {
+		this.qty = qty;
 	}
+	
+	
 
-
+	
+	
 }

@@ -1,4 +1,4 @@
-package com.muczo.mvc.warehouse;
+package com.muczo.mvc.warehouse.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -7,6 +7,8 @@ import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,6 +24,26 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+import com.muczo.mvc.warehouse.blueprint.Activity;
+import com.muczo.mvc.warehouse.blueprint.Customer;
+import com.muczo.mvc.warehouse.blueprint.Document;
+import com.muczo.mvc.warehouse.blueprint.Document2;
+import com.muczo.mvc.warehouse.blueprint.Employee;
+import com.muczo.mvc.warehouse.blueprint.PriceList;
+import com.muczo.mvc.warehouse.blueprint.Product;
+import com.muczo.mvc.warehouse.blueprint.ProductList;
+import com.muczo.mvc.warehouse.blueprint.Provider;
+import com.muczo.mvc.warehouse.blueprint.Reciepient;
+import com.muczo.mvc.warehouse.blueprint.Warehouse;
+import com.muczo.mvc.warehouse.db.CustomersDbUtil;
+import com.muczo.mvc.warehouse.db.EmployeesDbUtil;
+import com.muczo.mvc.warehouse.db.PriceDbUtil;
+import com.muczo.mvc.warehouse.db.ProductsDbUtil;
+import com.muczo.mvc.warehouse.db.ProvidersDbUtil;
+import com.muczo.mvc.warehouse.db.ReciepientsDbUtil;
+import com.muczo.mvc.warehouse.db.WarehouseDbUtil;
+import com.muczo.mvc.warehouse.db.WarehousesDbUtil;
+
 /**
  * Servlet implementation class WarehouseControllerServlet
  */
@@ -30,6 +52,13 @@ public class WarehouseControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private WarehouseDbUtil warehouseDbUtil;
+	private ProvidersDbUtil providersDbUtil;
+	private ProductsDbUtil productsDbUtil;
+	private CustomersDbUtil customersDbUtil;
+	private ReciepientsDbUtil reciepientsDbUtil;
+	private PriceDbUtil priceDbUtil;
+	private WarehousesDbUtil warehousesDbUtil;
+	private EmployeesDbUtil employeesDbUtil;
 
 	@Resource(name = "jdbc/kp_warehouse_documents")
 	private DataSource dataSource;
@@ -40,7 +69,16 @@ public class WarehouseControllerServlet extends HttpServlet {
 
 		// create our warehouse db util ... and pass in the conn pool / datasource
 		try {
+
 			warehouseDbUtil = new WarehouseDbUtil(dataSource);
+			providersDbUtil = new ProvidersDbUtil(dataSource);
+			productsDbUtil = new ProductsDbUtil(dataSource);
+			customersDbUtil = new CustomersDbUtil(dataSource);
+			reciepientsDbUtil = new ReciepientsDbUtil(dataSource);
+			priceDbUtil = new PriceDbUtil(dataSource);
+			warehousesDbUtil = new WarehousesDbUtil(dataSource);
+			employeesDbUtil = new EmployeesDbUtil(dataSource);
+
 		} catch (Exception exc) {
 			throw new ServletException(exc);
 		}
@@ -56,262 +94,261 @@ public class WarehouseControllerServlet extends HttpServlet {
 		request.getRequestDispatcher("link.html").include(request, response);
 
 		HttpSession session = request.getSession(false);
-	try {
-		if (session.getAttribute("userName") != null) {
+		try {
+			if (session.getAttribute("userName") != null) {
 
-			try {
-				// read the "command" parameter
-				String theCommand = request.getParameter("command");
+				try {
+					// read the "command" parameter
+					String theCommand = request.getParameter("command");
 
-				// if the command is missing, then default to listing students
-				if (theCommand == null) {
-					theCommand = "FIRST-LIST";
+					// if the command is missing, then default to listing students
+					if (theCommand == null) {
+						theCommand = "FIRST-LIST";
+					}
+
+					// route to the appropriate method
+					switch (theCommand) {
+
+					case "FIRST-LIST":
+						firstList(request, response);
+						break;
+
+					///////////////////// Documents....//////////////
+					case "LIST-DOCUMENTS":
+						listDocuments(request, response);
+						break;
+
+					case "ADD-DOCUMENT":
+						addDocument(request, response);
+						break;
+
+					case "LOAD-DOCUMENT":
+						loadDocument(request, response);
+						break;
+
+					case "UPDATE-DOCUMENT":
+						updateDocument(request, response);
+						break;
+
+					case "DELETE-DOCUMENT":
+						deleteDocument(request, response);
+						break;
+
+					///////////////////// Documents2....//////////////
+					case "LIST-DOCUMENTS2":
+						listDocuments2(request, response);
+						break;
+
+					case "ADD-DOCUMENT2":
+						addDocument2(request, response);
+						break;
+
+					case "LOAD-DOCUMENT2":
+						loadDocument2(request, response);
+						break;
+
+					case "UPDATE-DOCUMENT2":
+						updateDocument2(request, response);
+						break;
+
+					case "DELETE-DOCUMENT2":
+						deleteDocument2(request, response);
+						break;
+
+					///////////////////// Invoices....//////////////
+					case "LIST-INVOICES":
+						listInvoices(request, response);
+						break;
+
+					case "PRECREATE-INVOICE":
+						precreateInvoice(request, response);
+						break;
+
+					case "CALCULATE-INVOICE":
+						calculateInvoice(request, response);
+						break;
+
+					case "ADD-INVOICE":
+						addInvoice(request, response);
+						break;
+
+					case "LOAD-INVOICE":
+						loadInvoice(request, response);
+						break;
+
+					case "UPDATE-INVOICE":
+						updateInvoice(request, response);
+						break;
+
+					case "DELETE-INVOICE":
+						deleteInvoice(request, response);
+						break;
+
+					///////////////////// Products....///////////////
+					case "LIST-PRODUCTS":
+						listProducts(request, response);
+						break;
+
+					case "ADD-PRODUCT":
+						addProduct(request, response);
+						break;
+
+					case "LOAD-PRODUCT":
+						loadProduct(request, response);
+						break;
+
+					case "UPDATE-PRODUCT":
+						updateProduct(request, response);
+						break;
+
+					case "DELETE-PRODUCT":
+						deleteProduct(request, response);
+						break;
+
+					case "PRINT-DOCUMENT":
+						printDocument(request, response);
+						break;
+
+					///////////////////// Providers....///////////////
+					case "LIST-PROVIDERS":
+						listProviders(request, response);
+						break;
+
+					case "ADD-PROVIDER":
+						addProvider(request, response);
+						break;
+
+					case "LOAD-PROVIDER":
+						loadProvider(request, response);
+						break;
+
+					case "UPDATE-PROVIDER":
+						updateProvider(request, response);
+						break;
+
+					case "DELETE-PROVIDER":
+						deleteProvider(request, response);
+						break;
+
+					///////////////////// Customers....///////////////
+					case "LIST-CUSTOMERS":
+						listCustomers(request, response);
+						break;
+
+					case "ADD-CUSTOMER":
+						addCustomer(request, response);
+						break;
+
+					case "LOAD-CUSTOMER":
+						loadCustomer(request, response);
+						break;
+
+					case "UPDATE-CUSTOMER":
+						updateCustomer(request, response);
+						break;
+
+					case "DELETE-CUSTOMER":
+						deleteCustomer(request, response);
+						break;
+
+					///////////////////// Reciepients....///////////////
+					case "LIST-RECIEPIENTS":
+						listReciepients(request, response);
+						break;
+
+					case "ADD-RECIEPIENT":
+						addReciepient(request, response);
+						break;
+
+					case "LOAD-RECIEPIENT":
+						loadReciepient(request, response);
+						break;
+
+					case "UPDATE-RECIEPIENT":
+						updateReciepient(request, response);
+						break;
+
+					case "DELETE-RECIEPIENT":
+						deleteReciepient(request, response);
+						break;
+
+					///////////////////// Price List....///////////////
+					case "LIST-PRICE":
+						listPrices(request, response);
+						break;
+
+					case "ADD-PRICE":
+						addPrice(request, response);
+						break;
+
+					case "LOAD-PRICE":
+						loadPrice(request, response);
+						break;
+
+					case "UPDATE-PRICE":
+						updatePrice(request, response);
+						break;
+
+					case "DELETE-PRICE":
+						deletePrice(request, response);
+						break;
+
+					///////////////////// Employees List....///////////
+					case "LIST-EMPLOYEE":
+						listEmployees(request, response);
+						break;
+
+					case "ADD-EMPLOYEE":
+						addEmployee(request, response);
+						break;
+
+					case "LOAD-EMPLOYEE":
+						loadEmployee(request, response);
+						break;
+
+					case "UPDATE-EMPLOYEE":
+						updateEmployee(request, response);
+						break;
+
+					case "DELETE-EMPLOYEE":
+						deleteEmployee(request, response);
+						break;
+
+					///////////////////// Warehouses List....///////////
+					case "LIST-WAREHOUSES":
+						listWarehouses(request, response);
+						break;
+
+					case "ADD-WAREHOUSE":
+						addWarehouse(request, response);
+						break;
+
+					case "LOAD-WAREHOUSE":
+						loadWarehouse(request, response);
+						break;
+
+					case "UPDATE-WAREHOUSE":
+						updateWarehouse(request, response);
+						break;
+
+					case "DELETE-WAREHOUSE":
+						deleteWarehouse(request, response);
+						break;
+
+					default:
+						listProducts(request, response);
+					}
+
+				} catch (Exception exc) {
+					throw new ServletException(exc);
 				}
 
-				// route to the appropriate method
-				switch (theCommand) {
-
-				case "FIRST-LIST":
-					firstList(request, response);
-					break;
-
-				///////////////////// Documents....//////////////
-				case "LIST-DOCUMENTS":
-					listDocuments(request, response);
-					break;
-
-				case "ADD-DOCUMENT":
-					addDocument(request, response);
-					break;
-
-				case "LOAD-DOCUMENT":
-					loadDocument(request, response);
-					break;
-
-				case "UPDATE-DOCUMENT":
-					updateDocument(request, response);
-					break;
-
-				case "DELETE-DOCUMENT":
-					deleteDocument(request, response);
-					break;
-
-				///////////////////// Documents2....//////////////
-				case "LIST-DOCUMENTS2":
-					listDocuments2(request, response);
-					break;
-
-				case "ADD-DOCUMENT2":
-					addDocument2(request, response);
-					break;
-
-				case "LOAD-DOCUMENT2":
-					loadDocument2(request, response);
-					break;
-
-				case "UPDATE-DOCUMENT2":
-					updateDocument2(request, response);
-					break;
-
-				case "DELETE-DOCUMENT2":
-					deleteDocument2(request, response);
-					break;
-
-				///////////////////// Invoices....//////////////
-				case "LIST-INVOICES":
-					listInvoices(request, response);
-					break;
-
-				case "PRECREATE-INVOICE":
-					precreateInvoice(request, response);
-					break;
-
-				case "CALCULATE-INVOICE":
-					calculateInvoice(request, response);
-					break;
-
-				case "ADD-INVOICE":
-					addInvoice(request, response);
-					break;
-
-				case "LOAD-INVOICE":
-					loadInvoice(request, response);
-					break;
-
-				case "UPDATE-INVOICE":
-					updateInvoice(request, response);
-					break;
-
-				case "DELETE-INVOICE":
-					deleteInvoice(request, response);
-					break;
-
-				///////////////////// Products....///////////////
-				case "LIST-PRODUCTS":
-					listProducts(request, response);
-					break;
-
-				case "ADD-PRODUCT":
-					addProduct(request, response);
-					break;
-
-				case "LOAD-PRODUCT":
-					loadProduct(request, response);
-					break;
-
-				case "UPDATE-PRODUCT":
-					updateProduct(request, response);
-					break;
-
-				case "DELETE-PRODUCT":
-					deleteProduct(request, response);
-					break;
-
-				case "PRINT-DOCUMENT":
-					printDocument(request, response);
-					break;
-
-				///////////////////// Providers....///////////////
-				case "LIST-PROVIDERS":
-					listProviders(request, response);
-					break;
-
-				case "ADD-PROVIDER":
-					addProvider(request, response);
-					break;
-
-				case "LOAD-PROVIDER":
-					loadProvider(request, response);
-					break;
-
-				case "UPDATE-PROVIDER":
-					updateProvider(request, response);
-					break;
-
-				case "DELETE-PROVIDER":
-					deleteProvider(request, response);
-					break;
-
-				///////////////////// Customers....///////////////
-				case "LIST-CUSTOMERS":
-					listCustomers(request, response);
-					break;
-
-				case "ADD-CUSTOMER":
-					addCustomer(request, response);
-					break;
-
-				case "LOAD-CUSTOMER":
-					loadCustomer(request, response);
-					break;
-
-				case "UPDATE-CUSTOMER":
-					updateCustomer(request, response);
-					break;
-
-				case "DELETE-CUSTOMER":
-					deleteCustomer(request, response);
-					break;
-
-				///////////////////// Reciepients....///////////////
-				case "LIST-RECIEPIENTS":
-					listReciepients(request, response);
-					break;
-
-				case "ADD-RECIEPIENT":
-					addReciepient(request, response);
-					break;
-
-				case "LOAD-RECIEPIENT":
-					loadReciepient(request, response);
-					break;
-
-				case "UPDATE-RECIEPIENT":
-					updateReciepient(request, response);
-					break;
-
-				case "DELETE-RECIEPIENT":
-					deleteReciepient(request, response);
-					break;
-
-				///////////////////// Price List....///////////////
-				case "LIST-PRICE":
-					listPrices(request, response);
-					break;
-
-				case "ADD-PRICE":
-					addPrice(request, response);
-					break;
-
-				case "LOAD-PRICE":
-					loadPrice(request, response);
-					break;
-
-				case "UPDATE-PRICE":
-					updatePrice(request, response);
-					break;
-
-				case "DELETE-PRICE":
-					deletePrice(request, response);
-					break;
-
-				///////////////////// Employees List....///////////
-				case "LIST-EMPLOYEE":
-					listEmployees(request, response);
-					break;
-
-				case "ADD-EMPLOYEE":
-					addEmployee(request, response);
-					break;
-
-				case "LOAD-EMPLOYEE":
-					loadEmployee(request, response);
-					break;
-
-				case "UPDATE-EMPLOYEE":
-					updateEmployee(request, response);
-					break;
-
-				case "DELETE-EMPLOYEE":
-					deleteEmployee(request, response);
-					break;
-
-				///////////////////// Warehouses List....///////////
-				case "LIST-WAREHOUSES":
-					listWarehouses(request, response);
-					break;
-
-				case "ADD-WAREHOUSE":
-					addWarehouse(request, response);
-					break;
-
-				case "LOAD-WAREHOUSE":
-					loadWarehouse(request, response);
-					break;
-
-				case "UPDATE-WAREHOUSE":
-					updateWarehouse(request, response);
-					break;
-
-				case "DELETE-WAREHOUSE":
-					deleteWarehouse(request, response);
-					break;
-
-				default:
-					listProducts(request, response);
-				}
-
-			} catch (Exception exc) {
-				throw new ServletException(exc);
+			} else {
+				out.print("Proszê siê najpierw zalogowaæ!");
 			}
-			
-			
-		} else {
-			out.print("Proszê siê najpierw zalogowaæ!");
+		} catch (Exception e) {
+			out.print("Napewno wpisa³eœ has³o?");
 		}
-	}catch(Exception e) {
-		out.print("Napewno wpisa³eœ has³o?");
-	}
 		out.close();
 	}
 
@@ -336,49 +373,49 @@ public class WarehouseControllerServlet extends HttpServlet {
 		session.setAttribute("documents2", documents2);
 
 		// get providers from db util
-		List<Provider> providers = warehouseDbUtil.getProviders();
+		List<Provider> providers = providersDbUtil.getProviders();
 		// add customers to the request
 		request.setAttribute("PROVIDERS_LIST", providers);
 
 		session.setAttribute("Providers", providers);
 
 		// get customers from db util
-		List<Customer> customers = warehouseDbUtil.getCustomers();
+		List<Customer> customers = customersDbUtil.getCustomers();
 		// add customers to the request
 		request.setAttribute("CUSTOMERS_LIST", customers);
 
 		session.setAttribute("Customers", customers);
 
 		// get reciepients from db util
-		List<Reciepient> reciepients = warehouseDbUtil.getReciepients();
+		List<Reciepient> reciepients = reciepientsDbUtil.getReciepients();
 		// add reciepients to the request
 		request.setAttribute("RECIEPIENTS_LIST", reciepients);
 
 		session.setAttribute("Reciepients", reciepients);
 
 		// get products from db util
-		List<Product> products = warehouseDbUtil.getProducts();
+		List<Product> products = productsDbUtil.getProducts();
 		// add producst to the request
 		request.setAttribute("PRODUCTS_LIST", products);
 
 		session.setAttribute("Products", products);
 
 		// get products from db util
-		List<PriceList> prices = warehouseDbUtil.getPrices();
+		List<PriceList> prices = priceDbUtil.getPrices();
 		// add producst to the request
 		request.setAttribute("PRICES_LIST", prices);
 
 		session.setAttribute("Prices", prices);
 
 		// get employees from db util
-		List<Employee> employees = warehouseDbUtil.getEmployees();
+		List<Employee> employees = employeesDbUtil.getEmployees();
 		// add producst to the request
 		request.setAttribute("EMPLOYEES_LIST", employees);
 
 		session.setAttribute("Employees", employees);
 
 		// get warehouses from db util
-		List<Warehouse> warehouses = warehouseDbUtil.getWarehouses();
+		List<Warehouse> warehouses = warehousesDbUtil.getWarehouses();
 		// add producst to the request
 		request.setAttribute("WAREHOUSES_LIST", warehouses);
 
@@ -398,13 +435,13 @@ public class WarehouseControllerServlet extends HttpServlet {
 		session.setAttribute("preCustomer", preCustomer);
 
 		// get products from db util
-		List<Product> products1 = warehouseDbUtil.getProducts(warehouse1);
-		List<Product> products2 = warehouseDbUtil.getProducts(warehouse2);
-		List<Product> products3 = warehouseDbUtil.getProducts(warehouse3);
-		List<Product> products4 = warehouseDbUtil.getProducts(warehouse4);
-		List<Product> products5 = warehouseDbUtil.getProducts(warehouse5);
-		List<Product> products6 = warehouseDbUtil.getProducts(warehouse6);
-		List<Product> products7 = warehouseDbUtil.getProducts(warehouse7);
+		List<Product> products1 = productsDbUtil.getProducts(warehouse1);
+		List<Product> products2 = productsDbUtil.getProducts(warehouse2);
+		List<Product> products3 = productsDbUtil.getProducts(warehouse3);
+		List<Product> products4 = productsDbUtil.getProducts(warehouse4);
+		List<Product> products5 = productsDbUtil.getProducts(warehouse5);
+		List<Product> products6 = productsDbUtil.getProducts(warehouse6);
+		List<Product> products7 = productsDbUtil.getProducts(warehouse7);
 
 		// add products to the request
 		request.setAttribute("PRODUCT_LIST1", products1);
@@ -495,6 +532,22 @@ public class WarehouseControllerServlet extends HttpServlet {
 		// add the document to the database
 		warehouseDbUtil.addDocument(theDocument);
 
+		// write activity to db
+		List<Document> documents = warehouseDbUtil.getDocuments();
+		int id = documents.get(0).getId();
+
+		HttpSession session = request.getSession();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		System.out.println(dtf.format(now));
+		try {
+			Activity activity = new Activity(session.getAttribute("userName").toString(), "add doc1", dtf.format(now),
+					id);
+			warehouseDbUtil.monitorActivity(activity);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// send back to main page (the documents list)
 		listDocuments(request, response);
 
@@ -548,6 +601,19 @@ public class WarehouseControllerServlet extends HttpServlet {
 		// perform update on database
 		warehouseDbUtil.updateDocument(theDocument);
 
+		// write activity to db
+		HttpSession session = request.getSession();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		System.out.println(dtf.format(now));
+		try {
+			Activity activity = new Activity(session.getAttribute("userName").toString(), "update doc1",
+					dtf.format(now), id);
+			warehouseDbUtil.monitorActivity(activity);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println("update dupate");
 		// send them back to the "list document" page
 		listDocuments(request, response);
@@ -562,6 +628,20 @@ public class WarehouseControllerServlet extends HttpServlet {
 		// perform delete on database
 		warehouseDbUtil.deleteDocument(id);
 
+		// write activity to db
+		HttpSession session = request.getSession();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		System.out.println(dtf.format(now));
+		try {
+			Activity activity = new Activity(session.getAttribute("userName").toString(), "del doc1", dtf.format(now),
+					id);
+			warehouseDbUtil.monitorActivity(activity);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		// send them back to the "list document" page
 		listDocuments(request, response);
 
@@ -570,6 +650,22 @@ public class WarehouseControllerServlet extends HttpServlet {
 	private void printDocument(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		warehouseDbUtil.printDocument(request.getParameter("documentId"));
+
+		// write activity to db
+		int id = Integer.parseInt(request.getParameter("documentId"));
+
+		HttpSession session = request.getSession();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		System.out.println(dtf.format(now));
+		try {
+			Activity activity = new Activity(session.getAttribute("userName").toString(), "print doc1", dtf.format(now),
+					id);
+			warehouseDbUtil.monitorActivity(activity);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		// Process p = Runtime.getRuntime().exec("wscript test.vbs");
 
@@ -608,6 +704,23 @@ public class WarehouseControllerServlet extends HttpServlet {
 		// add the price to the database
 		warehouseDbUtil.addDocument2(theDocument2);
 
+		// write activity to db
+		List<Document2> documents2 = warehouseDbUtil.getDocuments2();
+		int id = documents2.get(documents2.size()-1).getId();
+
+		HttpSession session = request.getSession();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		System.out.println(dtf.format(now));
+		try {
+			Activity activity = new Activity(session.getAttribute("userName").toString(), "add doc2", dtf.format(now),
+					id);
+			warehouseDbUtil.monitorActivity(activity);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		// send back to main page (the reciepient list)
 		listDocuments2(request, response);
 
@@ -644,6 +757,20 @@ public class WarehouseControllerServlet extends HttpServlet {
 		// perform update on database
 		warehouseDbUtil.updateDocument2(theDocument);
 
+		// write activity to db
+		HttpSession session = request.getSession();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		System.out.println(dtf.format(now));
+		try {
+			Activity activity = new Activity(session.getAttribute("userName").toString(), "update doc1",
+					dtf.format(now), id);
+			warehouseDbUtil.monitorActivity(activity);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		// send them back to the "list price" page
 		listDocuments2(request, response);
 
@@ -656,6 +783,20 @@ public class WarehouseControllerServlet extends HttpServlet {
 
 		// perform delete on database
 		warehouseDbUtil.deleteDocument2(id);
+
+		// write activity to db
+		HttpSession session = request.getSession();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		System.out.println(dtf.format(now));
+		try {
+			Activity activity = new Activity(session.getAttribute("userName").toString(), "del doc1", dtf.format(now),
+					id);
+			warehouseDbUtil.monitorActivity(activity);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		// send them back to the "list price" page
 		listDocuments2(request, response);
@@ -758,9 +899,9 @@ public class WarehouseControllerServlet extends HttpServlet {
 		for (ProductList element : sumList) {
 
 			sb.append(element.getProduct() + "    szt." + element.getQty() + "     "
-					+ warehouseDbUtil.loadPriceForCustomer(element.getProduct(), theCustomer) + "z³" + "\n");
-			sb.append(element.getQty() * warehouseDbUtil.loadPriceForCustomer(element.getProduct(), theCustomer));
-			sum += element.getQty() * warehouseDbUtil.loadPriceForCustomer(element.getProduct(), theCustomer);
+					+ priceDbUtil.loadPriceForCustomer(element.getProduct(), theCustomer) + "z³" + "\n");
+			sb.append(element.getQty() * priceDbUtil.loadPriceForCustomer(element.getProduct(), theCustomer));
+			sum += element.getQty() * priceDbUtil.loadPriceForCustomer(element.getProduct(), theCustomer);
 
 		}
 
@@ -826,7 +967,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 	private void listProducts(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		// get products from db util
-		List<Product> products = warehouseDbUtil.getProducts();
+		List<Product> products = productsDbUtil.getProducts();
 
 		// add product to the request
 		request.setAttribute("PRODUCTS_LIST", products);
@@ -850,7 +991,24 @@ public class WarehouseControllerServlet extends HttpServlet {
 		Product theProduct = new Product(name, warehouse, 0);
 
 		// add the product to the database
-		warehouseDbUtil.addProduct(theProduct);
+		productsDbUtil.addProduct(theProduct);
+
+		// write activity to db
+		List<Product> products = productsDbUtil.getProducts();
+		int id = products.get(products.size()-1).getId();
+
+		HttpSession session = request.getSession();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		System.out.println(dtf.format(now));
+		try {
+			Activity activity = new Activity(session.getAttribute("userName").toString(), "add product",
+					dtf.format(now), id);
+			warehouseDbUtil.monitorActivity(activity);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		// send back to main page (the product list)
 		listProducts(request, response);
@@ -862,7 +1020,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		String theProductId = request.getParameter("productId");
 
 		// get product from database (db util)
-		Product theProduct = warehouseDbUtil.getProduct(theProductId);
+		Product theProduct = productsDbUtil.getProduct(theProductId);
 
 		// place product in the request attribute
 		request.setAttribute("THE_PRODUCT", theProduct);
@@ -884,7 +1042,21 @@ public class WarehouseControllerServlet extends HttpServlet {
 		Product theProduct = new Product(id, name, warehouse, 0);
 
 		// perform update on database
-		warehouseDbUtil.updateProduct(theProduct);
+		productsDbUtil.updateProduct(theProduct);
+
+		// write activity to db
+		HttpSession session = request.getSession();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		System.out.println(dtf.format(now));
+		try {
+			Activity activity = new Activity(session.getAttribute("userName").toString(), "update product",
+					dtf.format(now), id);
+			warehouseDbUtil.monitorActivity(activity);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		// send them back to the "list customers" page
 		listProducts(request, response);
@@ -897,7 +1069,21 @@ public class WarehouseControllerServlet extends HttpServlet {
 		int id = Integer.parseInt(request.getParameter("productId"));
 
 		// perform delete on database
-		warehouseDbUtil.deleteProduct(id);
+		productsDbUtil.deleteProduct(id);
+
+		// write activity to db
+		HttpSession session = request.getSession();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		System.out.println(dtf.format(now));
+		try {
+			Activity activity = new Activity(session.getAttribute("userName").toString(), "del product",
+					dtf.format(now), id);
+			warehouseDbUtil.monitorActivity(activity);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		// send them back to the "list product" page
 		listProducts(request, response);
@@ -910,7 +1096,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 	private void listProviders(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		// get provider from db util
-		List<Provider> providers = warehouseDbUtil.getProviders();
+		List<Provider> providers = providersDbUtil.getProviders();
 
 		// add provider to the request
 		request.setAttribute("PROVIDERS_LIST", providers);
@@ -935,7 +1121,24 @@ public class WarehouseControllerServlet extends HttpServlet {
 		Provider theProvider = new Provider(name, address, telephone);
 
 		// add the provider to the database
-		warehouseDbUtil.addProvider(theProvider);
+		providersDbUtil.addProvider(theProvider);
+
+		// write activity to db
+		List<Provider> provider = providersDbUtil.getProviders();
+		int id = provider.get(provider.size()-1).getId();
+
+		HttpSession session = request.getSession();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		System.out.println(dtf.format(now));
+		try {
+			Activity activity = new Activity(session.getAttribute("userName").toString(), "add provider",
+					dtf.format(now), id);
+			warehouseDbUtil.monitorActivity(activity);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		// send back to main page (the provider list)
 		listProviders(request, response);
@@ -948,7 +1151,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		String theProviderId = request.getParameter("providerId");
 
 		// get provider from database (db util)
-		Provider theProvider = warehouseDbUtil.getProvider(theProviderId);
+		Provider theProvider = providersDbUtil.getProvider(theProviderId);
 
 		// place provider in the request attribute
 		request.setAttribute("THE_PROVIDER", theProvider);
@@ -971,7 +1174,21 @@ public class WarehouseControllerServlet extends HttpServlet {
 		Provider theProvider = new Provider(id, name, address, telephone);
 
 		// perform update on database
-		warehouseDbUtil.updateProvider(theProvider);
+		providersDbUtil.updateProvider(theProvider);
+
+		// write activity to db
+		HttpSession session = request.getSession();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		System.out.println(dtf.format(now));
+		try {
+			Activity activity = new Activity(session.getAttribute("userName").toString(), "update provider",
+					dtf.format(now), id);
+			warehouseDbUtil.monitorActivity(activity);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		// send them back to the "list providers" page
 		listProviders(request, response);
@@ -984,7 +1201,21 @@ public class WarehouseControllerServlet extends HttpServlet {
 		int id = Integer.parseInt(request.getParameter("providerId"));
 
 		// perform delete on database
-		warehouseDbUtil.deleteProvider(id);
+		providersDbUtil.deleteProvider(id);
+
+		// write activity to db
+		HttpSession session = request.getSession();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		System.out.println(dtf.format(now));
+		try {
+			Activity activity = new Activity(session.getAttribute("userName").toString(), "del provider",
+					dtf.format(now), id);
+			warehouseDbUtil.monitorActivity(activity);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		// send them back to the "list providers" page
 		listProviders(request, response);
@@ -997,7 +1228,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 	private void listCustomers(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		// get customer from db util
-		List<Customer> customers = warehouseDbUtil.getCustomers();
+		List<Customer> customers = customersDbUtil.getCustomers();
 
 		// add customer to the request
 		request.setAttribute("CUSTOMERS_LIST", customers);
@@ -1022,7 +1253,24 @@ public class WarehouseControllerServlet extends HttpServlet {
 		Customer theCustomer = new Customer(name, address, telephone);
 
 		// add the customer to the database
-		warehouseDbUtil.addCustomer(theCustomer);
+		customersDbUtil.addCustomer(theCustomer);
+
+		// write activity to db
+		List<Customer> customer = customersDbUtil.getCustomers();
+		int id = customer.get(customer.size()-1).getId();
+
+		HttpSession session = request.getSession();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		System.out.println(dtf.format(now));
+		try {
+			Activity activity = new Activity(session.getAttribute("userName").toString(), "add customer",
+					dtf.format(now), id);
+			warehouseDbUtil.monitorActivity(activity);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		// send back to main page (the customer list)
 		listCustomers(request, response);
@@ -1035,7 +1283,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		String theCustomerId = request.getParameter("customerId");
 
 		// get customer from database (db util)
-		Customer theCusdtomer = warehouseDbUtil.getCustomer(theCustomerId);
+		Customer theCusdtomer = customersDbUtil.getCustomer(theCustomerId);
 
 		// place student in the request attribute
 		request.setAttribute("THE_CUSTOMER", theCusdtomer);
@@ -1058,8 +1306,23 @@ public class WarehouseControllerServlet extends HttpServlet {
 		Customer theCustomer = new Customer(id, name, address, telephone);
 
 		// perform update on database
-		warehouseDbUtil.updateCustomer(theCustomer);
+		customersDbUtil.updateCustomer(theCustomer);
 
+		// write activity to db
+		HttpSession session = request.getSession();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		System.out.println(dtf.format(now));
+		try {
+			Activity activity = new Activity(session.getAttribute("userName").toString(), "update customer",
+					dtf.format(now), id);
+			warehouseDbUtil.monitorActivity(activity);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
 		// send them back to the "list customers" page
 		listCustomers(request, response);
 
@@ -1071,10 +1334,25 @@ public class WarehouseControllerServlet extends HttpServlet {
 		int id = Integer.parseInt(request.getParameter("customerId"));
 
 		// perform delete on database
-		warehouseDbUtil.deleteCustomer(id);
+		customersDbUtil.deleteCustomer(id);
 
+		// write activity to db
+		HttpSession session = request.getSession();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		System.out.println(dtf.format(now));
+		try {
+			Activity activity = new Activity(session.getAttribute("userName").toString(), "delete customer",
+					dtf.format(now), id);
+			warehouseDbUtil.monitorActivity(activity);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
 		// send them back to the "list customers" page
-		listProducts(request, response);
+		listCustomers(request, response);
 
 	}
 
@@ -1084,7 +1362,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 	private void listReciepients(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		// get reciepients from db util
-		List<Reciepient> reciepients = warehouseDbUtil.getReciepients();
+		List<Reciepient> reciepients = reciepientsDbUtil.getReciepients();
 
 		// add reciepients to the request
 		request.setAttribute("RECIEPIENTS_LIST", reciepients);
@@ -1109,8 +1387,26 @@ public class WarehouseControllerServlet extends HttpServlet {
 		Reciepient theReciepient = new Reciepient(name, address, telephone);
 
 		// add the reciepient to the database
-		warehouseDbUtil.addReciepient(theReciepient);
+		reciepientsDbUtil.addReciepient(theReciepient);
 
+		// write activity to db
+		List<Reciepient> reciepients = reciepientsDbUtil.getReciepients();
+		int id = reciepients.get(reciepients.size()-1).getId();
+
+		HttpSession session = request.getSession();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		System.out.println(dtf.format(now));
+		try {
+			Activity activity = new Activity(session.getAttribute("userName").toString(), "add reciepient",
+					dtf.format(now), id);
+			warehouseDbUtil.monitorActivity(activity);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
 		// send back to main page (the reciepient list)
 		listReciepients(request, response);
 
@@ -1122,7 +1418,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		String theRciepientId = request.getParameter("reciepientId");
 
 		// get reciepient from database (db util)
-		Reciepient theReciepient = warehouseDbUtil.getReciepient(theRciepientId);
+		Reciepient theReciepient = reciepientsDbUtil.getReciepient(theRciepientId);
 
 		// place reciepient in the request attribute
 		request.setAttribute("THE_RECIEPIENT", theReciepient);
@@ -1145,8 +1441,22 @@ public class WarehouseControllerServlet extends HttpServlet {
 		Reciepient theReciepient = new Reciepient(id, name, address, telephone);
 
 		// perform update on database
-		warehouseDbUtil.updateReciepient(theReciepient);
+		reciepientsDbUtil.updateReciepient(theReciepient);
 
+		// write activity to db
+		HttpSession session = request.getSession();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		System.out.println(dtf.format(now));
+		try {
+			Activity activity = new Activity(session.getAttribute("userName").toString(), "update reciepient",
+					dtf.format(now), id);
+			warehouseDbUtil.monitorActivity(activity);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		// send them back to the "list reciepient" page
 		listReciepients(request, response);
 
@@ -1158,8 +1468,22 @@ public class WarehouseControllerServlet extends HttpServlet {
 		int id = Integer.parseInt(request.getParameter("reciepientId"));
 
 		// perform delete on database
-		warehouseDbUtil.deleteReciepient(id);
+		reciepientsDbUtil.deleteReciepient(id);
 
+		// write activity to db
+		HttpSession session = request.getSession();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		System.out.println(dtf.format(now));
+		try {
+			Activity activity = new Activity(session.getAttribute("userName").toString(), "del reciepient",
+					dtf.format(now), id);
+			warehouseDbUtil.monitorActivity(activity);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		// send them back to the "list reciepient" page
 		listReciepients(request, response);
 
@@ -1171,7 +1495,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 	private void listPrices(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		// get price from db util
-		List<PriceList> prices = warehouseDbUtil.getPrices();
+		List<PriceList> prices = priceDbUtil.getPrices();
 
 		// add prices to the request
 		request.setAttribute("PRICE_LIST", prices);
@@ -1196,8 +1520,25 @@ public class WarehouseControllerServlet extends HttpServlet {
 		PriceList thePrice = new PriceList(true, customer, product, price);
 
 		// add the price to the database
-		warehouseDbUtil.addPrice(thePrice);
+		priceDbUtil.addPrice(thePrice);
 
+		// write activity to db
+		List<PriceList> priceLists = priceDbUtil.getPrices();
+		int id = priceLists.get(priceLists.size()-1).getId();
+
+		HttpSession session = request.getSession();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		System.out.println(dtf.format(now));
+		try {
+			Activity activity = new Activity(session.getAttribute("userName").toString(), "add price",
+					dtf.format(now), id);
+			warehouseDbUtil.monitorActivity(activity);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		// send back to main page (the reciepient list)
 		listPrices(request, response);
 
@@ -1209,7 +1550,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		String thePriceId = request.getParameter("priceId");
 
 		// get price from database (db util)
-		PriceList thePrice = warehouseDbUtil.getPrice(thePriceId);
+		PriceList thePrice = priceDbUtil.getPrice(thePriceId);
 
 		// place price in the request attribute
 		request.setAttribute("THE_PRICE", thePrice);
@@ -1232,8 +1573,22 @@ public class WarehouseControllerServlet extends HttpServlet {
 		PriceList thePrice = new PriceList(true, id, customer, product, price);
 
 		// perform update on database
-		warehouseDbUtil.updatePrice(thePrice);
+		priceDbUtil.updatePrice(thePrice);
 
+		// write activity to db
+		HttpSession session = request.getSession();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		System.out.println(dtf.format(now));
+		try {
+			Activity activity = new Activity(session.getAttribute("userName").toString(), "update price",
+					dtf.format(now), id);
+			warehouseDbUtil.monitorActivity(activity);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		// send them back to the "list price" page
 		listPrices(request, response);
 
@@ -1245,8 +1600,25 @@ public class WarehouseControllerServlet extends HttpServlet {
 		int id = Integer.parseInt(request.getParameter("priceId"));
 
 		// perform delete on database
-		warehouseDbUtil.deletePrice(id);
+		priceDbUtil.deletePrice(id);
 
+		// write activity to db
+		List<PriceList> priceLists = priceDbUtil.getPrices();
+		int id = priceLists.get(priceLists.size()-1).getId();
+
+		HttpSession session = request.getSession();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		System.out.println(dtf.format(now));
+		try {
+			Activity activity = new Activity(session.getAttribute("userName").toString(), "del price",
+					dtf.format(now), id);
+			warehouseDbUtil.monitorActivity(activity);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		// send them back to the "list price" page
 		listPrices(request, response);
 
@@ -1258,7 +1630,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 	private void listEmployees(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		// get employee from db util
-		List<Employee> employees = warehouseDbUtil.getEmployees();
+		List<Employee> employees = employeesDbUtil.getEmployees();
 
 		// add employee to the request
 		request.setAttribute("EMPLOYEE_LIST", employees);
@@ -1289,8 +1661,25 @@ public class WarehouseControllerServlet extends HttpServlet {
 				contractDate);
 
 		// add the employee to the database
-		warehouseDbUtil.addEmployee(theEmployee);
+		employeesDbUtil.addEmployee(theEmployee);
 
+		// write activity to db
+		List<Employee> employees = employeesDbUtil.getEmployees();
+		int id = employees.get(employees.size()-1).getId();
+
+		HttpSession session = request.getSession();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		System.out.println(dtf.format(now));
+		try {
+			Activity activity = new Activity(session.getAttribute("userName").toString(), "add employee",
+					dtf.format(now), id);
+			warehouseDbUtil.monitorActivity(activity);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		// send back to main page (the employee list)
 		listEmployees(request, response);
 
@@ -1302,7 +1691,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		String theEmployeeId = request.getParameter("employeeId");
 
 		// get employee from database (db util)
-		Employee theEmployee = warehouseDbUtil.getEmployee(theEmployeeId);
+		Employee theEmployee = employeesDbUtil.getEmployee(theEmployeeId);
 
 		// place employee in the request attribute
 		request.setAttribute("THE_EMPLOYEE", theEmployee);
@@ -1331,8 +1720,22 @@ public class WarehouseControllerServlet extends HttpServlet {
 				medicalVisit, contractDate);
 
 		// perform update on database
-		warehouseDbUtil.updateEmployee(employee);
+		employeesDbUtil.updateEmployee(employee);
 
+		// write activity to db
+		HttpSession session = request.getSession();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		System.out.println(dtf.format(now));
+		try {
+			Activity activity = new Activity(session.getAttribute("userName").toString(), "update employee",
+					dtf.format(now), id);
+			warehouseDbUtil.monitorActivity(activity);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		// send them back to the "list employees" page
 		listEmployees(request, response);
 
@@ -1344,8 +1747,23 @@ public class WarehouseControllerServlet extends HttpServlet {
 		int id = Integer.parseInt(request.getParameter("employeeId"));
 
 		// perform delete on database
-		warehouseDbUtil.deleteEmployee(id);
+		employeesDbUtil.deleteEmployee(id);
 
+		// write activity to db
+		HttpSession session = request.getSession();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		System.out.println(dtf.format(now));
+		try {
+			Activity activity = new Activity(session.getAttribute("userName").toString(), "del employee",
+					dtf.format(now), id);
+			warehouseDbUtil.monitorActivity(activity);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		// send them back to the "list price" page
 		listEmployees(request, response);
 
@@ -1358,7 +1776,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 	private void listWarehouses(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		// get employee from db util
-		List<Warehouse> warehouses = warehouseDbUtil.getWarehouses();
+		List<Warehouse> warehouses = warehousesDbUtil.getWarehouses();
 
 		// add employee to the request
 		request.setAttribute("WAREHOUSES_LIST", warehouses);
@@ -1381,8 +1799,25 @@ public class WarehouseControllerServlet extends HttpServlet {
 		Warehouse theWarehouse = new Warehouse(name);
 
 		// add the employee to the database
-		warehouseDbUtil.addWarehouse(theWarehouse);
+		warehousesDbUtil.addWarehouse(theWarehouse);
 
+		// write activity to db
+		List<Warehouse> warehouses = warehousesDbUtil.getWarehouses();
+		int id = warehouses.get(warehouses.size()-1).getId();
+
+		HttpSession session = request.getSession();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		System.out.println(dtf.format(now));
+		try {
+			Activity activity = new Activity(session.getAttribute("userName").toString(), "add warehouse",
+					dtf.format(now), id);
+			warehouseDbUtil.monitorActivity(activity);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		// send back to main page (the employee list)
 		listWarehouses(request, response);
 
@@ -1394,7 +1829,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		String theWarehouseId = request.getParameter("warehouseId");
 
 		// get wearehouse from database (db util)
-		Warehouse theWarehouse = warehouseDbUtil.getWarehouse(theWarehouseId);
+		Warehouse theWarehouse = warehousesDbUtil.getWarehouse(theWarehouseId);
 
 		// place employee in the request attribute
 		request.setAttribute("THE_WAREHOUSE", theWarehouse);
@@ -1415,8 +1850,22 @@ public class WarehouseControllerServlet extends HttpServlet {
 		Warehouse warehouse = new Warehouse(id, name);
 
 		// perform update on database
-		warehouseDbUtil.updateWarehouse(warehouse);
+		warehousesDbUtil.updateWarehouse(warehouse);
 
+		// write activity to db
+		HttpSession session = request.getSession();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		System.out.println(dtf.format(now));
+		try {
+			Activity activity = new Activity(session.getAttribute("userName").toString(), "update warehouse",
+					dtf.format(now), id);
+			warehouseDbUtil.monitorActivity(activity);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		// send them back to the "list employees" page
 		listWarehouses(request, response);
 
@@ -1428,8 +1877,22 @@ public class WarehouseControllerServlet extends HttpServlet {
 		int id = Integer.parseInt(request.getParameter("warehouseId"));
 
 		// perform delete on database
-		warehouseDbUtil.deleteWarehouse(id);
+		warehousesDbUtil.deleteWarehouse(id);
 
+		// write activity to db
+		HttpSession session = request.getSession();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		System.out.println(dtf.format(now));
+		try {
+			Activity activity = new Activity(session.getAttribute("userName").toString(), "del warehouse",
+					dtf.format(now), id);
+			warehouseDbUtil.monitorActivity(activity);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		// send them back to the "list price" page
 		listWarehouses(request, response);
 

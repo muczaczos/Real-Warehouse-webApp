@@ -1,4 +1,4 @@
-package com.muczo.mvc.warehouse;
+package com.muczo.mvc.warehouse.blueprint;
 
 import java.io.Serializable;
 
@@ -37,9 +37,49 @@ public class Activity implements Serializable {
 
 	}
 
+
 	/////////////////////////////////////////////////////////////////////
 	/////////////////////// getters & setters //////////////////////////
 	////////////////////////////////////////////////////////////////////
+	public int getId() {
+		return id;
+	}
 
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getActivityName() {
+		return activityName;
+	}
+
+	public void setActivityName(String activityName) {
+		this.activityName = activityName;
+	}
+
+	public String getDateTime() {
+		return dateTime;
+	}
+
+	public void setDateTime(String dateTime) {
+		this.dateTime = dateTime;
+	}
+
+	public int getActivityId() {
+		return activityId;
+	}
+
+	public void setActivityId(int activityId) {
+		this.activityId = activityId;
+	}
+	
 
 }

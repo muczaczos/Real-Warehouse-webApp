@@ -1,37 +1,30 @@
-package com.muczo.mvc.warehouse;
+package com.muczo.mvc.warehouse.blueprint;
 
 import java.io.Serializable;
 
-public class Provider implements Serializable{
+public class Warehouse implements Serializable{
 	
 
 	/////////////////////////////////////////////////////////////////////
 	/////////////////////////////// Main variables///////////////////////
 	/////////////////////////////////////////////////////////////////////
-	private static int count = 0;
 
 	private int id;
 	private String name;
-	private String address;
-	private String telephone;
 
 	/////////////////////////////////////////////////////////////////////
 	//////////////////////////// Constructors ///////////////////////////
 	////////////////////////////////////////////////////////////////////
-	public Provider(int id, String name, String address, String telephone) {
+	public Warehouse(int id, String name) {
 
 		this.id = id;
 		this.name = name;
-		this.address = address;
-		this.telephone = telephone;
 
 	}
 	
-	public Provider(String name, String address, String telephone) {
+	public Warehouse(String name) {
 
 		this.name = name;
-		this.address = address;
-		this.telephone = telephone;
 
 	}
 
@@ -53,22 +46,5 @@ public class Provider implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getTelephone() {
-		return telephone;
-	}
-
-	public void setTelephone(String telephone) {
-		this.telephone = telephone;
-	}
-
 
 }

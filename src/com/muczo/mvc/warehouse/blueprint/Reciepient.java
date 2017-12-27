@@ -1,32 +1,35 @@
-package com.muczo.mvc.warehouse;
-
+package com.muczo.mvc.warehouse.blueprint;
 import java.io.Serializable;
 
-public class User implements Serializable {
-	
+public class Reciepient implements Serializable {
 
 	/////////////////////////////////////////////////////////////////////
 	/////////////////////////////// Main variables///////////////////////
 	/////////////////////////////////////////////////////////////////////
+	private static int count = 0;
+
 	private int id;
 	private String name;
-	private String password;
+	private String address;
+	private String telephone;
 
 	/////////////////////////////////////////////////////////////////////
-	//////////////////////////// Constructors ///////////////////////////
+	//////////////////////////// Constructors ////////////////////////////
 	////////////////////////////////////////////////////////////////////
-	public User(int id, String name, String password) {
+	public Reciepient(int id, String name, String address, String telephone) {
 
 		this.id = id;
 		this.name = name;
-		this.password = password;
+		this.address = address;
+		this.telephone = telephone;
 
 	}
 	
-	public User(String name, String password) {
+	public Reciepient(String name, String address, String telephone) {
 
 		this.name = name;
-		this.password = password;
+		this.address = address;
+		this.telephone = telephone;
 
 	}
 
@@ -49,12 +52,19 @@ public class User implements Serializable {
 		this.name = name;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getAddress() {
+		return address;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
 }

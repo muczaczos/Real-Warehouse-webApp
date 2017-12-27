@@ -1,4 +1,4 @@
-package com.muczo.mvc.warehouse;
+package com.muczo.mvc.warehouse.blueprint;
 
 public class ProductList {
 	@Override

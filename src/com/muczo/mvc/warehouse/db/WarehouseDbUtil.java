@@ -1,6 +1,5 @@
-package com.muczo.mvc.warehouse;
+package com.muczo.mvc.warehouse.db;
 
-import com.muczo.mvc.warehouse.Document;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -31,6 +30,12 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.RegionUtil;
+
+import com.muczo.mvc.warehouse.blueprint.Activity;
+import com.muczo.mvc.warehouse.blueprint.Document;
+import com.muczo.mvc.warehouse.blueprint.Document2;
+import com.muczo.mvc.warehouse.blueprint.Product;
+import com.muczo.mvc.warehouse.blueprint.User;
 
 public class WarehouseDbUtil {
 
@@ -105,7 +110,7 @@ public class WarehouseDbUtil {
 			return documents;
 		} finally {
 			// close JDBC objects
-			close(myConn, myStmt, myRs);
+			DbUtil.close(myConn, myStmt, myRs);
 		}
 	}
 
@@ -168,7 +173,7 @@ public class WarehouseDbUtil {
 
 		} finally {
 			// clean up JDBC objects
-			close(myConn, myStmt, myRs);
+			DbUtil.close(myConn, myStmt, myRs);
 		}
 	}
 
@@ -255,7 +260,7 @@ public class WarehouseDbUtil {
 			myStmt.execute();
 		} finally {
 			// clean up JDBC objects
-			close(myConn, myStmt, null);
+			DbUtil.close(myConn, myStmt, null);
 		}
 
 	}
@@ -323,7 +328,7 @@ public class WarehouseDbUtil {
 			return theDocument;
 		} finally {
 			// clean up JDBC objects
-			close(myConn, myStmt, myRs);
+			DbUtil.close(myConn, myStmt, myRs);
 		}
 	}
 
@@ -372,7 +377,7 @@ public class WarehouseDbUtil {
 		} finally {
 			// clean up JDBC objects
 
-			close(myConn, myStmt, null);
+			DbUtil.close(myConn, myStmt, null);
 
 		}
 
@@ -402,7 +407,7 @@ public class WarehouseDbUtil {
 		} finally {
 			// clean up JDBC objects
 
-			close(myConn, myStmt, null);
+			DbUtil.close(myConn, myStmt, null);
 
 		}
 
@@ -470,7 +475,7 @@ public class WarehouseDbUtil {
 
 		} finally {
 			// clean up JDBC objects
-			close(myConn, myStmt, myRs);
+			DbUtil.close(myConn, myStmt, myRs);
 		}
 
 		Workbook wb = null;
@@ -1067,7 +1072,7 @@ public class WarehouseDbUtil {
 			return documents2;
 		} finally {
 			// close JDBC objects
-			close(myConn, myStmt, myRs);
+			DbUtil.close(myConn, myStmt, myRs);
 		}
 	}
 
@@ -1101,7 +1106,7 @@ public class WarehouseDbUtil {
 			myStmt.execute();
 		} finally {
 			// clean up JDBC objects
-			close(myConn, myStmt, null);
+			DbUtil.close(myConn, myStmt, null);
 		}
 
 	}
@@ -1150,7 +1155,7 @@ public class WarehouseDbUtil {
 			return document2;
 		} finally {
 			// clean up JDBC objects
-			close(myConn, myStmt, myRs);
+			DbUtil.close(myConn, myStmt, myRs);
 		}
 	}
 
@@ -1181,7 +1186,7 @@ public class WarehouseDbUtil {
 		} finally {
 			// clean up JDBC objects
 
-			close(myConn, myStmt, null);
+			DbUtil.close(myConn, myStmt, null);
 
 		}
 
@@ -1211,1478 +1216,22 @@ public class WarehouseDbUtil {
 		} finally {
 			// clean up JDBC objects
 
-			close(myConn, myStmt, null);
+			DbUtil.close(myConn, myStmt, null);
 
 		}
 
 	}
 
-	///////////////////////////////////////////////////////////////////////////////
-	////////////////////////// PRODUCST ZONE //////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////
-	public List<Product> getProducts() throws Exception {
+	
 
-		List<Product> products = new ArrayList<>();
+	
 
-		Connection myConn = null;
-		PreparedStatement myStmt = null;
-		ResultSet myRs = null;
+	
 
-		try {
-			// get a connection
-			myConn = dataSource.getConnection();
 
-			// create sql statement
-			String sql = "select * from products";
+	
 
-			// create prepared statement
-			myStmt = myConn.prepareStatement(sql);
-
-			// execute statement
-			myRs = myStmt.executeQuery();
-
-			// process result set
-			while (myRs.next()) {
-
-				// retrieve data from result set row
-				int id = myRs.getInt("id");
-				String name = myRs.getString("name");
-				String warehouseSql = myRs.getString("warehouse");
-				int qty = myRs.getInt("qty");
-
-				// create new student object
-				Product product = new Product(id, name, warehouseSql, qty);
-
-				// add it to the list of students
-				products.add(product);
-			}
-
-			return products;
-		} finally {
-			// close JDBC objects
-			close(myConn, myStmt, myRs);
-		}
-	}
-
-	public void addProduct(Product theProduct) throws Exception {
-
-		Connection myConn = null;
-		PreparedStatement myStmt = null;
-
-		try {
-			// get db connection
-			myConn = dataSource.getConnection();
-
-			// create sql for insert
-			String sql = "insert into products " + "(name, warehouse) " + "values (?, ?)";
-
-			myStmt = myConn.prepareStatement(sql);
-
-			// set the param values for the product
-			myStmt.setString(1, theProduct.getProductName());
-			myStmt.setString(2, theProduct.getWarehouse());
-
-			// execute sql insert
-			myStmt.execute();
-		} finally {
-			// clean up JDBC objects
-			close(myConn, myStmt, null);
-		}
-
-	}
-
-	public List<Product> getProducts(String warehouse) throws Exception {
-
-		List<Product> products = new ArrayList<>();
-
-		Connection myConn = null;
-		PreparedStatement myStmt = null;
-		ResultSet myRs = null;
-
-		try {
-			// get a connection
-			myConn = dataSource.getConnection();
-
-			// create sql statement
-			String sql = "select * from products where warehouse=?";
-
-			// create prepared statement
-			myStmt = myConn.prepareStatement(sql);
-
-			// set params
-			myStmt.setString(1, warehouse);
-
-			// execute statement
-			myRs = myStmt.executeQuery();
-
-			// process result set
-			while (myRs.next()) {
-
-				// retrieve data from result set row
-				int id = myRs.getInt("id");
-				String name = myRs.getString("name");
-				String warehouseSql = myRs.getString("warehouse");
-				int qty = myRs.getInt("qty");
-
-				// create new student object
-				Product product = new Product(id, name, warehouseSql, qty);
-
-				// add it to the list of students
-				products.add(product);
-			}
-
-			return products;
-		} finally {
-			// close JDBC objects
-			close(myConn, myStmt, myRs);
-		}
-	}
-
-	public Product getProduct(String theProductId) throws Exception {
-
-		Product theProduct = null;
-
-		Connection myConn = null;
-		PreparedStatement myStmt = null;
-		ResultSet myRs = null;
-		int productId;
-
-		try {
-
-			// convert product id to int
-			productId = (int) Integer.parseInt(theProductId);
-
-			// get connection to database
-			myConn = dataSource.getConnection();
-
-			// create sql to get selected product
-			String sql = "select * from products where id=?";
-
-			// create prepared statement
-			myStmt = myConn.prepareStatement(sql);
-
-			// set params
-			myStmt.setInt(1, productId);
-
-			// execute statement
-			myRs = myStmt.executeQuery();
-
-			// retrive data from result set row
-			if (myRs.next()) {
-				String name = myRs.getString("name");
-				String warehouse = myRs.getString("warehouse");
-				int qty = myRs.getInt("qty");
-
-				// use the studentId during construction
-				theProduct = new Product(productId, name, warehouse, qty);
-			} else {
-				throw new Exception("Could not find product id: " + productId);
-			}
-
-			return theProduct;
-		} finally {
-			// clean up JDBC objects
-			close(myConn, myStmt, myRs);
-		}
-	}
-
-	public Product getProductByName(String theProductName) throws Exception {
-
-		Product theProduct = null;
-
-		Connection myConn = null;
-		PreparedStatement myStmt = null;
-		ResultSet myRs = null;
-		int productId;
-
-		try {
-
-			// get connection to database
-			myConn = dataSource.getConnection();
-
-			// create sql to get selected product
-			String sql = "select * from products where name=?";
-
-			// create prepared statement
-			myStmt = myConn.prepareStatement(sql);
-
-			// set params
-			myStmt.setString(1, theProductName);
-
-			// execute statement
-			myRs = myStmt.executeQuery();
-
-			// retrive data from result set row
-			if (myRs.next()) {
-				int id = myRs.getInt("id");
-				String name = myRs.getString("name");
-				String warehouse = myRs.getString("warehouse");
-				int qty = myRs.getInt("qty");
-
-				// use the studentId during construction
-				theProduct = new Product(id, name, warehouse, qty);
-			} else {
-				throw new Exception("Could not find product id: " + theProductName);
-			}
-
-			return theProduct;
-		} finally {
-			// clean up JDBC objects
-			close(myConn, myStmt, myRs);
-		}
-	}
-
-	public void updateProduct(Product theProduct) throws Exception {
-
-		Connection myConn = null;
-		PreparedStatement myStmt = null;
-
-		try {
-			// get db connection
-			myConn = dataSource.getConnection();
-
-			// create SQL update statement
-			String sql = "update products " + "set name=?, warehouse=? " + "where id=?";
-
-			// prepare statement
-			myStmt = myConn.prepareStatement(sql);
-
-			// set params
-			myStmt.setString(1, theProduct.getProductName());
-			myStmt.setString(2, theProduct.getWarehouse());
-			myStmt.setInt(3, theProduct.getId());
-
-			// execute SQL statement
-			myStmt.execute();
-
-		} finally {
-			// clean up JDBC objects
-
-			close(myConn, myStmt, null);
-
-		}
-
-	}
-
-	public void updateProductQty(Product theProduct) throws Exception {
-
-		Connection myConn = null;
-		PreparedStatement myStmt = null;
-
-		try {
-			// get db connection
-			myConn = dataSource.getConnection();
-
-			// create SQL update statement
-			String sql = "update products " + "set qty=?" + " where id=?";
-
-			// prepare statement
-			myStmt = myConn.prepareStatement(sql);
-
-			// set params
-			myStmt.setInt(1, theProduct.getQty());
-			myStmt.setInt(2, theProduct.getId());
-
-			// execute SQL statement
-			myStmt.execute();
-
-		} finally {
-			// clean up JDBC objects
-
-			close(myConn, myStmt, null);
-
-		}
-
-	}
-
-	public void deleteProduct(int id) throws Exception {
-
-		Connection myConn = null;
-		PreparedStatement myStmt = null;
-
-		try {
-			// get db connection
-			myConn = dataSource.getConnection();
-
-			// create SQL update statement
-			String sql = "delete from products " + "where id=?";
-
-			// prepare statement
-			myStmt = myConn.prepareStatement(sql);
-
-			// set params
-			myStmt.setInt(1, id);
-
-			// execute SQL statement
-			myStmt.execute();
-
-		} finally {
-			// clean up JDBC objects
-
-			close(myConn, myStmt, null);
-
-		}
-
-	}
-
-	////////////////////////////////////////////////////////////////////////////////
-	////////////////////////// PROVIDERS ZONE //////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////
-	public List<Provider> getProviders() throws Exception {
-
-		List<Provider> providers = new ArrayList<>();
-
-		Connection myConn = null;
-		Statement myStmt = null;
-		ResultSet myRs = null;
-
-		try {
-			// get a connection
-			myConn = dataSource.getConnection();
-
-			// create sql statement
-			String sql = "select * from providers";
-
-			myStmt = myConn.createStatement();
-
-			// execute query
-			myRs = myStmt.executeQuery(sql);
-
-			// process result set
-			while (myRs.next()) {
-
-				// retrieve data from result set row
-				int id = myRs.getInt("id");
-				String name = myRs.getString("name");
-				String address = myRs.getString("address");
-				String telephone = myRs.getString("telephone");
-
-				// create new provider object
-				Provider tempProvider = new Provider(id, name, address, telephone);
-
-				// add it to the list of students
-				providers.add(tempProvider);
-			}
-
-			return providers;
-		} finally {
-			// close JDBC objects
-			close(myConn, myStmt, myRs);
-		}
-
-	}
-
-	public void addProvider(Provider theProvider) throws Exception {
-
-		Connection myConn = null;
-		PreparedStatement myStmt = null;
-
-		try {
-			// get db connection
-			myConn = dataSource.getConnection();
-
-			// create sql for insert
-			String sql = "insert into providers " + "(name, address, telephone) " + "values (?, ?, ?)";
-
-			myStmt = myConn.prepareStatement(sql);
-
-			// set the param values for the student
-			myStmt.setString(1, theProvider.getName());
-			myStmt.setString(2, theProvider.getAddress());
-			myStmt.setString(3, theProvider.getTelephone());
-
-			// execute sql insert
-			myStmt.execute();
-		} finally {
-			// clean up JDBC objects
-			close(myConn, myStmt, null);
-		}
-
-	}
-
-	public Provider getProvider(String theProviderId) throws Exception {
-
-		Provider theProvider = null;
-
-		Connection myConn = null;
-		PreparedStatement myStmt = null;
-		ResultSet myRs = null;
-		int providerId;
-
-		try {
-
-			// convert student id to int
-			providerId = (int) Integer.parseInt(theProviderId);
-
-			// get connection to database
-			myConn = dataSource.getConnection();
-
-			// create sql to get selected student
-			String sql = "select * from providers where id=?";
-
-			// create prepared statement
-			myStmt = myConn.prepareStatement(sql);
-
-			// set params
-			myStmt.setInt(1, providerId);
-
-			// execute statement
-			myRs = myStmt.executeQuery();
-
-			// retrive data from result set row
-			if (myRs.next()) {
-				String name = myRs.getString("name");
-				String address = myRs.getString("address");
-				String telephone = myRs.getString("telephone");
-
-				// use the studentId during construction
-				theProvider = new Provider(providerId, name, address, telephone);
-			} else {
-				throw new Exception("Could not find provider id: " + providerId);
-			}
-
-			return theProvider;
-		} finally {
-			// clean up JDBC objects
-			close(myConn, myStmt, myRs);
-		}
-	}
-
-	public void updateProvider(Provider theProvider) throws Exception {
-
-		Connection myConn = null;
-		PreparedStatement myStmt = null;
-
-		try {
-			// get db connection
-			myConn = dataSource.getConnection();
-
-			// create SQL update statement
-			String sql = "update providers " + "set name=?, address=?, telephone=? " + "where id=?";
-
-			// prepare statement
-			myStmt = myConn.prepareStatement(sql);
-
-			// set params
-			myStmt.setString(1, theProvider.getName());
-			myStmt.setString(2, theProvider.getAddress());
-			myStmt.setString(3, theProvider.getTelephone());
-			myStmt.setInt(4, theProvider.getId());
-
-			// execute SQL statement
-			myStmt.execute();
-
-		} finally {
-			// clean up JDBC objects
-
-			close(myConn, myStmt, null);
-
-		}
-
-	}
-
-	public void deleteProvider(int id) throws Exception {
-
-		Connection myConn = null;
-		PreparedStatement myStmt = null;
-
-		try {
-			// get db connection
-			myConn = dataSource.getConnection();
-
-			// create SQL update statement
-			String sql = "delete from providers " + "where id=?";
-
-			// prepare statement
-			myStmt = myConn.prepareStatement(sql);
-
-			// set params
-			myStmt.setInt(1, id);
-
-			// execute SQL statement
-			myStmt.execute();
-
-		} finally {
-			// clean up JDBC objects
-
-			close(myConn, myStmt, null);
-
-		}
-
-	}
-
-	////////////////////////////////////////////////////////////////////////////////
-	////////////////////////// CUSTOMERS ZONE //////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////
-
-	public List<Customer> getCustomers() throws Exception {
-
-		List<Customer> customers = new ArrayList<>();
-
-		Connection myConn = null;
-		Statement myStmt = null;
-		ResultSet myRs = null;
-
-		try {
-			// get a connection
-			myConn = dataSource.getConnection();
-
-			// create sql statement
-			String sql = "select * from customers";
-
-			myStmt = myConn.createStatement();
-
-			// execute query
-			myRs = myStmt.executeQuery(sql);
-
-			// process result set
-			while (myRs.next()) {
-
-				// retrieve data from result set row
-				int id = myRs.getInt("id");
-				String name = myRs.getString("name");
-				String address = myRs.getString("address");
-				String telephone = myRs.getString("telephone");
-
-				// create new student object
-				Customer tempCustomer = new Customer(id, name, address, telephone);
-
-				// add it to the list of students
-				customers.add(tempCustomer);
-			}
-
-			return customers;
-		} finally {
-			// close JDBC objects
-			close(myConn, myStmt, myRs);
-		}
-
-	}
-
-	public void addCustomer(Customer theCustomer) throws Exception {
-
-		Connection myConn = null;
-		PreparedStatement myStmt = null;
-
-		try {
-			// get db connection
-			myConn = dataSource.getConnection();
-
-			// create sql for insert
-			String sql = "insert into customers " + "(name, address, telephone) " + "values (?, ?, ?)";
-
-			myStmt = myConn.prepareStatement(sql);
-
-			// set the param values for the student
-			myStmt.setString(1, theCustomer.getName());
-			myStmt.setString(2, theCustomer.getAddress());
-			myStmt.setString(3, theCustomer.getTelephone());
-
-			// execute sql insert
-			myStmt.execute();
-		} finally {
-			// clean up JDBC objects
-			close(myConn, myStmt, null);
-		}
-
-	}
-
-	public Customer getCustomer(String theCustomerId) throws Exception {
-
-		Customer theCustomer = null;
-
-		Connection myConn = null;
-		PreparedStatement myStmt = null;
-		ResultSet myRs = null;
-		int customerId;
-
-		try {
-
-			// convert student id to int
-			customerId = (int) Integer.parseInt(theCustomerId);
-
-			// get connection to database
-			myConn = dataSource.getConnection();
-
-			// create sql to get selected student
-			String sql = "select * from customers where id=?";
-
-			// create prepared statement
-			myStmt = myConn.prepareStatement(sql);
-
-			// set params
-			myStmt.setInt(1, customerId);
-
-			// execute statement
-			myRs = myStmt.executeQuery();
-
-			// retrive data from result set row
-			if (myRs.next()) {
-				String name = myRs.getString("name");
-				String address = myRs.getString("address");
-				String telephone = myRs.getString("telephone");
-
-				// use the studentId during construction
-				theCustomer = new Customer(customerId, name, address, telephone);
-			} else {
-				throw new Exception("Could not find customer id: " + customerId);
-			}
-
-			return theCustomer;
-		} finally {
-			// clean up JDBC objects
-			close(myConn, myStmt, myRs);
-		}
-	}
-
-	public void updateCustomer(Customer theCustomer) throws Exception {
-
-		Connection myConn = null;
-		PreparedStatement myStmt = null;
-
-		try {
-			// get db connection
-			myConn = dataSource.getConnection();
-
-			// create SQL update statement
-			String sql = "update customers " + "set name=?, address=?, telephone=? " + "where id=?";
-
-			// prepare statement
-			myStmt = myConn.prepareStatement(sql);
-
-			// set params
-			myStmt.setString(1, theCustomer.getName());
-			myStmt.setString(2, theCustomer.getAddress());
-			myStmt.setString(3, theCustomer.getTelephone());
-			myStmt.setInt(4, theCustomer.getId());
-
-			// execute SQL statement
-			myStmt.execute();
-
-		} finally {
-			// clean up JDBC objects
-
-			close(myConn, myStmt, null);
-
-		}
-
-	}
-
-	public void deleteCustomer(int id) throws Exception {
-
-		Connection myConn = null;
-		PreparedStatement myStmt = null;
-
-		try {
-			// get db connection
-			myConn = dataSource.getConnection();
-
-			// create SQL update statement
-			String sql = "delete from customers " + "where id=?";
-
-			// prepare statement
-			myStmt = myConn.prepareStatement(sql);
-
-			// set params
-			myStmt.setInt(1, id);
-
-			// execute SQL statement
-			myStmt.execute();
-
-		} finally {
-			// clean up JDBC objects
-
-			close(myConn, myStmt, null);
-
-		}
-
-	}
-
-	//////////////////////////////////////////////////////////////////////////////
-	//////////////////////// RECIEPIENT ZONE /////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////////
-
-	public void addReciepient(Reciepient theReciepient) throws Exception {
-
-		Connection myConn = null;
-		PreparedStatement myStmt = null;
-
-		try {
-			// get db connection
-			myConn = dataSource.getConnection();
-
-			// create sql for insert
-			String sql = "insert into reciepients " + "(name, address, telephone) " + "values (?, ?, ?)";
-
-			myStmt = myConn.prepareStatement(sql);
-
-			// set the param values for the student
-			myStmt.setString(1, theReciepient.getName());
-			myStmt.setString(2, theReciepient.getAddress());
-			myStmt.setString(3, theReciepient.getTelephone());
-
-			// execute sql insert
-			myStmt.execute();
-		} finally {
-			// clean up JDBC objects
-			close(myConn, myStmt, null);
-		}
-
-	}
-
-	public List<Reciepient> getReciepients() throws Exception {
-
-		List<Reciepient> reciepients = new ArrayList<>();
-
-		Connection myConn = null;
-		Statement myStmt = null;
-		ResultSet myRs = null;
-
-		try {
-			// get a connection
-			myConn = dataSource.getConnection();
-
-			// create sql statement
-			String sql = "select * from reciepients";
-
-			myStmt = myConn.createStatement();
-
-			// execute query
-			myRs = myStmt.executeQuery(sql);
-
-			// process result set
-			while (myRs.next()) {
-
-				// retrieve data from result set row
-				int id = myRs.getInt("id");
-				String name = myRs.getString("name");
-				String address = myRs.getString("address");
-				String telephone = myRs.getString("telephone");
-
-				// create new student object
-				Reciepient tempReciepient = new Reciepient(id, name, address, telephone);
-
-				// add it to the list of students
-				reciepients.add(tempReciepient);
-			}
-
-			return reciepients;
-		} finally {
-			// close JDBC objects
-			close(myConn, myStmt, myRs);
-		}
-	}
-
-	public Reciepient getReciepient(String theRciepientId) throws Exception {
-
-		Reciepient theReciepient = null;
-
-		Connection myConn = null;
-		PreparedStatement myStmt = null;
-		ResultSet myRs = null;
-		int reciepientId;
-
-		try {
-
-			// convert student id to int
-			reciepientId = (int) Integer.parseInt(theRciepientId);
-
-			// get connection to database
-			myConn = dataSource.getConnection();
-
-			// create sql to get selected student
-			String sql = "select * from reciepients where id=?";
-
-			// create prepared statement
-			myStmt = myConn.prepareStatement(sql);
-
-			// set params
-			myStmt.setInt(1, reciepientId);
-
-			// execute statement
-			myRs = myStmt.executeQuery();
-
-			// retrive data from result set row
-			if (myRs.next()) {
-				String name = myRs.getString("name");
-				String address = myRs.getString("address");
-				String telephone = myRs.getString("telephone");
-
-				// use the studentId during construction
-				theReciepient = new Reciepient(reciepientId, name, address, telephone);
-			} else {
-				throw new Exception("Could not find customer id: " + reciepientId);
-			}
-
-			return theReciepient;
-		} finally {
-			// clean up JDBC objects
-			close(myConn, myStmt, myRs);
-		}
-	}
-
-	public void updateReciepient(Reciepient theReciepient) throws Exception {
-
-		Connection myConn = null;
-		PreparedStatement myStmt = null;
-
-		try {
-			// get db connection
-			myConn = dataSource.getConnection();
-
-			// create SQL update statement
-			String sql = "update reciepients " + "set name=?, address=?, telephone=? " + "where id=?";
-
-			// prepare statement
-			myStmt = myConn.prepareStatement(sql);
-
-			// set params
-			myStmt.setString(1, theReciepient.getName());
-			myStmt.setString(2, theReciepient.getAddress());
-			myStmt.setString(3, theReciepient.getTelephone());
-			myStmt.setInt(4, theReciepient.getId());
-
-			// execute SQL statement
-			myStmt.execute();
-
-		} finally {
-			// clean up JDBC objects
-
-			close(myConn, myStmt, null);
-
-		}
-
-	}
-
-	public void deleteReciepient(int id) throws Exception {
-
-		Connection myConn = null;
-		PreparedStatement myStmt = null;
-
-		try {
-			// get db connection
-			myConn = dataSource.getConnection();
-
-			// create SQL update statement
-			String sql = "delete from reciepients " + "where id=?";
-
-			// prepare statement
-			myStmt = myConn.prepareStatement(sql);
-
-			// set params
-			myStmt.setInt(1, id);
-
-			// execute SQL statement
-			myStmt.execute();
-
-		} finally {
-			// clean up JDBC objects
-
-			close(myConn, myStmt, null);
-
-		}
-
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////
-	////////////////////////// PRICE LIST ZONE /////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////
-
-	public List<PriceList> getPrices() throws Exception {
-
-		List<PriceList> prices = new ArrayList<>();
-
-		Connection myConn = null;
-		Statement myStmt = null;
-		ResultSet myRs = null;
-
-		try {
-			// get a connection
-			myConn = dataSource.getConnection();
-
-			// create sql statement
-			String sql = "select * from prices";
-
-			myStmt = myConn.createStatement();
-
-			// execute query
-			myRs = myStmt.executeQuery(sql);
-
-			// process result set
-			while (myRs.next()) {
-
-				// retrieve data from result set row
-				int id = myRs.getInt("id");
-				String customer = myRs.getString("customer");
-				String product = myRs.getString("product");
-				Double price = myRs.getDouble("price");
-
-				// create new student object
-				PriceList tempPrice = new PriceList(true, id, customer, product, price);
-
-				// add it to the list of students
-				prices.add(tempPrice);
-			}
-
-			return prices;
-		} finally {
-			// close JDBC objects
-			close(myConn, myStmt, myRs);
-		}
-	}
-
-	public void addPrice(PriceList thePrice) throws Exception {
-		Connection myConn = null;
-		PreparedStatement myStmt = null;
-
-		try {
-			// get db connection
-			myConn = dataSource.getConnection();
-
-			// create sql for insert
-			String sql = "insert into prices " + "(customer, product, price) " + "values (?, ?, ?)";
-
-			myStmt = myConn.prepareStatement(sql);
-
-			// set the param values for the student
-			myStmt.setString(1, thePrice.getCustomer());
-			myStmt.setString(2, thePrice.getProduct());
-			myStmt.setDouble(3, thePrice.getPrice());
-
-			// execute sql insert
-			myStmt.execute();
-		} finally {
-			// clean up JDBC objects
-			close(myConn, myStmt, null);
-		}
-	}
-
-	public PriceList getPrice(String thePriceId) throws Exception {
-
-		PriceList thePrice = null;
-
-		Connection myConn = null;
-		PreparedStatement myStmt = null;
-		ResultSet myRs = null;
-		int priceId;
-
-		try {
-
-			// convert student id to int
-			priceId = (int) Integer.parseInt(thePriceId);
-
-			// get connection to database
-			myConn = dataSource.getConnection();
-
-			// create sql to get selected student
-			String sql = "select * from prices where id=?";
-
-			// create prepared statement
-			myStmt = myConn.prepareStatement(sql);
-
-			// set params
-			myStmt.setInt(1, priceId);
-
-			// execute statement
-			myRs = myStmt.executeQuery();
-
-			// retrive data from result set row
-			if (myRs.next()) {
-				String customer = myRs.getString("customer");
-				String product = myRs.getString("product");
-				Double price = myRs.getDouble("price");
-
-				// use the studentId during construction
-				thePrice = new PriceList(true, priceId, customer, product, price);
-			} else {
-				throw new Exception("Could not find price id: " + priceId);
-			}
-
-			return thePrice;
-		} finally {
-			// clean up JDBC objects
-			close(myConn, myStmt, myRs);
-		}
-	}
-
-	public void updatePrice(PriceList thePrice) throws Exception {
-
-		Connection myConn = null;
-		PreparedStatement myStmt = null;
-
-		try {
-			// get db connection
-			myConn = dataSource.getConnection();
-
-			// create SQL update statement
-			String sql = "update prices " + "set customer=?, product=?, price=? " + "where id=?";
-
-			// prepare statement
-			myStmt = myConn.prepareStatement(sql);
-
-			// set params
-			myStmt.setString(1, thePrice.getCustomer());
-			myStmt.setString(2, thePrice.getProduct());
-			myStmt.setDouble(3, thePrice.getPrice());
-			myStmt.setInt(4, thePrice.getId());
-
-			// execute SQL statement
-			myStmt.execute();
-
-		} finally {
-			// clean up JDBC objects
-
-			close(myConn, myStmt, null);
-
-		}
-
-	}
-
-	public void deletePrice(int id) throws Exception {
-
-		Connection myConn = null;
-		PreparedStatement myStmt = null;
-
-		try {
-			// get db connection
-			myConn = dataSource.getConnection();
-
-			// create SQL update statement
-			String sql = "delete from prices " + "where id=?";
-
-			// prepare statement
-			myStmt = myConn.prepareStatement(sql);
-
-			// set params
-			myStmt.setInt(1, id);
-
-			// execute SQL statement
-			myStmt.execute();
-
-		} finally {
-			// clean up JDBC objects
-
-			close(myConn, myStmt, null);
-
-		}
-	}
-
-	public Double loadPriceForCustomer(String product, String customer) throws Exception {
-
-		Connection myConn = null;
-		PreparedStatement myStmt = null;
-		ResultSet myRs = null;
-		Double price = 0.00;
-
-		try {
-			// get db connection
-			myConn = dataSource.getConnection();
-			String sql = "select price from prices where customer=? and product=?";
-			myStmt = myConn.prepareStatement(sql);
-			myStmt.setString(1, customer);
-			myStmt.setString(2, product);
-			myRs = myStmt.executeQuery();
-			while (myRs.next()) {
-				price = myRs.getDouble("price");
-			}
-		} finally {
-			close(myConn, myStmt, myRs);
-		}
-
-		return price;
-
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////
-	////////////////////////// EMPLOYEES ZONE //////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////
-
-	public List<Employee> getEmployees() throws Exception {
-
-		List<Employee> employees = new ArrayList<>();
-
-		Connection myConn = null;
-		Statement myStmt = null;
-		ResultSet myRs = null;
-
-		try {
-			// get a connection
-			myConn = dataSource.getConnection();
-
-			// create sql statement
-			String sql = "select * from employees";
-
-			myStmt = myConn.createStatement();
-
-			// execute query
-			myRs = myStmt.executeQuery(sql);
-
-			// process result set
-			while (myRs.next()) {
-
-				// retrieve data from result set row
-				int id = myRs.getInt("id");
-				String name = myRs.getString("name");
-				String surname = myRs.getString("surname");
-				String address = myRs.getString("address");
-				String telephone = myRs.getString("telephone");
-				String profession = myRs.getString("profession");
-				String safetyTraining = myRs.getString("safetyTraining");
-				String medicalVisit = myRs.getString("medicalVisit");
-				String contractDate = myRs.getString("contractDate");
-
-				// create new student object
-				Employee tempEmployee = new Employee(id, name, surname, address, telephone, profession, safetyTraining,
-						medicalVisit, contractDate);
-
-				// add it to the list of students
-				employees.add(tempEmployee);
-			}
-
-			return employees;
-		} finally {
-			// close JDBC objects
-			close(myConn, myStmt, myRs);
-		}
-	}
-
-	public void addEmployee(Employee theEmployee) throws Exception {
-
-		Connection myConn = null;
-		PreparedStatement myStmt = null;
-
-		try {
-			// get db connection
-			myConn = dataSource.getConnection();
-
-			// create sql for insert
-			String sql = "insert into employees " + "(name, surname, address, telephone, profession, safetyTraining,"
-					+ " medicalVisit, contractDate) " + "values (?, ?, ?, ?, ?, ?, ?, ?)";
-
-			myStmt = myConn.prepareStatement(sql);
-
-			// set the param values for the student
-			myStmt.setString(1, theEmployee.getName());
-			myStmt.setString(2, theEmployee.getSurname());
-			myStmt.setString(3, theEmployee.getAddress());
-			myStmt.setString(4, theEmployee.getTelephone());
-			myStmt.setString(5, theEmployee.getProfession());
-			myStmt.setString(6, theEmployee.getSafetyTraining());
-			myStmt.setString(7, theEmployee.getMedicalVisit());
-			myStmt.setString(8, theEmployee.getContractDate());
-
-			// execute sql insert
-			myStmt.execute();
-		} finally {
-			// clean up JDBC objects
-			close(myConn, myStmt, null);
-		}
-
-	}
-
-	public Employee getEmployee(String theEmployeeId) throws Exception {
-
-		Employee theEmployee = null;
-
-		Connection myConn = null;
-		PreparedStatement myStmt = null;
-		ResultSet myRs = null;
-		int employeeId;
-
-		try {
-
-			// convert employee id to int
-			employeeId = (int) Integer.parseInt(theEmployeeId);
-
-			// get connection to database
-			myConn = dataSource.getConnection();
-
-			// create sql to get selected employee
-			String sql = "select * from employees where id=?";
-
-			// create prepared statement
-			myStmt = myConn.prepareStatement(sql);
-
-			// set params
-			myStmt.setInt(1, employeeId);
-
-			// execute statement
-			myRs = myStmt.executeQuery();
-
-			// retrive data from result set row
-			if (myRs.next()) {
-				String name = myRs.getString("name");
-				String surname = myRs.getString("surname");
-				String address = myRs.getString("address");
-				String telephone = myRs.getString("telephone");
-				String profession = myRs.getString("profession");
-				String safetyTraining = myRs.getString("safetyTraining");
-				String medicalVisit = myRs.getString("medicalVisit");
-				String contractDate = myRs.getString("contractDate");
-
-				// use the employeeId during construction
-				theEmployee = new Employee(employeeId, name, surname, address, telephone, profession, safetyTraining,
-						medicalVisit, contractDate);
-			} else {
-				throw new Exception("Could not find employee id: " + employeeId);
-			}
-
-			return theEmployee;
-		} finally {
-			// clean up JDBC objects
-			close(myConn, myStmt, myRs);
-		}
-	}
-
-	public void updateEmployee(Employee employee) throws Exception {
-
-		Connection myConn = null;
-		PreparedStatement myStmt = null;
-
-		try {
-			// get db connection
-			myConn = dataSource.getConnection();
-
-			// create SQL update statement
-			String sql = "update employees "
-					+ "set name=?, surname=?, address=?, telephone=?, profession=?, safetyTraining=?, "
-					+ "medicalVisit=?, contractDate=? where id=?";
-
-			// prepare statement
-			myStmt = myConn.prepareStatement(sql);
-
-			// set params
-			myStmt.setString(1, employee.getName());
-			myStmt.setString(2, employee.getSurname());
-			myStmt.setString(3, employee.getAddress());
-			myStmt.setString(4, employee.getTelephone());
-			myStmt.setString(5, employee.getProfession());
-			myStmt.setString(6, employee.getSafetyTraining());
-			myStmt.setString(7, employee.getMedicalVisit());
-			myStmt.setString(8, employee.getContractDate());
-			myStmt.setInt(9, employee.getId());
-
-			// execute SQL statement
-			myStmt.execute();
-
-		} finally {
-			// clean up JDBC objects
-
-			close(myConn, myStmt, null);
-
-		}
-
-	}
-
-	public void deleteEmployee(int id) throws Exception {
-
-		Connection myConn = null;
-		PreparedStatement myStmt = null;
-
-		try {
-			// get db connection
-			myConn = dataSource.getConnection();
-
-			// create SQL update statement
-			String sql = "delete from employees " + "where id=?";
-
-			// prepare statement
-			myStmt = myConn.prepareStatement(sql);
-
-			// set params
-			myStmt.setInt(1, id);
-
-			// execute SQL statement
-			myStmt.execute();
-
-		} finally {
-			// clean up JDBC objects
-
-			close(myConn, myStmt, null);
-
-		}
-
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////
-	////////////////////////// WAREHOUSES ZONE /////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////
-
-	public List<Warehouse> getWarehouses() throws Exception {
-
-		List<Warehouse> warehouses = new ArrayList<>();
-
-		Connection myConn = null;
-		Statement myStmt = null;
-		ResultSet myRs = null;
-
-		try {
-			// get a connection
-			myConn = dataSource.getConnection();
-
-			// create sql statement
-			String sql = "select * from warehouses";
-
-			myStmt = myConn.createStatement();
-
-			// execute query
-			myRs = myStmt.executeQuery(sql);
-
-			// process result set
-			while (myRs.next()) {
-
-				// retrieve data from result set row
-				int id = myRs.getInt("id");
-				String name = myRs.getString("name");
-
-				// create new warehouse object
-				Warehouse tempWarehouse = new Warehouse(id, name);
-
-				// add it to the list of students
-				warehouses.add(tempWarehouse);
-			}
-
-			return warehouses;
-		} finally {
-			// close JDBC objects
-			close(myConn, myStmt, myRs);
-		}
-	}
-
-	public void addWarehouse(Warehouse theWarehouse) throws Exception {
-
-		Connection myConn = null;
-		PreparedStatement myStmt = null;
-
-		try {
-			// get db connection
-			myConn = dataSource.getConnection();
-
-			// create sql for insert
-
-			String sql = "insert into warehouses (name) values (?)";
-			System.out.println("warehouse upa upa upa");
-			myStmt = myConn.prepareStatement(sql);
-
-			// set the param values for the student
-			myStmt.setString(1, theWarehouse.getName());
-
-			// execute sql insert
-			myStmt.execute();
-		} finally {
-			// clean up JDBC objects
-			close(myConn, myStmt, null);
-		}
-
-	}
-
-	public Warehouse getWarehouse(String theWarehouseId) throws Exception {
-
-		Warehouse theWarehouse = null;
-
-		Connection myConn = null;
-		PreparedStatement myStmt = null;
-		ResultSet myRs = null;
-		int warehouseId;
-
-		try {
-
-			// convert employee id to int
-			warehouseId = (int) Integer.parseInt(theWarehouseId);
-
-			// get connection to database
-			myConn = dataSource.getConnection();
-
-			// create sql to get selected warehouse
-			String sql = "select * from warehouses where id=?";
-
-			// create prepared statement
-			myStmt = myConn.prepareStatement(sql);
-
-			// set params
-			myStmt.setInt(1, warehouseId);
-
-			// execute statement
-			myRs = myStmt.executeQuery();
-
-			// retrive data from result set row
-			if (myRs.next()) {
-				String name = myRs.getString("name");
-
-				// use the warehouseId during construction
-				theWarehouse = new Warehouse(warehouseId, name);
-			} else {
-				throw new Exception("Could not find employee id: " + warehouseId);
-			}
-
-			return theWarehouse;
-		} finally {
-			// clean up JDBC objects
-			close(myConn, myStmt, myRs);
-		}
-
-	}
-
-	public void updateWarehouse(Warehouse warehouse) throws Exception {
-
-		Connection myConn = null;
-		PreparedStatement myStmt = null;
-
-		try {
-			// get db connection
-			myConn = dataSource.getConnection();
-
-			// create SQL update statement
-			String sql = "update warehouses " + "set name=? where id=?";
-
-			// prepare statement
-			myStmt = myConn.prepareStatement(sql);
-
-			// set params
-			myStmt.setString(1, warehouse.getName());
-			myStmt.setInt(2, warehouse.getId());
-
-			// execute SQL statement
-			myStmt.execute();
-
-		} finally {
-			// clean up JDBC objects
-
-			close(myConn, myStmt, null);
-
-		}
-
-	}
-
-	public void deleteWarehouse(int id) throws Exception {
-
-		Connection myConn = null;
-		PreparedStatement myStmt = null;
-
-		try {
-			// get db connection
-			myConn = dataSource.getConnection();
-
-			// create SQL update statement
-			String sql = "delete from warehouses " + "where id=?";
-
-			// prepare statement
-			myStmt = myConn.prepareStatement(sql);
-
-			// set params
-			myStmt.setInt(1, id);
-
-			// execute SQL statement
-			myStmt.execute();
-
-		} finally {
-			// clean up JDBC objects
-
-			close(myConn, myStmt, null);
-
-		}
-
-	}
+	
 
 	//////////////////////////////////////////////////////////////////////////////
 	////////////////////////// OTHER ZONE ////////////////////////////////////////
@@ -2726,32 +1275,117 @@ public class WarehouseDbUtil {
 			return theUser;
 		} finally {
 			// clean up JDBC objects
-			close(myConn, myStmt, myRs);
+			DbUtil.close(myConn, myStmt, myRs);
 		}
 	}
 
 	//////////////////////////////////////////////////////////////////////////////
 	////////////////////////// OTHER ZONE ////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////
+	public void monitorActivity(Activity activity) throws Exception {
 
-	private void close(Connection myConn, Statement myStmt, ResultSet myRs) {
+		Connection myConn = null;
+		PreparedStatement myStmt = null;
 
 		try {
-			if (myRs != null) {
-				myRs.close();
-			}
+			// get db connection
+			myConn = dataSource.getConnection();
 
-			if (myStmt != null) {
-				myStmt.close();
-			}
+			// create sql for insert
+			String sql = "insert into activity " + "(userName, activityName, dateTime, activityId) " + "values (?, ?, ?, ?)";
 
-			if (myConn != null) {
-				myConn.close(); // doesn't really close it ... just puts back in connection pool
-			}
-		} catch (Exception exc) {
-			exc.printStackTrace();
+			myStmt = myConn.prepareStatement(sql);
+
+			// set the param values for the student
+			myStmt.setString(1, activity.getUserName());
+			myStmt.setString(2, activity.getActivityName());
+			myStmt.setString(3, activity.getDateTime());
+			myStmt.setInt(4, activity.getActivityId());
+
+			// execute sql insert
+			myStmt.execute();
+		} finally {
+			// clean up JDBC objects
+			DbUtil.close(myConn, myStmt, null);
 		}
 	}
+	
+	public void updateProductQty(Product theProduct) throws Exception {
+
+		Connection myConn = null;
+		PreparedStatement myStmt = null;
+
+		try {
+			// get db connection
+			myConn = dataSource.getConnection();
+
+			// create SQL update statement
+			String sql = "update products " + "set qty=?" + " where id=?";
+
+			// prepare statement
+			myStmt = myConn.prepareStatement(sql);
+
+			// set params
+			myStmt.setInt(1, theProduct.getQty());
+			myStmt.setInt(2, theProduct.getId());
+
+			// execute SQL statement
+			myStmt.execute();
+
+		} finally {
+			// clean up JDBC objects
+
+			DbUtil.	close(myConn, myStmt, null);
+
+		}
+
+	}
+	public Product getProductByName(String theProductName) throws Exception {
+
+		Product theProduct = null;
+
+		Connection myConn = null;
+		PreparedStatement myStmt = null;
+		ResultSet myRs = null;
+		int productId;
+
+		try {
+
+			// get connection to database
+			myConn = dataSource.getConnection();
+
+			// create sql to get selected product
+			String sql = "select * from products where name=?";
+
+			// create prepared statement
+			myStmt = myConn.prepareStatement(sql);
+
+			// set params
+			myStmt.setString(1, theProductName);
+
+			// execute statement
+			myRs = myStmt.executeQuery();
+
+			// retrive data from result set row
+			if (myRs.next()) {
+				int id = myRs.getInt("id");
+				String name = myRs.getString("name");
+				String warehouse = myRs.getString("warehouse");
+				int qty = myRs.getInt("qty");
+
+				// use the studentId during construction
+				theProduct = new Product(id, name, warehouse, qty);
+			} else {
+				throw new Exception("Could not find product id: " + theProductName);
+			}
+
+			return theProduct;
+		} finally {
+			// clean up JDBC objects
+			DbUtil.close(myConn, myStmt, myRs);
+		}
+	}
+
 
 	///////////////////// next doc number /////////////////////////
 	// Each customer has own numeration of documents.
@@ -2840,6 +1474,7 @@ public class WarehouseDbUtil {
 		return idDoc;
 	}
 
+	//method helps generating doc for printing
 	private void borderToRegion(CellRangeAddress cellRangeAddress, Sheet sheet, Workbook wb) {
 
 		RegionUtil.setBorderTop(CellStyle.BORDER_THIN, cellRangeAddress, sheet, wb);
@@ -2869,7 +1504,7 @@ public class WarehouseDbUtil {
 		} finally {
 			// clean up JDBC objects
 
-			close(myConn, myStmt, results);
+			DbUtil.close(myConn, myStmt, results);
 
 		}
 

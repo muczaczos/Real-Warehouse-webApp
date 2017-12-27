@@ -1,7 +1,8 @@
-package com.muczo.mvc.warehouse;
+package com.muczo.mvc.warehouse.blueprint;
 import java.io.Serializable;
 
-public class Reciepient implements Serializable {
+public class Customer implements Serializable {
+	
 
 	/////////////////////////////////////////////////////////////////////
 	/////////////////////////////// Main variables///////////////////////
@@ -14,9 +15,9 @@ public class Reciepient implements Serializable {
 	private String telephone;
 
 	/////////////////////////////////////////////////////////////////////
-	//////////////////////////// Constructors ////////////////////////////
+	//////////////////////////// Constructors ///////////////////////////
 	////////////////////////////////////////////////////////////////////
-	public Reciepient(int id, String name, String address, String telephone) {
+	public Customer(int id, String name, String address, String telephone) {
 
 		this.id = id;
 		this.name = name;
@@ -25,7 +26,7 @@ public class Reciepient implements Serializable {
 
 	}
 	
-	public Reciepient(String name, String address, String telephone) {
+	public Customer(String name, String address, String telephone) {
 
 		this.name = name;
 		this.address = address;
@@ -67,4 +68,6 @@ public class Reciepient implements Serializable {
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
 	}
+
+
 }
