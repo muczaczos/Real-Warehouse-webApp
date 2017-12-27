@@ -56,7 +56,8 @@ public class WarehouseControllerServlet extends HttpServlet {
 		request.getRequestDispatcher("link.html").include(request, response);
 
 		HttpSession session = request.getSession(false);
-		if (session != null) {
+	try {
+		if (session.getAttribute("userName") != null) {
 
 			try {
 				// read the "command" parameter
@@ -308,6 +309,9 @@ public class WarehouseControllerServlet extends HttpServlet {
 		} else {
 			out.print("Proszê siê najpierw zalogowaæ!");
 		}
+	}catch(Exception e) {
+		out.print("Napewno wpisa³eœ has³o?");
+	}
 		out.close();
 	}
 

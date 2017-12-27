@@ -1,0 +1,45 @@
+package com.muczo.mvc.warehouse;
+
+import java.io.Serializable;
+
+public class Activity implements Serializable {
+
+	/////////////////////////////////////////////////////////////////////
+	/////////////////////////////// Main variables///////////////////////
+	/////////////////////////////////////////////////////////////////////
+	private int id;
+	private String userName;
+	private String activityName;
+	private String dateTime;
+	private int activityId;
+
+	/////////////////////////////////////////////////////////////////////
+	//////////////////////////// Constructors ///////////////////////////
+	////////////////////////////////////////////////////////////////////
+	public Activity(int id, String userName, String activityName, String dateTime,
+			int activityId) {
+
+		this.id = id;
+		this.userName = userName;
+		this.activityName = activityName;
+		this.dateTime = dateTime;
+		this.activityId = activityId;
+
+	}
+
+	public Activity(String userName, String activityName, String dateTime,
+			int activityId) {
+
+		this.userName = userName;
+		this.activityName = activityName;
+		this.dateTime = dateTime;
+		this.activityId = activityId;
+
+	}
+
+	/////////////////////////////////////////////////////////////////////
+	/////////////////////// getters & setters //////////////////////////
+	////////////////////////////////////////////////////////////////////
+
+
+}
