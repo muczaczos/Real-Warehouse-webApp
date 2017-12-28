@@ -1059,7 +1059,7 @@ public class WarehouseDbUtil {
 				// retrieve data from result set row
 				int id = myRs.getInt("id");
 				String provider = myRs.getString("provider");
-				String product = myRs.getString("product");
+				String product = myRs.getString("productName");
 				int qty = myRs.getInt("qty");
 
 				// create new student object
@@ -1085,7 +1085,7 @@ public class WarehouseDbUtil {
 			myConn = dataSource.getConnection();
 
 			// create sql for insert
-			String sql = "insert into documents2 " + "(provider, product, qty) " + "values (?, ?, ?)";
+			String sql = "insert into documents2 " + "(provider, productName, qty) " + "values (?, ?, ?)";
 
 			myStmt = myConn.prepareStatement(sql);
 
@@ -1143,7 +1143,7 @@ public class WarehouseDbUtil {
 			// retrive data from result set row
 			if (myRs.next()) {
 				String provider = myRs.getString("provider");
-				String product = myRs.getString("product");
+				String product = myRs.getString("productName");
 				int qty = myRs.getInt("qty");
 
 				// use the document2id during construction

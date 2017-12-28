@@ -348,6 +348,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 			}
 		} catch (Exception e) {
 			out.print("Napewno wpisa³eœ has³o?");
+			out.print(e.toString());
 		}
 		out.close();
 	}
@@ -676,14 +677,14 @@ public class WarehouseControllerServlet extends HttpServlet {
 	///////////////////////////////////////////////////////////////////////////////
 	private void listDocuments2(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		// get price from db util
-		List<Document2> documents = warehouseDbUtil.getDocuments2();
-
-		// add prices to the request
-		request.setAttribute("DOCUMENTS2_LIST", documents);
-
 		HttpSession session = request.getSession();
-		session.setAttribute("Documents2", documents);
+
+		// get documents from db util
+		List<Document2> documents2 = warehouseDbUtil.getDocuments2();
+		// add documents to the request
+		request.setAttribute("DOCUMENTS2_LIST", documents2);
+
+		session.setAttribute("documents2", documents2);
 
 		// send to JSP page (view)
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/create-doc2.jsp");
@@ -706,7 +707,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 
 		// write activity to db
 		List<Document2> documents2 = warehouseDbUtil.getDocuments2();
-		int id = documents2.get(documents2.size()-1).getId();
+		int id = documents2.get(documents2.size() - 1).getId();
 
 		HttpSession session = request.getSession();
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
@@ -721,8 +722,10 @@ public class WarehouseControllerServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		// send back to main page (the reciepient list)
+		// send back to main page (the documents2 list)
+		listProducts(request, response);
 		listDocuments2(request, response);
+		
 
 	}
 
@@ -995,7 +998,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 
 		// write activity to db
 		List<Product> products = productsDbUtil.getProducts();
-		int id = products.get(products.size()-1).getId();
+		int id = products.get(products.size() - 1).getId();
 
 		HttpSession session = request.getSession();
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
@@ -1125,7 +1128,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 
 		// write activity to db
 		List<Provider> provider = providersDbUtil.getProviders();
-		int id = provider.get(provider.size()-1).getId();
+		int id = provider.get(provider.size() - 1).getId();
 
 		HttpSession session = request.getSession();
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
@@ -1257,7 +1260,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 
 		// write activity to db
 		List<Customer> customer = customersDbUtil.getCustomers();
-		int id = customer.get(customer.size()-1).getId();
+		int id = customer.get(customer.size() - 1).getId();
 
 		HttpSession session = request.getSession();
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
@@ -1322,7 +1325,6 @@ public class WarehouseControllerServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		
 		// send them back to the "list customers" page
 		listCustomers(request, response);
 
@@ -1350,7 +1352,6 @@ public class WarehouseControllerServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		
 		// send them back to the "list customers" page
 		listCustomers(request, response);
 
@@ -1391,7 +1392,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 
 		// write activity to db
 		List<Reciepient> reciepients = reciepientsDbUtil.getReciepients();
-		int id = reciepients.get(reciepients.size()-1).getId();
+		int id = reciepients.get(reciepients.size() - 1).getId();
 
 		HttpSession session = request.getSession();
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
@@ -1406,7 +1407,6 @@ public class WarehouseControllerServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		
 		// send back to main page (the reciepient list)
 		listReciepients(request, response);
 
@@ -1456,7 +1456,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		// send them back to the "list reciepient" page
 		listReciepients(request, response);
 
@@ -1483,7 +1483,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		// send them back to the "list reciepient" page
 		listReciepients(request, response);
 
@@ -1524,21 +1524,21 @@ public class WarehouseControllerServlet extends HttpServlet {
 
 		// write activity to db
 		List<PriceList> priceLists = priceDbUtil.getPrices();
-		int id = priceLists.get(priceLists.size()-1).getId();
+		int id = priceLists.get(priceLists.size() - 1).getId();
 
 		HttpSession session = request.getSession();
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 		LocalDateTime now = LocalDateTime.now();
 		System.out.println(dtf.format(now));
 		try {
-			Activity activity = new Activity(session.getAttribute("userName").toString(), "add price",
-					dtf.format(now), id);
+			Activity activity = new Activity(session.getAttribute("userName").toString(), "add price", dtf.format(now),
+					id);
 			warehouseDbUtil.monitorActivity(activity);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		// send back to main page (the reciepient list)
 		listPrices(request, response);
 
@@ -1588,7 +1588,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		// send them back to the "list price" page
 		listPrices(request, response);
 
@@ -1603,22 +1603,19 @@ public class WarehouseControllerServlet extends HttpServlet {
 		priceDbUtil.deletePrice(id);
 
 		// write activity to db
-		List<PriceList> priceLists = priceDbUtil.getPrices();
-		int id = priceLists.get(priceLists.size()-1).getId();
-
 		HttpSession session = request.getSession();
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 		LocalDateTime now = LocalDateTime.now();
 		System.out.println(dtf.format(now));
 		try {
-			Activity activity = new Activity(session.getAttribute("userName").toString(), "del price",
-					dtf.format(now), id);
+			Activity activity = new Activity(session.getAttribute("userName").toString(), "del price", dtf.format(now),
+					id);
 			warehouseDbUtil.monitorActivity(activity);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		// send them back to the "list price" page
 		listPrices(request, response);
 
@@ -1665,7 +1662,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 
 		// write activity to db
 		List<Employee> employees = employeesDbUtil.getEmployees();
-		int id = employees.get(employees.size()-1).getId();
+		int id = employees.get(employees.size() - 1).getId();
 
 		HttpSession session = request.getSession();
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
@@ -1679,7 +1676,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		// send back to main page (the employee list)
 		listEmployees(request, response);
 
@@ -1735,7 +1732,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		// send them back to the "list employees" page
 		listEmployees(request, response);
 
@@ -1762,8 +1759,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
 		// send them back to the "list price" page
 		listEmployees(request, response);
 
@@ -1803,7 +1799,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 
 		// write activity to db
 		List<Warehouse> warehouses = warehousesDbUtil.getWarehouses();
-		int id = warehouses.get(warehouses.size()-1).getId();
+		int id = warehouses.get(warehouses.size() - 1).getId();
 
 		HttpSession session = request.getSession();
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
@@ -1817,7 +1813,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		// send back to main page (the employee list)
 		listWarehouses(request, response);
 
@@ -1865,7 +1861,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		// send them back to the "list employees" page
 		listWarehouses(request, response);
 
@@ -1892,7 +1888,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		// send them back to the "list price" page
 		listWarehouses(request, response);
 
