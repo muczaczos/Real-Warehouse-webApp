@@ -40,7 +40,7 @@
 	<div id="container">
 		<br>
 		<ul>
-			<li><a href="WarehouseControllerServlet"><fmt:message
+	<li><a href="WarehouseControllerServlet"><fmt:message
 						key="label.menu.doc" /></a></li>
 			<li><a href="create-doc2.jsp"><fmt:message
 						key="label.menu.doc2" /></a></li>
@@ -52,7 +52,7 @@
 						key="label.menu.cus" /></a></li>
 			<li><a href="create-reciepient.jsp"><fmt:message
 						key="label.menu.rec" /></a></li>
-			<li><a href="create-product.jsp"><fmt:message
+			<li><a href="WarehouseControllerServlet?command=LIST-PRODUCTS?"><fmt:message
 						key="label.menu.pro" /></a></li>
 			<li><a href="create-price.jsp"><fmt:message
 						key="label.menu.pri" /></a></li>

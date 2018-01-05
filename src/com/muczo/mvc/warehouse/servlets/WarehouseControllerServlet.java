@@ -2,14 +2,10 @@ package com.muczo.mvc.warehouse.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.math.RoundingMode;
 import java.text.DateFormat;
-import java.text.NumberFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -31,18 +27,20 @@ import com.muczo.mvc.warehouse.blueprint.Document2;
 import com.muczo.mvc.warehouse.blueprint.Employee;
 import com.muczo.mvc.warehouse.blueprint.PriceList;
 import com.muczo.mvc.warehouse.blueprint.Product;
-import com.muczo.mvc.warehouse.blueprint.ProductList;
 import com.muczo.mvc.warehouse.blueprint.Provider;
 import com.muczo.mvc.warehouse.blueprint.Reciepient;
 import com.muczo.mvc.warehouse.blueprint.Warehouse;
 import com.muczo.mvc.warehouse.db.CustomersDbUtil;
+import com.muczo.mvc.warehouse.db.Documents1DbUtil;
+import com.muczo.mvc.warehouse.db.Documents2DbUtil;
 import com.muczo.mvc.warehouse.db.EmployeesDbUtil;
 import com.muczo.mvc.warehouse.db.PriceDbUtil;
 import com.muczo.mvc.warehouse.db.ProductsDbUtil;
 import com.muczo.mvc.warehouse.db.ProvidersDbUtil;
 import com.muczo.mvc.warehouse.db.ReciepientsDbUtil;
-import com.muczo.mvc.warehouse.db.WarehouseDbUtil;
 import com.muczo.mvc.warehouse.db.WarehousesDbUtil;
+import com.muczo.mvc.warehouse.helperclasses.CalculateInvoice;
+import com.muczo.mvc.warehouse.helperclasses.PrintDocument;
 
 /**
  * Servlet implementation class WarehouseControllerServlet
@@ -51,7 +49,8 @@ import com.muczo.mvc.warehouse.db.WarehousesDbUtil;
 public class WarehouseControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private WarehouseDbUtil warehouseDbUtil;
+	private Documents1DbUtil documents1DbUtil;
+	private Documents2DbUtil documents2DbUtil;
 	private ProvidersDbUtil providersDbUtil;
 	private ProductsDbUtil productsDbUtil;
 	private CustomersDbUtil customersDbUtil;
@@ -70,7 +69,8 @@ public class WarehouseControllerServlet extends HttpServlet {
 		// create our warehouse db util ... and pass in the conn pool / datasource
 		try {
 
-			warehouseDbUtil = new WarehouseDbUtil(dataSource);
+			documents1DbUtil = new Documents1DbUtil(dataSource);
+			documents2DbUtil = new Documents2DbUtil(dataSource);
 			providersDbUtil = new ProvidersDbUtil(dataSource);
 			productsDbUtil = new ProductsDbUtil(dataSource);
 			customersDbUtil = new CustomersDbUtil(dataSource);
@@ -78,6 +78,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 			priceDbUtil = new PriceDbUtil(dataSource);
 			warehousesDbUtil = new WarehousesDbUtil(dataSource);
 			employeesDbUtil = new EmployeesDbUtil(dataSource);
+			PrintDocument.dataSource = dataSource;
 
 		} catch (Exception exc) {
 			throw new ServletException(exc);
@@ -230,27 +231,6 @@ public class WarehouseControllerServlet extends HttpServlet {
 						deleteProvider(request, response);
 						break;
 
-					///////////////////// Customers....///////////////
-					case "LIST-CUSTOMERS":
-						listCustomers(request, response);
-						break;
-
-					case "ADD-CUSTOMER":
-						addCustomer(request, response);
-						break;
-
-					case "LOAD-CUSTOMER":
-						loadCustomer(request, response);
-						break;
-
-					case "UPDATE-CUSTOMER":
-						updateCustomer(request, response);
-						break;
-
-					case "DELETE-CUSTOMER":
-						deleteCustomer(request, response);
-						break;
-
 					///////////////////// Reciepients....///////////////
 					case "LIST-RECIEPIENTS":
 						listReciepients(request, response);
@@ -347,8 +327,8 @@ public class WarehouseControllerServlet extends HttpServlet {
 				out.print("Proszê siê najpierw zalogowaæ!");
 			}
 		} catch (Exception e) {
-			out.print("Napewno wpisa³eœ has³o?");
-			out.print(e.toString());
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/index.html");
+			dispatcher.forward(request, response);
 		}
 		out.close();
 	}
@@ -362,12 +342,12 @@ public class WarehouseControllerServlet extends HttpServlet {
 		session.setAttribute("Date", sdf.format(date).toString());
 
 		// get documents from db util
-		List<Document> documents = warehouseDbUtil.getDocuments();
+		List<Document> documents = documents1DbUtil.getDocuments();
 		// add documents to the request
 		request.setAttribute("DOCUMENTS_LIST", documents);
 
 		// get documents from db util
-		List<Document2> documents2 = warehouseDbUtil.getDocuments2();
+		List<Document2> documents2 = documents2DbUtil.getDocuments2();
 		// add documents to the request
 		request.setAttribute("DOCUMENTS2_LIST", documents2);
 
@@ -431,7 +411,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		String warehouse7 = request.getParameter("warehouse7");
 
 		String preCustomer = request.getParameter("customer");
-		int noOfDoc = warehouseDbUtil.nextCustomerDoc(preCustomer);
+		int noOfDoc = documents1DbUtil.nextCustomerDoc(preCustomer);
 		session.setAttribute("noOfDoc", noOfDoc);
 		session.setAttribute("preCustomer", preCustomer);
 
@@ -467,7 +447,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 	private void listDocuments(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		// get products from db util
-		List<Document> documents = warehouseDbUtil.getDocuments();
+		List<Document> documents = documents1DbUtil.getDocuments();
 
 		// add product to the request
 		request.setAttribute("DOCUMENTS_LIST", documents);
@@ -476,7 +456,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		session.setAttribute("Documents", documents);
 
 		// send to JSP page (view)
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/create-doc.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WarehouseControllerServlet?command=FirstList");
 		dispatcher.forward(request, response);
 
 	}
@@ -531,10 +511,10 @@ public class WarehouseControllerServlet extends HttpServlet {
 				qty2, product3, qty3, product4, qty4, product5, qty5, product6, qty6, product7, qty7, info);
 
 		// add the document to the database
-		warehouseDbUtil.addDocument(theDocument);
+		documents1DbUtil.addDocument(theDocument);
 
 		// write activity to db
-		List<Document> documents = warehouseDbUtil.getDocuments();
+		List<Document> documents = documents1DbUtil.getDocuments();
 		int id = documents.get(0).getId();
 
 		HttpSession session = request.getSession();
@@ -544,13 +524,13 @@ public class WarehouseControllerServlet extends HttpServlet {
 		try {
 			Activity activity = new Activity(session.getAttribute("userName").toString(), "add doc1", dtf.format(now),
 					id);
-			warehouseDbUtil.monitorActivity(activity);
+			documents1DbUtil.monitorActivity(activity);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		// send back to main page (the documents list)
-		listDocuments(request, response);
+		firstList(request, response);
 
 	}
 
@@ -560,7 +540,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		String theDocumentId = request.getParameter("documentId");
 
 		// get document from database (db util)
-		Document theDocument = warehouseDbUtil.getDocument(theDocumentId);
+		Document theDocument = documents1DbUtil.getDocument(theDocumentId);
 
 		// place document in the request attribute
 		request.setAttribute("THE_DOCUMENT", theDocument);
@@ -600,7 +580,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 				product3, qty3, product4, qty4, product5, qty5, product6, qty6, product7, qty7, info);
 
 		// perform update on database
-		warehouseDbUtil.updateDocument(theDocument);
+		documents1DbUtil.updateDocument(theDocument);
 
 		// write activity to db
 		HttpSession session = request.getSession();
@@ -610,14 +590,14 @@ public class WarehouseControllerServlet extends HttpServlet {
 		try {
 			Activity activity = new Activity(session.getAttribute("userName").toString(), "update doc1",
 					dtf.format(now), id);
-			warehouseDbUtil.monitorActivity(activity);
+			documents1DbUtil.monitorActivity(activity);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		System.out.println("update dupate");
-		// send them back to the "list document" page
-		listDocuments(request, response);
+		
+		firstList(request, response);
 
 	}
 
@@ -627,7 +607,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		int id = Integer.parseInt(request.getParameter("documentId"));
 
 		// perform delete on database
-		warehouseDbUtil.deleteDocument(id);
+		documents1DbUtil.deleteDocument(id);
 
 		// write activity to db
 		HttpSession session = request.getSession();
@@ -637,7 +617,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		try {
 			Activity activity = new Activity(session.getAttribute("userName").toString(), "del doc1", dtf.format(now),
 					id);
-			warehouseDbUtil.monitorActivity(activity);
+			documents1DbUtil.monitorActivity(activity);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -650,7 +630,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 
 	private void printDocument(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		warehouseDbUtil.printDocument(request.getParameter("documentId"));
+		documents1DbUtil.printDocument(request.getParameter("documentId"));
 
 		// write activity to db
 		int id = Integer.parseInt(request.getParameter("documentId"));
@@ -662,7 +642,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		try {
 			Activity activity = new Activity(session.getAttribute("userName").toString(), "print doc1", dtf.format(now),
 					id);
-			warehouseDbUtil.monitorActivity(activity);
+			documents1DbUtil.monitorActivity(activity);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -680,7 +660,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		// get documents from db util
-		List<Document2> documents2 = warehouseDbUtil.getDocuments2();
+		List<Document2> documents2 = documents2DbUtil.getDocuments2();
 		// add documents to the request
 		request.setAttribute("DOCUMENTS2_LIST", documents2);
 
@@ -703,27 +683,28 @@ public class WarehouseControllerServlet extends HttpServlet {
 		Document2 theDocument2 = new Document2(provider, product, qty);
 
 		// add the price to the database
-		warehouseDbUtil.addDocument2(theDocument2);
+		documents2DbUtil.addDocument2(theDocument2);
 
 		// write activity to db
-		List<Document2> documents2 = warehouseDbUtil.getDocuments2();
+		List<Document2> documents2 = documents2DbUtil.getDocuments2();
 		int id = documents2.get(documents2.size() - 1).getId();
 
 		HttpSession session = request.getSession();
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 		LocalDateTime now = LocalDateTime.now();
 		System.out.println(dtf.format(now));
+		
 		try {
 			Activity activity = new Activity(session.getAttribute("userName").toString(), "add doc2", dtf.format(now),
 					id);
-			warehouseDbUtil.monitorActivity(activity);
+			documents1DbUtil.monitorActivity(activity);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		// send back to main page (the documents2 list)
-		listProducts(request, response);
+		//listProducts(request, response);
 		listDocuments2(request, response);
 		
 
@@ -735,7 +716,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		String theDocument2id = request.getParameter("doc2Id");
 
 		// get price from database (db util)
-		Document2 theDocument2 = warehouseDbUtil.getDocument2(theDocument2id);
+		Document2 theDocument2 = documents2DbUtil.getDocument2(theDocument2id);
 
 		// place price in the request attribute
 		request.setAttribute("THE_DOCUMENT2", theDocument2);
@@ -758,7 +739,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		Document2 theDocument = new Document2(id, provider, product, qty);
 
 		// perform update on database
-		warehouseDbUtil.updateDocument2(theDocument);
+		documents2DbUtil.updateDocument2(theDocument);
 
 		// write activity to db
 		HttpSession session = request.getSession();
@@ -768,7 +749,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		try {
 			Activity activity = new Activity(session.getAttribute("userName").toString(), "update doc1",
 					dtf.format(now), id);
-			warehouseDbUtil.monitorActivity(activity);
+			documents1DbUtil.monitorActivity(activity);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -785,7 +766,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		int id = Integer.parseInt(request.getParameter("doc2Id"));
 
 		// perform delete on database
-		warehouseDbUtil.deleteDocument2(id);
+		documents2DbUtil.deleteDocument2(id);
 
 		// write activity to db
 		HttpSession session = request.getSession();
@@ -795,7 +776,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		try {
 			Activity activity = new Activity(session.getAttribute("userName").toString(), "del doc1", dtf.format(now),
 					id);
-			warehouseDbUtil.monitorActivity(activity);
+			documents1DbUtil.monitorActivity(activity);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -832,102 +813,10 @@ public class WarehouseControllerServlet extends HttpServlet {
 
 	private void calculateInvoice(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		ArrayList<String> productList = new ArrayList<String>();
-		ArrayList<String> product = new ArrayList<String>();
-		ArrayList<Integer> qty = new ArrayList<Integer>();
-		ArrayList<ProductList> sumList = new ArrayList<ProductList>();
 		String theCustomer = request.getParameter("inv2customer");
-		String grossAmount;
-
 		String[] ids = request.getParameterValues("docId");
-		for (String id : ids) {
 
-			Document document = warehouseDbUtil.getDocument(id);
-
-			product.add(document.getProduct1());
-			qty.add(document.getQty1());
-
-			if (document.getQty2() > 0) {
-				product.add(document.getProduct2());
-				qty.add(document.getQty2());
-
-				if (document.getQty3() > 0) {
-					product.add(document.getProduct3());
-					qty.add(document.getQty3());
-
-					if (document.getQty4() > 0) {
-						product.add(document.getProduct4());
-						qty.add(document.getQty4());
-
-						if (document.getQty5() > 0) {
-							product.add(document.getProduct5());
-							qty.add(document.getQty5());
-
-							if (document.getQty6() > 0) {
-								product.add(document.getProduct6());
-								qty.add(document.getQty6());
-
-								if (document.getQty7() > 0) {
-									product.add(document.getProduct7());
-									qty.add(document.getQty7());
-								}
-							}
-						}
-					}
-				}
-			}
-
-		}
-
-		for (int j = 0; j < product.size(); j++) {
-
-			if (!productList.contains(product.get(j))) {
-
-				for (int k = j; k < product.size() - 1; k++) {
-
-					if (product.get(j).equals(product.get(k + 1))) {
-
-						int suma = qty.get(j) + qty.get(k + 1);
-						qty.set(j, suma);
-					}
-				}
-				productList.add(product.get(j));
-				sumList.add(new ProductList(product.get(j), qty.get(j)));
-			}
-
-		}
-		StringBuilder sb = new StringBuilder();
-		Double sum = 0.00;
-
-		for (ProductList element : sumList) {
-
-			sb.append(element.getProduct() + "    szt." + element.getQty() + "     "
-					+ priceDbUtil.loadPriceForCustomer(element.getProduct(), theCustomer) + "z³" + "\n");
-			sb.append(element.getQty() * priceDbUtil.loadPriceForCustomer(element.getProduct(), theCustomer));
-			sum += element.getQty() * priceDbUtil.loadPriceForCustomer(element.getProduct(), theCustomer);
-
-		}
-
-		sum *= 1.23;
-
-		// Rounding number to up and two digits after dot.
-		NumberFormat fmt = NumberFormat.getNumberInstance();
-		fmt.setMaximumFractionDigits(2);
-		fmt.setRoundingMode(RoundingMode.CEILING);
-		sb.append("\n Gross amount: " + fmt.format(sum));
-		grossAmount = fmt.format(sum).toString();
-
-		// Convert from NumberFormat to Double
-
-		try {
-			Double myNumber = 0.00;
-			myNumber = fmt.parse(grossAmount).doubleValue();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		String invoice = sb.toString();
+		String invoice = CalculateInvoice.calculate(ids, theCustomer, priceDbUtil, documents1DbUtil);
 		HttpSession session = request.getSession();
 		session.setAttribute("amount", invoice);
 
@@ -948,7 +837,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		request.setAttribute("invcustomer", theCustomer);
 
 		// get products from db util
-		List<Document> documents = warehouseDbUtil.getCustomerDocuments(theCustomer);
+		List<Document> documents = documents1DbUtil.getCustomerDocuments(theCustomer);
 
 		// add product to the request
 		request.setAttribute("CUSTOM_DOCUMENTS_LIST", documents);
@@ -971,7 +860,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 
 		// get products from db util
 		List<Product> products = productsDbUtil.getProducts();
-
+		
 		// add product to the request
 		request.setAttribute("PRODUCTS_LIST", products);
 
@@ -1007,7 +896,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		try {
 			Activity activity = new Activity(session.getAttribute("userName").toString(), "add product",
 					dtf.format(now), id);
-			warehouseDbUtil.monitorActivity(activity);
+			documents1DbUtil.monitorActivity(activity);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1055,7 +944,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		try {
 			Activity activity = new Activity(session.getAttribute("userName").toString(), "update product",
 					dtf.format(now), id);
-			warehouseDbUtil.monitorActivity(activity);
+			documents1DbUtil.monitorActivity(activity);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1082,7 +971,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		try {
 			Activity activity = new Activity(session.getAttribute("userName").toString(), "del product",
 					dtf.format(now), id);
-			warehouseDbUtil.monitorActivity(activity);
+			documents1DbUtil.monitorActivity(activity);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1137,7 +1026,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		try {
 			Activity activity = new Activity(session.getAttribute("userName").toString(), "add provider",
 					dtf.format(now), id);
-			warehouseDbUtil.monitorActivity(activity);
+			documents1DbUtil.monitorActivity(activity);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1187,7 +1076,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		try {
 			Activity activity = new Activity(session.getAttribute("userName").toString(), "update provider",
 					dtf.format(now), id);
-			warehouseDbUtil.monitorActivity(activity);
+			documents1DbUtil.monitorActivity(activity);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1214,7 +1103,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		try {
 			Activity activity = new Activity(session.getAttribute("userName").toString(), "del provider",
 					dtf.format(now), id);
-			warehouseDbUtil.monitorActivity(activity);
+			documents1DbUtil.monitorActivity(activity);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1222,138 +1111,6 @@ public class WarehouseControllerServlet extends HttpServlet {
 
 		// send them back to the "list providers" page
 		listProviders(request, response);
-
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////
-	////////////////////////// CUSTOMERS ZONE //////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////
-	private void listCustomers(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-		// get customer from db util
-		List<Customer> customers = customersDbUtil.getCustomers();
-
-		// add customer to the request
-		request.setAttribute("CUSTOMERS_LIST", customers);
-
-		HttpSession session = request.getSession();
-		session.setAttribute("Customers", customers);
-
-		// send to JSP page (view)
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/create-customer.jsp");
-		dispatcher.forward(request, response);
-
-	}
-
-	private void addCustomer(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-		// read customer info from form data
-		String name = request.getParameter("name");
-		String address = request.getParameter("address");
-		String telephone = request.getParameter("telephone");
-
-		// create a new customer object
-		Customer theCustomer = new Customer(name, address, telephone);
-
-		// add the customer to the database
-		customersDbUtil.addCustomer(theCustomer);
-
-		// write activity to db
-		List<Customer> customer = customersDbUtil.getCustomers();
-		int id = customer.get(customer.size() - 1).getId();
-
-		HttpSession session = request.getSession();
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-		LocalDateTime now = LocalDateTime.now();
-		System.out.println(dtf.format(now));
-		try {
-			Activity activity = new Activity(session.getAttribute("userName").toString(), "add customer",
-					dtf.format(now), id);
-			warehouseDbUtil.monitorActivity(activity);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		// send back to main page (the customer list)
-		listCustomers(request, response);
-
-	}
-
-	private void loadCustomer(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-		// read customer id from form data
-		String theCustomerId = request.getParameter("customerId");
-
-		// get customer from database (db util)
-		Customer theCusdtomer = customersDbUtil.getCustomer(theCustomerId);
-
-		// place student in the request attribute
-		request.setAttribute("THE_CUSTOMER", theCusdtomer);
-
-		// send to jsp page: update-student-form.jsp
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/update-customer-form.jsp");
-		dispatcher.forward(request, response);
-
-	}
-
-	private void updateCustomer(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-		// read customer info from form data
-		int id = Integer.parseInt(request.getParameter("customerId"));
-		String name = request.getParameter("name");
-		String address = request.getParameter("address");
-		String telephone = request.getParameter("telephone");
-
-		// create a new customer object
-		Customer theCustomer = new Customer(id, name, address, telephone);
-
-		// perform update on database
-		customersDbUtil.updateCustomer(theCustomer);
-
-		// write activity to db
-		HttpSession session = request.getSession();
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-		LocalDateTime now = LocalDateTime.now();
-		System.out.println(dtf.format(now));
-		try {
-			Activity activity = new Activity(session.getAttribute("userName").toString(), "update customer",
-					dtf.format(now), id);
-			warehouseDbUtil.monitorActivity(activity);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		// send them back to the "list customers" page
-		listCustomers(request, response);
-
-	}
-
-	private void deleteCustomer(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-		// read customer info from form data
-		int id = Integer.parseInt(request.getParameter("customerId"));
-
-		// perform delete on database
-		customersDbUtil.deleteCustomer(id);
-
-		// write activity to db
-		HttpSession session = request.getSession();
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-		LocalDateTime now = LocalDateTime.now();
-		System.out.println(dtf.format(now));
-		try {
-			Activity activity = new Activity(session.getAttribute("userName").toString(), "delete customer",
-					dtf.format(now), id);
-			warehouseDbUtil.monitorActivity(activity);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		// send them back to the "list customers" page
-		listCustomers(request, response);
 
 	}
 
@@ -1401,7 +1158,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		try {
 			Activity activity = new Activity(session.getAttribute("userName").toString(), "add reciepient",
 					dtf.format(now), id);
-			warehouseDbUtil.monitorActivity(activity);
+			documents1DbUtil.monitorActivity(activity);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1451,7 +1208,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		try {
 			Activity activity = new Activity(session.getAttribute("userName").toString(), "update reciepient",
 					dtf.format(now), id);
-			warehouseDbUtil.monitorActivity(activity);
+			documents1DbUtil.monitorActivity(activity);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1478,7 +1235,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		try {
 			Activity activity = new Activity(session.getAttribute("userName").toString(), "del reciepient",
 					dtf.format(now), id);
-			warehouseDbUtil.monitorActivity(activity);
+			documents1DbUtil.monitorActivity(activity);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1533,7 +1290,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		try {
 			Activity activity = new Activity(session.getAttribute("userName").toString(), "add price", dtf.format(now),
 					id);
-			warehouseDbUtil.monitorActivity(activity);
+			documents1DbUtil.monitorActivity(activity);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1583,7 +1340,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		try {
 			Activity activity = new Activity(session.getAttribute("userName").toString(), "update price",
 					dtf.format(now), id);
-			warehouseDbUtil.monitorActivity(activity);
+			documents1DbUtil.monitorActivity(activity);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1610,7 +1367,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		try {
 			Activity activity = new Activity(session.getAttribute("userName").toString(), "del price", dtf.format(now),
 					id);
-			warehouseDbUtil.monitorActivity(activity);
+			documents1DbUtil.monitorActivity(activity);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1671,7 +1428,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		try {
 			Activity activity = new Activity(session.getAttribute("userName").toString(), "add employee",
 					dtf.format(now), id);
-			warehouseDbUtil.monitorActivity(activity);
+			documents1DbUtil.monitorActivity(activity);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1727,7 +1484,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		try {
 			Activity activity = new Activity(session.getAttribute("userName").toString(), "update employee",
 					dtf.format(now), id);
-			warehouseDbUtil.monitorActivity(activity);
+			documents1DbUtil.monitorActivity(activity);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1754,7 +1511,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		try {
 			Activity activity = new Activity(session.getAttribute("userName").toString(), "del employee",
 					dtf.format(now), id);
-			warehouseDbUtil.monitorActivity(activity);
+			documents1DbUtil.monitorActivity(activity);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1808,7 +1565,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		try {
 			Activity activity = new Activity(session.getAttribute("userName").toString(), "add warehouse",
 					dtf.format(now), id);
-			warehouseDbUtil.monitorActivity(activity);
+			documents1DbUtil.monitorActivity(activity);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1856,7 +1613,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		try {
 			Activity activity = new Activity(session.getAttribute("userName").toString(), "update warehouse",
 					dtf.format(now), id);
-			warehouseDbUtil.monitorActivity(activity);
+			documents1DbUtil.monitorActivity(activity);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1883,7 +1640,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 		try {
 			Activity activity = new Activity(session.getAttribute("userName").toString(), "del warehouse",
 					dtf.format(now), id);
-			warehouseDbUtil.monitorActivity(activity);
+			documents1DbUtil.monitorActivity(activity);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

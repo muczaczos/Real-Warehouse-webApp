@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import com.muczo.mvc.warehouse.blueprint.Activity;
-import com.muczo.mvc.warehouse.db.WarehouseDbUtil;
+import com.muczo.mvc.warehouse.db.Documents1DbUtil;
 
 /**
  * Servlet implementation class LogoutServlet
@@ -24,7 +25,7 @@ import com.muczo.mvc.warehouse.db.WarehouseDbUtil;
 @WebServlet("/LogoutServlet")
 public class LogoutServlet extends HttpServlet {
 
-	private WarehouseDbUtil warehouseDbUtil;
+	private Documents1DbUtil warehouseDbUtil;
 	
 	@Resource(name = "jdbc/kp_warehouse_documents")
 	private DataSource dataSource;
@@ -35,7 +36,7 @@ public class LogoutServlet extends HttpServlet {
 
 		// create our warehouse db util ... and pass in the conn pool / datasource
 		try {
-			warehouseDbUtil = new WarehouseDbUtil(dataSource);
+			warehouseDbUtil = new Documents1DbUtil(dataSource);
 		} catch (Exception exc) {
 			throw new ServletException(exc);
 		}
@@ -47,10 +48,7 @@ public class LogoutServlet extends HttpServlet {
 		
 		
 		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
-
-		request.getRequestDispatcher("link.html").include(request, response);
-
+		
 		HttpSession session = request.getSession();
 		
 		//write activity to db
@@ -61,17 +59,16 @@ public class LogoutServlet extends HttpServlet {
 		try {
 			Activity activity = new Activity(session.getAttribute("userName").toString(), "Logout", dtf.format(now), 0);
 			warehouseDbUtil.monitorActivity(activity);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/index.html");
+			dispatcher.forward(request, response);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			out.print("Proponujê siê najpierw zalogowaæ...");
-	
 
 		}
 		
 		session.invalidate();
 
-		out.close();
+
 	
-		response.sendRedirect("login.html");
 	}
 }

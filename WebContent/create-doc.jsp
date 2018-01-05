@@ -54,25 +54,25 @@
 
 			<ul>
 				<li><a href="WarehouseControllerServlet"><fmt:message
-							key="label.menu.doc" /></a></li>
-				<li><a href="create-doc2.jsp"><fmt:message
-							key="label.menu.doc2" /></a></li>
-				<li><a href="create-invoice.jsp"><fmt:message
-							key="label.menu.inv" /></a></li>
-				<li><a href="create-provider.jsp"><fmt:message
-							key="label.menu.prov" /></a></li>
-				<li><a href="create-customer.jsp"><fmt:message
-							key="label.menu.cus" /></a></li>
-				<li><a href="create-reciepient.jsp"><fmt:message
-							key="label.menu.rec" /></a></li>
-				<li><a href="create-product.jsp"><fmt:message
-							key="label.menu.pro" /></a></li>
-				<li><a href="create-price.jsp"><fmt:message
-							key="label.menu.pri" /></a></li>
-				<li><a href="create-employees.jsp"><fmt:message
-							key="label.menu.emp" /></a></li>
-				<li><a href="create-warehouse.jsp"><fmt:message
-							key="label.menu.war" /></a></li>
+						key="label.menu.doc" /></a></li>
+			<li><a href="create-doc2.jsp"><fmt:message
+						key="label.menu.doc2" /></a></li>
+			<li><a href="create-invoice.jsp"><fmt:message
+						key="label.menu.inv" /></a></li>
+			<li><a href="create-provider.jsp"><fmt:message
+						key="label.menu.prov" /></a></li>
+			<li><a href="create-customer.jsp"><fmt:message
+						key="label.menu.cus" /></a></li>
+			<li><a href="create-reciepient.jsp"><fmt:message
+						key="label.menu.rec" /></a></li>
+			<li><a href="WarehouseControllerServlet?command=LIST-PRODUCTS?"><fmt:message
+						key="label.menu.pro" /></a></li>
+			<li><a href="create-price.jsp"><fmt:message
+						key="label.menu.pri" /></a></li>
+			<li><a href="create-employees.jsp"><fmt:message
+						key="label.menu.emp" /></a></li>
+			<li><a href="create-warehouse.jsp"><fmt:message
+						key="label.menu.war" /></a></li>
 			</ul>
 
 			<br> <br>

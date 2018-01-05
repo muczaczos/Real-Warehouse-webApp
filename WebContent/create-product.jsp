@@ -53,7 +53,7 @@
 						key="label.menu.cus" /></a></li>
 			<li><a href="create-reciepient.jsp"><fmt:message
 						key="label.menu.rec" /></a></li>
-			<li><a href="create-product.jsp"><fmt:message
+			<li><a href="WarehouseControllerServlet?command=LIST-PRODUCTS?"><fmt:message
 						key="label.menu.pro" /></a></li>
 			<li><a href="create-price.jsp"><fmt:message
 						key="label.menu.pri" /></a></li>

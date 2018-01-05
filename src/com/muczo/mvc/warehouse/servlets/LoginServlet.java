@@ -16,7 +16,7 @@ import javax.sql.DataSource;
 
 import com.muczo.mvc.warehouse.blueprint.Activity;
 import com.muczo.mvc.warehouse.blueprint.User;
-import com.muczo.mvc.warehouse.db.WarehouseDbUtil;
+import com.muczo.mvc.warehouse.db.Documents1DbUtil;
 
 /**
  * Servlet implementation class LoginServlet
@@ -24,7 +24,7 @@ import com.muczo.mvc.warehouse.db.WarehouseDbUtil;
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
 
-	private WarehouseDbUtil warehouseDbUtil;
+	private Documents1DbUtil warehouseDbUtil;
 
 	@Resource(name = "jdbc/kp_warehouse_documents")
 	private DataSource dataSource;
@@ -35,7 +35,7 @@ public class LoginServlet extends HttpServlet {
 
 		// create our warehouse db util ... and pass in the conn pool / datasource
 		try {
-			warehouseDbUtil = new WarehouseDbUtil(dataSource);
+			warehouseDbUtil = new Documents1DbUtil(dataSource);
 		} catch (Exception exc) {
 			throw new ServletException(exc);
 		}

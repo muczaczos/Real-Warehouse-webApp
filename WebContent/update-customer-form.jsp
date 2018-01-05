@@ -52,7 +52,7 @@
 
 		<br> <br> <br>
 
-		<form action="WarehouseControllerServlet" method="GET">
+		<form action="CustomerControllerServlet" method="GET">
 
 			<input type="hidden" name="command" value="UPDATE-CUSTOMER" /> <input
 				type="hidden" name="customerId" value="${THE_CUSTOMER.id}" />
