@@ -17,6 +17,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.RegionUtil;
+import org.apache.poi.xssf.usermodel.XSSFPrintSetup;
 
 import com.muczo.mvc.warehouse.blueprint.Document;
 import com.muczo.mvc.warehouse.db.DbUtil;
@@ -43,6 +44,7 @@ public class PrintDocument {
 			// Blank Document with tables
 			wb = new HSSFWorkbook();
 			Sheet sheet = wb.createSheet("new sheet");
+		
 			// double leftMarginInches = sheet.getMargin(Sheet.LeftMargin);
 			sheet.setMargin(Sheet.RightMargin, 0.5 /* inches */ );
 			sheet.setMargin(Sheet.LeftMargin, 0.8 /* inches */ );
@@ -542,7 +544,7 @@ public class PrintDocument {
 				sheet.addMergedRegion(cellRangeAddress21);
 				borderToRegion(cellRangeAddress21, sheet, wb);
 			}
-
+		
 		} catch (IndexOutOfBoundsException eb) {
 			JOptionPane.showMessageDialog(new JFrame(), "Mark some document for printing", "Printing error",
 					JOptionPane.ERROR_MESSAGE);

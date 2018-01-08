@@ -22,8 +22,11 @@
 </head>
 
 <body>
-<a href="LogoutServlet">Wyloguj</a>
-<hr>
+	<form action="LogoutServlet" method="GET">
+		<input type="submit" value="Wyloguj" class="logout" />
+
+	</form>
+	<hr>
 	<a href="create-warehouse.jsp?theLocale=en_US">Polski (PL)</a> |
 	<a href="create-warehouse.jsp?theLocale=pl_PL">English (US)</a>
 
@@ -40,7 +43,7 @@
 	<div id="container">
 		<br>
 		<ul>
-		<li><a href="WarehouseControllerServlet"><fmt:message
+			<li><a href="WarehouseControllerServlet"><fmt:message
 						key="label.menu.doc" /></a></li>
 			<li><a href="create-doc2.jsp"><fmt:message
 						key="label.menu.doc2" /></a></li>

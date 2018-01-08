@@ -22,7 +22,7 @@
 </head>
 
 <body>
-<a href="LogoutServlet">Wyloguj</a>
+
 <hr>
 	<a
 		href="update-employee-form.jsp?command=LOAD-EMPLOYEE&employeeId=${THE_EMPLOYEE.id}&theLocale=en_US">Polski
@@ -43,7 +43,7 @@
 
 		<br> <br> <br>
 
-		<form action="WarehouseControllerServlet" method="GET">
+		<form action="EmployeesControllerServlet" method="GET">
 
 			<input type="hidden" name="command" value="UPDATE-EMPLOYEE" /> <input
 				type="hidden" name="employeeId" value="${THE_EMPLOYEE.id}" />

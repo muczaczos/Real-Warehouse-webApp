@@ -50,14 +50,7 @@ public class CustomerControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private Documents1DbUtil documents1DbUtil;
-	private Documents2DbUtil documents2DbUtil;
-	private ProvidersDbUtil providersDbUtil;
-	private ProductsDbUtil productsDbUtil;
 	private CustomersDbUtil customersDbUtil;
-	private ReciepientsDbUtil reciepientsDbUtil;
-	private PriceDbUtil priceDbUtil;
-	private WarehousesDbUtil warehousesDbUtil;
-	private EmployeesDbUtil employeesDbUtil;
 
 	@Resource(name = "jdbc/kp_warehouse_documents")
 	private DataSource dataSource;
@@ -146,133 +139,157 @@ public class CustomerControllerServlet extends HttpServlet {
 	////////////////////////////////////////////////////////////////////////////////
 	private void listCustomers(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		// get customer from db util
-		List<Customer> customers = customersDbUtil.getCustomers();
-
-		// add customer to the request
-		request.setAttribute("CUSTOMERS_LIST", customers);
-
 		HttpSession session = request.getSession();
-		session.setAttribute("Customers", customers);
 
-		// send to JSP page (view)
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/create-customer.jsp");
-		dispatcher.forward(request, response);
+		if (session.getAttribute("userName") != null) {
+
+			// get customer from db util
+			List<Customer> customers = customersDbUtil.getCustomers();
+
+			// add customer to the request
+			request.setAttribute("CUSTOMERS_LIST", customers);
+
+			session = request.getSession();
+			session.setAttribute("Customers", customers);
+
+			// send to JSP page (view)
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/create-customer.jsp");
+			dispatcher.forward(request, response);
+
+		}
 
 	}
 
 	private void addCustomer(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		// read customer info from form data
-		String name = request.getParameter("name");
-		String address = request.getParameter("address");
-		String telephone = request.getParameter("telephone");
+		HttpSession session = request.getSession();
 
-		// create a new customer object
-		Customer theCustomer = new Customer(name, address, telephone);
+		if (session.getAttribute("userName") != null) {
 
-		// add the customer to the database
-		customersDbUtil.addCustomer(theCustomer);
+			// read customer info from form data
+			String name = request.getParameter("name");
+			String address = request.getParameter("address");
+			String telephone = request.getParameter("telephone");
 
-		// write activity to db
-		List<Customer> customer = customersDbUtil.getCustomers();
-		int id = customer.get(customer.size() - 1).getId();
+			// create a new customer object
+			Customer theCustomer = new Customer(name, address, telephone);
 
-		try {
-			HttpSession session = request.getSession();
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-			LocalDateTime now = LocalDateTime.now();
-			System.out.println(dtf.format(now));
-			Activity activity = new Activity(session.getAttribute("userName").toString(), "add customer",
-					dtf.format(now), id);
-			documents1DbUtil.monitorActivity(activity);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// add the customer to the database
+			customersDbUtil.addCustomer(theCustomer);
+
+			// write activity to db
+			List<Customer> customer = customersDbUtil.getCustomers();
+			int id = customer.get(customer.size() - 1).getId();
+
+			try {
+				session = request.getSession();
+				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+				LocalDateTime now = LocalDateTime.now();
+				System.out.println(dtf.format(now));
+				Activity activity = new Activity(session.getAttribute("userName").toString(), "add customer",
+						dtf.format(now), id);
+				documents1DbUtil.monitorActivity(activity);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			// send back to main page (the customer list)
+			listCustomers(request, response);
 		}
-
-		// send back to main page (the customer list)
-		listCustomers(request, response);
-
 	}
 
 	private void loadCustomer(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		// read customer id from form data
-		String theCustomerId = request.getParameter("customerId");
+		HttpSession session = request.getSession();
 
-		// get customer from database (db util)
-		Customer theCusdtomer = customersDbUtil.getCustomer(theCustomerId);
+		if (session.getAttribute("userName") != null) {
 
-		// place student in the request attribute
-		request.setAttribute("THE_CUSTOMER", theCusdtomer);
+			// read customer id from form data
+			String theCustomerId = request.getParameter("customerId");
 
-		// send to jsp page: update-student-form.jsp
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/update-customer-form.jsp");
-		dispatcher.forward(request, response);
+			// get customer from database (db util)
+			Customer theCusdtomer = customersDbUtil.getCustomer(theCustomerId);
+
+			// place student in the request attribute
+			request.setAttribute("THE_CUSTOMER", theCusdtomer);
+
+			// send to jsp page: update-student-form.jsp
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/update-customer-form.jsp");
+			dispatcher.forward(request, response);
+
+		}
 
 	}
 
 	private void updateCustomer(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		// read customer info from form data
-		int id = Integer.parseInt(request.getParameter("customerId"));
-		String name = request.getParameter("name");
-		String address = request.getParameter("address");
-		String telephone = request.getParameter("telephone");
+		HttpSession session = request.getSession();
 
-		// create a new customer object
-		Customer theCustomer = new Customer(id, name, address, telephone);
+		if (session.getAttribute("userName") != null) {
 
-		// perform update on database
-		customersDbUtil.updateCustomer(theCustomer);
+			// read customer info from form data
+			int id = Integer.parseInt(request.getParameter("customerId"));
+			String name = request.getParameter("name");
+			String address = request.getParameter("address");
+			String telephone = request.getParameter("telephone");
 
-		
-		try {
-			
-			// write activity to db
-			HttpSession session = request.getSession();
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-			LocalDateTime now = LocalDateTime.now();
-			System.out.println(dtf.format(now));
-			Activity activity = new Activity(session.getAttribute("userName").toString(), "update customer",
-					dtf.format(now), id);
-			documents1DbUtil.monitorActivity(activity);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// create a new customer object
+			Customer theCustomer = new Customer(id, name, address, telephone);
+
+			// perform update on database
+			customersDbUtil.updateCustomer(theCustomer);
+
+			try {
+
+				// write activity to db
+				session = request.getSession();
+				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+				LocalDateTime now = LocalDateTime.now();
+				System.out.println(dtf.format(now));
+				Activity activity = new Activity(session.getAttribute("userName").toString(), "update customer",
+						dtf.format(now), id);
+				documents1DbUtil.monitorActivity(activity);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			// send them back to the "list customers" page
+			listCustomers(request, response);
 		}
-
-		// send them back to the "list customers" page
-		listCustomers(request, response);
-
 	}
 
 	private void deleteCustomer(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		// read customer info from form data
-		int id = Integer.parseInt(request.getParameter("customerId"));
+		HttpSession session = request.getSession();
 
-		// perform delete on database
-		customersDbUtil.deleteCustomer(id);
+		if (session.getAttribute("userName") != null) {
 
-		try {
-			// write activity to db
-			HttpSession session = request.getSession();
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-			LocalDateTime now = LocalDateTime.now();
-			System.out.println(dtf.format(now));
-			
-			Activity activity = new Activity(session.getAttribute("userName").toString(), "delete customer",
-					dtf.format(now), id);
-			documents1DbUtil.monitorActivity(activity);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// read customer info from form data
+			int id = Integer.parseInt(request.getParameter("customerId"));
+
+			// perform delete on database
+			customersDbUtil.deleteCustomer(id);
+
+			try {
+				// write activity to db
+				session = request.getSession();
+				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+				LocalDateTime now = LocalDateTime.now();
+				System.out.println(dtf.format(now));
+
+				Activity activity = new Activity(session.getAttribute("userName").toString(), "delete customer",
+						dtf.format(now), id);
+				documents1DbUtil.monitorActivity(activity);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			// send them back to the "list customers" page
+			listCustomers(request, response);
 		}
-
-		// send them back to the "list customers" page
-		listCustomers(request, response);
 
 	}
 

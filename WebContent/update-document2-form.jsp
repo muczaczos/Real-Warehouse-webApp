@@ -23,7 +23,7 @@
 </head>
 
 <body>
-<a href="LogoutServlet">Wyloguj</a>
+
 <hr>
 	<a
 		href="update-document2-form.jsp?command=LOAD-DOCUMENT2&productId=${THE_DOCUMENT2.id}&theLocale=en_US">Polski

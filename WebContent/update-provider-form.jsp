@@ -21,7 +21,7 @@
 </head>
 
 <body>
-<a href="LogoutServlet">Wyloguj</a>
+
 <hr>
 	<a
 		href="update-provider-form.jsp?command=LOAD-PROVIDER&providerId=${THE_CUSTOMER.id}&theLocale=en_US">Polski

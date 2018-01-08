@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import com.muczo.mvc.warehouse.blueprint.Activity;
+import com.muczo.mvc.warehouse.blueprint.User;
 import com.muczo.mvc.warehouse.db.Documents1DbUtil;
 
 /**
@@ -45,30 +46,44 @@ public class LogoutServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+		System.out.println("logout");
 		
 		response.setContentType("text/html; charset=UTF-8");
 		
 		HttpSession session = request.getSession();
 		
-		//write activity to db
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-		LocalDateTime now = LocalDateTime.now();
-		System.out.println(dtf.format(now));
+		
 		
 		try {
-			Activity activity = new Activity(session.getAttribute("userName").toString(), "Logout", dtf.format(now), 0);
-			warehouseDbUtil.monitorActivity(activity);
+			
+			
+			//write activity to db
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+			LocalDateTime now = LocalDateTime.now();
+			System.out.println(dtf.format(now));
+		
+			
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/index.html");
 			dispatcher.forward(request, response);
+			
+			Activity activity = new Activity(session.getAttribute("userName").toString(), "Logout", dtf.format(now), 0);
+			warehouseDbUtil.monitorActivity(activity);
+			
+			session.setAttribute("userName", null);
+			System.out.println(session.getAttribute("userName"));
+			session.invalidate();  
+	
+			
+		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 
 		}
+			
 		
-		session.invalidate();
-
-
+	
 	
 	}
+	
+
 }

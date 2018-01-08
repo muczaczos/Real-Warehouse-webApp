@@ -21,7 +21,7 @@
 </head>
 
 <body>
-<a href="LogoutServlet">Wyloguj</a>
+
 <hr>
 	<a
 		href="update-price-form.jsp?command=LOAD-PRICE&priceId=${THE_PRICE.id}&theLocale=en_US">Polski

@@ -22,8 +22,11 @@
 </head>
 
 <body>
-<a href="LogoutServlet">Wyloguj</a>
-<hr>
+	<form action="LogoutServlet" method="GET">
+		<input type="submit" value="Wyloguj" class="logout" />
+
+	</form>
+	<hr>
 	<a href="create-product.jsp?theLocale=en_US">Polski (PL)</a> |
 	<a href="create-product.jsp?theLocale=pl_PL">English (US)</a>
 

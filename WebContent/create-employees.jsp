@@ -26,8 +26,11 @@
 </head>
 
 <body>
-<a href="LogoutServlet">Wyloguj</a>
-<hr>
+	<form action="LogoutServlet" method="GET">
+		<input type="submit" value="Wyloguj" class="logout" />
+
+	</form>
+	<hr>
 	<a href="create-employees.jsp?theLocale=en_US">Polski (PL)</a> |
 	<a href="create-employees.jsp?theLocale=pl_PL">English (US)</a>
 
@@ -44,7 +47,7 @@
 	<div id="container">
 		<br>
 		<ul>
-	<li><a href="WarehouseControllerServlet"><fmt:message
+			<li><a href="WarehouseControllerServlet"><fmt:message
 						key="label.menu.doc" /></a></li>
 			<li><a href="create-doc2.jsp"><fmt:message
 						key="label.menu.doc2" /></a></li>
@@ -67,7 +70,7 @@
 		</ul>
 		<br> <br>
 
-		<form action="WarehouseControllerServlet" method="GET">
+		<form action="EmployeesControllerServlet" method="GET">
 			<input type="hidden" name="command" value="ADD-EMPLOYEE" />
 
 			<table>
@@ -135,7 +138,7 @@
 
 
 		<br> <br>
-		<form action="WarehouseControllerServlet" method="GET">
+		<form action="EmployeesControllerServlet" method="GET">
 
 			<table>
 
@@ -154,13 +157,13 @@
 
 				<c:forEach var="tempEmploy" items="${Employees}">
 					<!-- set up a link for each customers  -->
-					<c:url var="tempLink" value="WarehouseControllerServlet">
+					<c:url var="tempLink" value="EmployeesControllerServlet">
 						<c:param name="command" value="LOAD-EMPLOYEE" />
 						<c:param name="employeeId" value="${tempEmploy.id}" />
 					</c:url>
 
 					<!-- set up a link to delete a document -->
-					<c:url var="deleteLink" value="WarehouseControllerServlet">
+					<c:url var="deleteLink" value="EmployeesControllerServlet">
 						<c:param name="command" value="DELETE-EMPLOYEE" />
 						<c:param name="employeeId" value="${tempEmploy.id}" />
 					</c:url>

@@ -30,7 +30,11 @@
 
 <body>
 
-<a href="LogoutServlet">Wyloguj</a>
+	<form action="LogoutServlet" method="GET">
+						<input type="submit"
+							value="Wyloguj" class="logout" />
+			
+		</form>
 
 <hr>
 	Jesteś zalogowany jako ${userName}
