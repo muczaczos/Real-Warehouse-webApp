@@ -27,8 +27,8 @@
 
 	</form>
 	<hr>
-	<a href="create-reciepient.jsp?theLocale=en_US">Polski (PL)</a> |
-	<a href="create-reciepient.jsp?theLocale=pl_PL">English (US)</a>
+	<a href="ReciepientControllerServlet?theLocale=en_US">Polski (PL)</a> |
+	<a href="ReciepientControllerServlet?theLocale=pl_PL">English (US)</a>
 
 	<hr>
 
@@ -43,30 +43,30 @@
 	<div id="container">
 
 		<br>
-		<ul>
-			<li><a href="WarehouseControllerServlet"><fmt:message
+			<ul>
+			<li><a href="Document1ControllerServlet"><fmt:message
 						key="label.menu.doc" /></a></li>
-			<li><a href="create-doc2.jsp"><fmt:message
+			<li><a href="Document2ControllerServlet"><fmt:message
 						key="label.menu.doc2" /></a></li>
-			<li><a href="create-invoice.jsp"><fmt:message
+			<li><a href="InvoiceControllerServlet"><fmt:message
 						key="label.menu.inv" /></a></li>
-			<li><a href="create-provider.jsp"><fmt:message
+			<li><a href="ProviderControllerServlet"><fmt:message
 						key="label.menu.prov" /></a></li>
-			<li><a href="create-customer.jsp"><fmt:message
+			<li><a href="CustomerControllerServlet"><fmt:message
 						key="label.menu.cus" /></a></li>
-			<li><a href="create-reciepient.jsp"><fmt:message
+			<li><a href="ReciepientControllerServlet"><fmt:message
 						key="label.menu.rec" /></a></li>
-			<li><a href="WarehouseControllerServlet?command=LIST-PRODUCTS?"><fmt:message
+			<li><a href="ProductControllerServlet"><fmt:message
 						key="label.menu.pro" /></a></li>
-			<li><a href="create-price.jsp"><fmt:message
+			<li><a href="PriceControllerServlet"><fmt:message
 						key="label.menu.pri" /></a></li>
-			<li><a href="create-employees.jsp"><fmt:message
+			<li><a href="EmployeesControllerServlet"><fmt:message
 						key="label.menu.emp" /></a></li>
-			<li><a href="create-warehouse.jsp"><fmt:message
+			<li><a href="WarehouseControllerServlet"><fmt:message
 						key="label.menu.war" /></a></li>
 		</ul>
 		<br> <br>
-		<form action="WarehouseControllerServlet" method="GET">
+		<form action="ReciepientControllerServlet" method="GET">
 			<input type="hidden" name="command" value="ADD-RECIEPIENT" />
 
 			<table>
@@ -99,7 +99,7 @@
 
 
 		<br> <br>
-		<form action="WarehouseControllerServlet" method="GET">
+		<form action="ReciepientControllerServlet" method="GET">
 
 			<table>
 
@@ -113,13 +113,13 @@
 
 				<c:forEach var="tempRec" items="${Reciepients}">
 					<!-- set up a link for each customers  -->
-					<c:url var="tempLink" value="WarehouseControllerServlet">
+					<c:url var="tempLink" value="ReciepientControllerServlet">
 						<c:param name="command" value="LOAD-RECIEPIENT" />
 						<c:param name="reciepientId" value="${tempRec.id}" />
 					</c:url>
 
 					<!-- set up a link to delete a document -->
-					<c:url var="deleteLink" value="WarehouseControllerServlet">
+					<c:url var="deleteLink" value="ReciepientControllerServlet">
 						<c:param name="command" value="DELETE-RECIEPIENT" />
 						<c:param name="reciepientId" value="${tempRec.id}" />
 					</c:url>
@@ -149,7 +149,7 @@
 		<div style="clear: both;"></div>
 
 		<p>
-			<a href="WarehouseControllerServlet"><fmt:message
+			<a href="Document1ControllerServlet"><fmt:message
 					key="label.back.home" /></a>
 		</p>
 	</div>

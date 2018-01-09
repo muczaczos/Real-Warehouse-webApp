@@ -26,10 +26,10 @@
 
 <hr>
 	<a
-		href="update-document2-form.jsp?command=LOAD-DOCUMENT2&productId=${THE_DOCUMENT2.id}&theLocale=en_US">Polski
+		href="Document2ControllerServlet?command=LOAD-DOCUMENT2&productId=${THE_DOCUMENT2.id}&theLocale=en_US">Polski
 		(PL)</a> |
 	<a
-		href="update-document2-form.jsp?command=LOAD-DOCUMENT2&productId=${THE_DOCUMENT2.id}&theLocale=pl_PL">English
+		href="Document2ControllerServlet?command=LOAD-DOCUMENT2&productId=${THE_DOCUMENT2.id}&theLocale=pl_PL">English
 		(US)</a>
 	
 	<hr>
@@ -44,7 +44,7 @@
 	<div id="container">
 
 		<br> <br> <br>
-		<form action="WarehouseControllerServlet" method="GET">
+		<form action="Document2ControllerServlet" method="GET">
 
 			<input type="hidden" name="command" value="UPDATE-DOCUMENT2" /> <input
 				type="hidden" name="doc2Id" value="${THE_DOCUMENT2.id}" />
@@ -82,7 +82,7 @@
 		<div style="clear: both;"></div>
 
 		<p>
-			<a href="create-doc2.jsp"><fmt:message
+			<a href="Document2ControllerServlet"><fmt:message
 					key="label.back.doc2" /></a>
 		</p>
 	</div>

@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import com.muczo.mvc.warehouse.blueprint.Activity;
-import com.muczo.mvc.warehouse.blueprint.Employee;
+import com.muczo.mvc.warehouse.blueprint.Reciepient;
 import com.muczo.mvc.warehouse.db.CustomersDbUtil;
 import com.muczo.mvc.warehouse.db.Documents1DbUtil;
 import com.muczo.mvc.warehouse.db.Documents2DbUtil;
@@ -30,42 +30,38 @@ import com.muczo.mvc.warehouse.db.WarehousesDbUtil;
 import com.muczo.mvc.warehouse.helperclasses.PrintDocument;
 
 /**
- * Servlet implementation class EmployeesControllerServlet
+ * Servlet implementation class ReciepientControllerServlet
  */
-@WebServlet("/EmployeesControllerServlet")
-public class EmployeesControllerServlet extends HttpServlet {
+@WebServlet("/ReciepientControllerServlet")
+public class ReciepientControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	private Documents1DbUtil documents1DbUtil;
-	private EmployeesDbUtil employeesDbUtil;
+	private ReciepientsDbUtil reciepientsDbUtil;
 
 	@Resource(name = "jdbc/kp_warehouse_documents")
 	private DataSource dataSource;
 
 	@Override
 	public void init() throws ServletException {
-
 		super.init();
 
 		// create our warehouse db util ... and pass in the conn pool / datasource
 		try {
 
 			documents1DbUtil = new Documents1DbUtil(dataSource);
-			employeesDbUtil = new EmployeesDbUtil(dataSource);
+			reciepientsDbUtil = new ReciepientsDbUtil(dataSource);
 
 		} catch (Exception exc) {
 			throw new ServletException(exc);
 		}
-		
 	}
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		request.getRequestDispatcher("link.html").include(request, response);
@@ -80,35 +76,35 @@ public class EmployeesControllerServlet extends HttpServlet {
 
 					// if the command is missing, then default to listing students
 					if (theCommand == null) {
-						theCommand = "LIST-EMPLOYEE";
+						theCommand = "LIST-RECIEPIENTS";
 					}
 
 					// route to the appropriate method
 					switch (theCommand) {
 
-					///////////////////// Employees List....///////////
-					case "LIST-EMPLOYEE":
-						listEmployees(request, response);
+					///////////////////// Reciepients....///////////////
+					case "LIST-RECIEPIENTS":
+						listReciepients(request, response);
 						break;
 
-					case "ADD-EMPLOYEE":
-						addEmployee(request, response);
+					case "ADD-RECIEPIENT":
+						addReciepient(request, response);
 						break;
 
-					case "LOAD-EMPLOYEE":
-						loadEmployee(request, response);
+					case "LOAD-RECIEPIENT":
+						loadReciepient(request, response);
 						break;
 
-					case "UPDATE-EMPLOYEE":
-						updateEmployee(request, response);
+					case "UPDATE-RECIEPIENT":
+						updateReciepient(request, response);
 						break;
 
-					case "DELETE-EMPLOYEE":
-						deleteEmployee(request, response);
+					case "DELETE-RECIEPIENT":
+						deleteReciepient(request, response);
 						break;
 
-					default:
-						listEmployees(request, response);
+								default:
+									listReciepients(request, response);
 					}
 
 				} catch (Exception exc) {
@@ -127,125 +123,113 @@ public class EmployeesControllerServlet extends HttpServlet {
 		out.close();
 	}
 
+
 	/////////////////////////////////////////////////////////////////////////////////
-	////////////////////////// EMPLOYEES ZONE //////////////////////////////////////
+	////////////////////////// RECIEPIENTS ZONE ////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////////////
-	private void listEmployees(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	private void listReciepients(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		HttpSession session = request.getSession();
 
 		if (session.getAttribute("userName") != null) {
 
-			// get employee from db util
-			List<Employee> employees = employeesDbUtil.getEmployees();
+			// get reciepients from db util
+			List<Reciepient> reciepients = reciepientsDbUtil.getReciepients();
 
-			// add employee to the request
-			request.setAttribute("EMPLOYEE_LIST", employees);
+			// add reciepients to the request
+			request.setAttribute("RECIEPIENTS_LIST", reciepients);
 
 			session = request.getSession();
-			session.setAttribute("Employees", employees);
+			session.setAttribute("Reciepients", reciepients);
 
 			// send to JSP page (view)
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/create-employees.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/create-reciepient.jsp");
 			dispatcher.forward(request, response);
-
 		}
 
 	}
 
-	private void addEmployee(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	private void addReciepient(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		HttpSession session = request.getSession();
 
+		System.out.println(session.getAttribute("userName").toString());
+
 		if (session.getAttribute("userName") != null) {
 
-			// read employee info from form data
+			// read reciepient info from form data
 			String name = request.getParameter("name");
-			String surname = request.getParameter("surname");
 			String address = request.getParameter("address");
 			String telephone = request.getParameter("telephone");
-			String profession = request.getParameter("profession");
-			String safetyTraining = request.getParameter("safetyTraining");
-			String medicalVisit = request.getParameter("medicalVisit");
-			String contractDate = request.getParameter("contractDate");
 
-			// create a new employee object
-			Employee theEmployee = new Employee(name, surname, address, telephone, profession, safetyTraining,
-					medicalVisit, contractDate);
+			// create a new reciepient object
+			Reciepient theReciepient = new Reciepient(name, address, telephone);
 
-			// add the employee to the database
-			employeesDbUtil.addEmployee(theEmployee);
+			// add the reciepient to the database
+			reciepientsDbUtil.addReciepient(theReciepient);
 
 			// write activity to db
-			List<Employee> employees = employeesDbUtil.getEmployees();
-			int id = employees.get(employees.size() - 1).getId();
+			List<Reciepient> reciepients = reciepientsDbUtil.getReciepients();
+			int id = reciepients.get(reciepients.size() - 1).getId();
 
-			session = request.getSession();
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 			LocalDateTime now = LocalDateTime.now();
 			System.out.println(dtf.format(now));
 			try {
-				Activity activity = new Activity(session.getAttribute("userName").toString(), "add employee",
+
+				Activity activity = new Activity(session.getAttribute("userName").toString(), "add reciepient",
 						dtf.format(now), id);
 				documents1DbUtil.monitorActivity(activity);
+
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
-			// send back to main page (the employee list)
-			listEmployees(request, response);
-
+			// send back to main page (the reciepient list)
+			listReciepients(request, response);
 		}
-
 	}
 
-	private void loadEmployee(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	private void loadReciepient(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		HttpSession session = request.getSession();
 
 		if (session.getAttribute("userName") != null) {
 
-			// read employee id from form data
-			String theEmployeeId = request.getParameter("employeeId");
+			// read reciepient id from form data
+			String theRciepientId = request.getParameter("reciepientId");
 
-			// get employee from database (db util)
-			Employee theEmployee = employeesDbUtil.getEmployee(theEmployeeId);
+			// get reciepient from database (db util)
+			Reciepient theReciepient = reciepientsDbUtil.getReciepient(theRciepientId);
 
-			// place employee in the request attribute
-			request.setAttribute("THE_EMPLOYEE", theEmployee);
+			// place reciepient in the request attribute
+			request.setAttribute("THE_RECIEPIENT", theReciepient);
 
-			// send to jsp page: update-employee-form.jsp
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/update-employee-form.jsp");
+			// send to jsp page: update-reciepient-form.jsp
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/update-reciepient-form.jsp");
 			dispatcher.forward(request, response);
-
 		}
 
 	}
 
-	private void updateEmployee(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	private void updateReciepient(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		HttpSession session = request.getSession();
 
 		if (session.getAttribute("userName") != null) {
 
-			// read employee info from form data
-			int id = Integer.parseInt(request.getParameter("employeeId"));
+			// read reciepient info from form data
+			int id = Integer.parseInt(request.getParameter("customerId"));
 			String name = request.getParameter("name");
-			String surname = request.getParameter("surname");
 			String address = request.getParameter("address");
 			String telephone = request.getParameter("telephone");
-			String profession = request.getParameter("profession");
-			String safetyTraining = request.getParameter("safetyTraining");
-			String medicalVisit = request.getParameter("medicalVisit");
-			String contractDate = request.getParameter("contractDate");
 
-			// create a new employee object
-			Employee employee = new Employee(id, name, surname, address, telephone, profession, safetyTraining,
-					medicalVisit, contractDate);
+			// create a new reciepient object
+			Reciepient theReciepient = new Reciepient(id, name, address, telephone);
 
 			// perform update on database
-			employeesDbUtil.updateEmployee(employee);
+			reciepientsDbUtil.updateReciepient(theReciepient);
 
 			// write activity to db
 			session = request.getSession();
@@ -253,7 +237,7 @@ public class EmployeesControllerServlet extends HttpServlet {
 			LocalDateTime now = LocalDateTime.now();
 			System.out.println(dtf.format(now));
 			try {
-				Activity activity = new Activity(session.getAttribute("userName").toString(), "update employee",
+				Activity activity = new Activity(session.getAttribute("userName").toString(), "update reciepient",
 						dtf.format(now), id);
 				documents1DbUtil.monitorActivity(activity);
 			} catch (Exception e) {
@@ -261,24 +245,22 @@ public class EmployeesControllerServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 
-			// send them back to the "list employees" page
-			listEmployees(request, response);
-
+			// send them back to the "list reciepient" page
+			listReciepients(request, response);
 		}
-
 	}
 
-	private void deleteEmployee(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	private void deleteReciepient(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		HttpSession session = request.getSession();
 
 		if (session.getAttribute("userName") != null) {
 
-			// read employee info from form data
-			int id = Integer.parseInt(request.getParameter("employeeId"));
+			// read reciepient info from form data
+			int id = Integer.parseInt(request.getParameter("reciepientId"));
 
 			// perform delete on database
-			employeesDbUtil.deleteEmployee(id);
+			reciepientsDbUtil.deleteReciepient(id);
 
 			// write activity to db
 			session = request.getSession();
@@ -286,7 +268,7 @@ public class EmployeesControllerServlet extends HttpServlet {
 			LocalDateTime now = LocalDateTime.now();
 			System.out.println(dtf.format(now));
 			try {
-				Activity activity = new Activity(session.getAttribute("userName").toString(), "del employee",
+				Activity activity = new Activity(session.getAttribute("userName").toString(), "del reciepient",
 						dtf.format(now), id);
 				documents1DbUtil.monitorActivity(activity);
 			} catch (Exception e) {
@@ -294,11 +276,8 @@ public class EmployeesControllerServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 
-			// send them back to the "list price" page
-			listEmployees(request, response);
-
+			// send them back to the "list reciepient" page
+			listReciepients(request, response);
 		}
-
 	}
-
 }

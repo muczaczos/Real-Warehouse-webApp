@@ -2,9 +2,13 @@ package com.muczo.mvc.warehouse.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.annotation.Resource;
 import javax.servlet.RequestDispatcher;
@@ -17,6 +21,14 @@ import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import com.muczo.mvc.warehouse.blueprint.Activity;
+import com.muczo.mvc.warehouse.blueprint.Customer;
+import com.muczo.mvc.warehouse.blueprint.Document;
+import com.muczo.mvc.warehouse.blueprint.Document2;
+import com.muczo.mvc.warehouse.blueprint.Employee;
+import com.muczo.mvc.warehouse.blueprint.PriceList;
+import com.muczo.mvc.warehouse.blueprint.Product;
+import com.muczo.mvc.warehouse.blueprint.Provider;
+import com.muczo.mvc.warehouse.blueprint.Reciepient;
 import com.muczo.mvc.warehouse.blueprint.Warehouse;
 import com.muczo.mvc.warehouse.db.CustomersDbUtil;
 import com.muczo.mvc.warehouse.db.Documents1DbUtil;
@@ -30,12 +42,12 @@ import com.muczo.mvc.warehouse.db.WarehousesDbUtil;
 import com.muczo.mvc.warehouse.helperclasses.PrintDocument;
 
 /**
- * Servlet implementation class WarehouseControllerServlet
+ * Servlet implementation class ProductControllerServlet
  */
-@WebServlet("/WarehouseControllerServlet")
-public class WarehouseControllerServlet extends HttpServlet {
+@WebServlet("/ProductControllerServlet")
+public class ProductControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+       
 	private Documents1DbUtil documents1DbUtil;
 	private Documents2DbUtil documents2DbUtil;
 	private ProvidersDbUtil providersDbUtil;
@@ -51,6 +63,8 @@ public class WarehouseControllerServlet extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
+		super.init();
+
 		// create our warehouse db util ... and pass in the conn pool / datasource
 		try {
 
@@ -70,13 +84,13 @@ public class WarehouseControllerServlet extends HttpServlet {
 		}
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
 
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		request.getRequestDispatcher("link.html").include(request, response);
@@ -91,35 +105,36 @@ public class WarehouseControllerServlet extends HttpServlet {
 
 					// if the command is missing, then default to listing students
 					if (theCommand == null) {
-						theCommand = "LIST-WAREHOUSES";
+						theCommand = "LIST-PRODUCTS";
 					}
 
 					// route to the appropriate method
 					switch (theCommand) {
 
-					///////////////////// Warehouses List....///////////
-					case "LIST-WAREHOUSES":
-						listWarehouses(request, response);
+					///////////////////// Products....///////////////
+					case "LIST-PRODUCTS":
+						listProducts(request, response);
 						break;
 
-					case "ADD-WAREHOUSE":
-						addWarehouse(request, response);
+					case "ADD-PRODUCT":
+						addProduct(request, response);
 						break;
 
-					case "LOAD-WAREHOUSE":
-						loadWarehouse(request, response);
+					case "LOAD-PRODUCT":
+						loadProduct(request, response);
 						break;
 
-					case "UPDATE-WAREHOUSE":
-						updateWarehouse(request, response);
+					case "UPDATE-PRODUCT":
+						updateProduct(request, response);
 						break;
 
-					case "DELETE-WAREHOUSE":
-						deleteWarehouse(request, response);
+					case "DELETE-PRODUCT":
+						deleteProduct(request, response);
 						break;
+
 
 					default:
-						listWarehouses(request, response);
+						listProducts(request, response);
 					}
 
 				} catch (Exception exc) {
@@ -138,58 +153,59 @@ public class WarehouseControllerServlet extends HttpServlet {
 		out.close();
 	}
 
-	/////////////////////////////////////////////////////////////////////////////////
-	////////////////////////// WAREHOUSES ZONE /////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////
 
-	private void listWarehouses(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	////////////////////////////////////////////////////////////////////////////////
+	////////////////////////// PRODUCTS ZONE //////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	private void listProducts(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		HttpSession session = request.getSession();
 
 		if (session.getAttribute("userName") != null) {
 
-			// get employee from db util
-			List<Warehouse> warehouses = warehousesDbUtil.getWarehouses();
+			// get products from db util
+			List<Product> products = productsDbUtil.getProducts();
 
-			// add employee to the request
-			request.setAttribute("WAREHOUSES_LIST", warehouses);
+			// add product to the request
+			request.setAttribute("PRODUCTS_LIST", products);
 
 			session = request.getSession();
-			session.setAttribute("Warehouses", warehouses);
+			session.setAttribute("Products", products);
 
 			// send to JSP page (view)
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/create-warehouse.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/create-product.jsp");
 			dispatcher.forward(request, response);
 
 		}
 
 	}
 
-	private void addWarehouse(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	private void addProduct(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		HttpSession session = request.getSession();
 
 		if (session.getAttribute("userName") != null) {
 
-			// read warehouses info from form data
-			String name = request.getParameter("name");
+			// read product info from form data
+			String name = request.getParameter("productName");
+			String warehouse = request.getParameter("warehouse");
 
-			// create a new employee object
-			Warehouse theWarehouse = new Warehouse(name);
+			// create a new product object
+			Product theProduct = new Product(name, warehouse, 0);
 
-			// add the employee to the database
-			warehousesDbUtil.addWarehouse(theWarehouse);
+			// add the product to the database
+			productsDbUtil.addProduct(theProduct);
 
 			// write activity to db
-			List<Warehouse> warehouses = warehousesDbUtil.getWarehouses();
-			int id = warehouses.get(warehouses.size() - 1).getId();
+			List<Product> products = productsDbUtil.getProducts();
+			int id = products.get(products.size() - 1).getId();
 
 			session = request.getSession();
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 			LocalDateTime now = LocalDateTime.now();
 			System.out.println(dtf.format(now));
 			try {
-				Activity activity = new Activity(session.getAttribute("userName").toString(), "add warehouse",
+				Activity activity = new Activity(session.getAttribute("userName").toString(), "add product",
 						dtf.format(now), id);
 				documents1DbUtil.monitorActivity(activity);
 			} catch (Exception e) {
@@ -197,51 +213,52 @@ public class WarehouseControllerServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 
-			// send back to main page (the employee list)
-			listWarehouses(request, response);
+			// send back to main page (the product list)
+			listProducts(request, response);
 
 		}
 
 	}
 
-	private void loadWarehouse(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	private void loadProduct(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		HttpSession session = request.getSession();
 
 		if (session.getAttribute("userName") != null) {
 
-			// read warehouse id from form data
-			String theWarehouseId = request.getParameter("warehouseId");
+			// read product id from form data
+			String theProductId = request.getParameter("productId");
 
-			// get wearehouse from database (db util)
-			Warehouse theWarehouse = warehousesDbUtil.getWarehouse(theWarehouseId);
+			// get product from database (db util)
+			Product theProduct = productsDbUtil.getProduct(theProductId);
 
-			// place employee in the request attribute
-			request.setAttribute("THE_WAREHOUSE", theWarehouse);
+			// place product in the request attribute
+			request.setAttribute("THE_PRODUCT", theProduct);
 
-			// send to jsp page: update-employee-form.jsp
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/update-warehouse-form.jsp");
+			// send to jsp page: update-product-form.jsp
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/update-product-form.jsp");
 			dispatcher.forward(request, response);
 
 		}
 
 	}
 
-	private void updateWarehouse(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	private void updateProduct(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		HttpSession session = request.getSession();
 
 		if (session.getAttribute("userName") != null) {
 
-			// read warehouse info from form data
-			int id = Integer.parseInt(request.getParameter("warehouseId"));
-			String name = request.getParameter("name");
+			// read product info from form data
+			int id = Integer.parseInt(request.getParameter("productId"));
+			String name = request.getParameter("productName");
+			String warehouse = request.getParameter("warehouse");
 
-			// create a new employee object
-			Warehouse warehouse = new Warehouse(id, name);
+			// create a new product object
+			Product theProduct = new Product(id, name, warehouse, 0);
 
 			// perform update on database
-			warehousesDbUtil.updateWarehouse(warehouse);
+			productsDbUtil.updateProduct(theProduct);
 
 			// write activity to db
 			session = request.getSession();
@@ -249,7 +266,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 			LocalDateTime now = LocalDateTime.now();
 			System.out.println(dtf.format(now));
 			try {
-				Activity activity = new Activity(session.getAttribute("userName").toString(), "update warehouse",
+				Activity activity = new Activity(session.getAttribute("userName").toString(), "update product",
 						dtf.format(now), id);
 				documents1DbUtil.monitorActivity(activity);
 			} catch (Exception e) {
@@ -257,24 +274,24 @@ public class WarehouseControllerServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 
-			// send them back to the "list employees" page
-			listWarehouses(request, response);
+			// send them back to the "list customers" page
+			listProducts(request, response);
 
 		}
 
 	}
 
-	private void deleteWarehouse(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	private void deleteProduct(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		HttpSession session = request.getSession();
 
 		if (session.getAttribute("userName") != null) {
 
-			// read employee info from form data
-			int id = Integer.parseInt(request.getParameter("warehouseId"));
+			// read product info from form data
+			int id = Integer.parseInt(request.getParameter("productId"));
 
 			// perform delete on database
-			warehousesDbUtil.deleteWarehouse(id);
+			productsDbUtil.deleteProduct(id);
 
 			// write activity to db
 			session = request.getSession();
@@ -282,7 +299,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 			LocalDateTime now = LocalDateTime.now();
 			System.out.println(dtf.format(now));
 			try {
-				Activity activity = new Activity(session.getAttribute("userName").toString(), "del warehouse",
+				Activity activity = new Activity(session.getAttribute("userName").toString(), "del product",
 						dtf.format(now), id);
 				documents1DbUtil.monitorActivity(activity);
 			} catch (Exception e) {
@@ -290,8 +307,8 @@ public class WarehouseControllerServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 
-			// send them back to the "list price" page
-			listWarehouses(request, response);
+			// send them back to the "list product" page
+			listProducts(request, response);
 
 		}
 

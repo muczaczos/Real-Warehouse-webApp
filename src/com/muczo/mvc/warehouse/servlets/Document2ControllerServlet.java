@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import com.muczo.mvc.warehouse.blueprint.Activity;
-import com.muczo.mvc.warehouse.blueprint.Employee;
+import com.muczo.mvc.warehouse.blueprint.Document2;
 import com.muczo.mvc.warehouse.db.CustomersDbUtil;
 import com.muczo.mvc.warehouse.db.Documents1DbUtil;
 import com.muczo.mvc.warehouse.db.Documents2DbUtil;
@@ -30,42 +30,38 @@ import com.muczo.mvc.warehouse.db.WarehousesDbUtil;
 import com.muczo.mvc.warehouse.helperclasses.PrintDocument;
 
 /**
- * Servlet implementation class EmployeesControllerServlet
+ * Servlet implementation class Document2ControllerServlet
  */
-@WebServlet("/EmployeesControllerServlet")
-public class EmployeesControllerServlet extends HttpServlet {
+@WebServlet("/Document2ControllerServlet")
+public class Document2ControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	private Documents1DbUtil documents1DbUtil;
-	private EmployeesDbUtil employeesDbUtil;
+	private Documents2DbUtil documents2DbUtil;
 
 	@Resource(name = "jdbc/kp_warehouse_documents")
 	private DataSource dataSource;
 
 	@Override
 	public void init() throws ServletException {
-
 		super.init();
 
 		// create our warehouse db util ... and pass in the conn pool / datasource
 		try {
 
 			documents1DbUtil = new Documents1DbUtil(dataSource);
-			employeesDbUtil = new EmployeesDbUtil(dataSource);
+			documents2DbUtil = new Documents2DbUtil(dataSource);
 
 		} catch (Exception exc) {
 			throw new ServletException(exc);
 		}
-		
 	}
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		request.getRequestDispatcher("link.html").include(request, response);
@@ -80,35 +76,35 @@ public class EmployeesControllerServlet extends HttpServlet {
 
 					// if the command is missing, then default to listing students
 					if (theCommand == null) {
-						theCommand = "LIST-EMPLOYEE";
+						theCommand = "LIST-DOCUMENTS2";
 					}
 
 					// route to the appropriate method
 					switch (theCommand) {
 
-					///////////////////// Employees List....///////////
-					case "LIST-EMPLOYEE":
-						listEmployees(request, response);
+					///////////////////// Documents2....//////////////
+					case "LIST-DOCUMENTS2":
+						listDocuments2(request, response);
 						break;
 
-					case "ADD-EMPLOYEE":
-						addEmployee(request, response);
+					case "ADD-DOCUMENT2":
+						addDocument2(request, response);
 						break;
 
-					case "LOAD-EMPLOYEE":
-						loadEmployee(request, response);
+					case "LOAD-DOCUMENT2":
+						loadDocument2(request, response);
 						break;
 
-					case "UPDATE-EMPLOYEE":
-						updateEmployee(request, response);
+					case "UPDATE-DOCUMENT2":
+						updateDocument2(request, response);
 						break;
 
-					case "DELETE-EMPLOYEE":
-						deleteEmployee(request, response);
+					case "DELETE-DOCUMENT2":
+						deleteDocument2(request, response);
 						break;
 
 					default:
-						listEmployees(request, response);
+						listDocuments2(request, response);
 					}
 
 				} catch (Exception exc) {
@@ -127,65 +123,58 @@ public class EmployeesControllerServlet extends HttpServlet {
 		out.close();
 	}
 
-	/////////////////////////////////////////////////////////////////////////////////
-	////////////////////////// EMPLOYEES ZONE //////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////////////
-	private void listEmployees(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	////////////////////////// DOCUMENTS2 ZONE ////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	private void listDocuments2(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		HttpSession session = request.getSession();
 
 		if (session.getAttribute("userName") != null) {
 
-			// get employee from db util
-			List<Employee> employees = employeesDbUtil.getEmployees();
+			// get documents from db util
+			List<Document2> documents2 = documents2DbUtil.getDocuments2();
+			// add documents to the request
+			request.setAttribute("DOCUMENTS2_LIST", documents2);
 
-			// add employee to the request
-			request.setAttribute("EMPLOYEE_LIST", employees);
-
-			session = request.getSession();
-			session.setAttribute("Employees", employees);
+			session.setAttribute("documents2", documents2);
 
 			// send to JSP page (view)
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/create-employees.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/create-doc2.jsp");
 			dispatcher.forward(request, response);
 
 		}
 
 	}
 
-	private void addEmployee(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	private void addDocument2(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		HttpSession session = request.getSession();
 
 		if (session.getAttribute("userName") != null) {
 
-			// read employee info from form data
-			String name = request.getParameter("name");
-			String surname = request.getParameter("surname");
-			String address = request.getParameter("address");
-			String telephone = request.getParameter("telephone");
-			String profession = request.getParameter("profession");
-			String safetyTraining = request.getParameter("safetyTraining");
-			String medicalVisit = request.getParameter("medicalVisit");
-			String contractDate = request.getParameter("contractDate");
+			// read document2 info from form data
+			String provider = request.getParameter("provider");
+			String product = request.getParameter("product");
+			int qty = Integer.parseInt(request.getParameter("qty"));
 
-			// create a new employee object
-			Employee theEmployee = new Employee(name, surname, address, telephone, profession, safetyTraining,
-					medicalVisit, contractDate);
+			// create a new price object
+			Document2 theDocument2 = new Document2(provider, product, qty);
 
-			// add the employee to the database
-			employeesDbUtil.addEmployee(theEmployee);
+			// add the price to the database
+			documents2DbUtil.addDocument2(theDocument2);
 
 			// write activity to db
-			List<Employee> employees = employeesDbUtil.getEmployees();
-			int id = employees.get(employees.size() - 1).getId();
+			List<Document2> documents2 = documents2DbUtil.getDocuments2();
+			int id = documents2.get(documents2.size() - 1).getId();
 
 			session = request.getSession();
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 			LocalDateTime now = LocalDateTime.now();
 			System.out.println(dtf.format(now));
+
 			try {
-				Activity activity = new Activity(session.getAttribute("userName").toString(), "add employee",
+				Activity activity = new Activity(session.getAttribute("userName").toString(), "add doc2",
 						dtf.format(now), id);
 				documents1DbUtil.monitorActivity(activity);
 			} catch (Exception e) {
@@ -193,59 +182,54 @@ public class EmployeesControllerServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 
-			// send back to main page (the employee list)
-			listEmployees(request, response);
+			// send back to main page (the documents2 list)
+			// listProducts(request, response);
+			listDocuments2(request, response);
 
 		}
 
 	}
 
-	private void loadEmployee(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	private void loadDocument2(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		HttpSession session = request.getSession();
 
 		if (session.getAttribute("userName") != null) {
 
-			// read employee id from form data
-			String theEmployeeId = request.getParameter("employeeId");
+			// read price id from form data
+			String theDocument2id = request.getParameter("doc2Id");
 
-			// get employee from database (db util)
-			Employee theEmployee = employeesDbUtil.getEmployee(theEmployeeId);
+			// get price from database (db util)
+			Document2 theDocument2 = documents2DbUtil.getDocument2(theDocument2id);
 
-			// place employee in the request attribute
-			request.setAttribute("THE_EMPLOYEE", theEmployee);
+			// place price in the request attribute
+			request.setAttribute("THE_DOCUMENT2", theDocument2);
 
-			// send to jsp page: update-employee-form.jsp
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/update-employee-form.jsp");
+			// send to jsp page: update-price-form.jsp
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/update-document2-form.jsp");
 			dispatcher.forward(request, response);
 
 		}
 
 	}
 
-	private void updateEmployee(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	private void updateDocument2(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		HttpSession session = request.getSession();
 
 		if (session.getAttribute("userName") != null) {
 
-			// read employee info from form data
-			int id = Integer.parseInt(request.getParameter("employeeId"));
-			String name = request.getParameter("name");
-			String surname = request.getParameter("surname");
-			String address = request.getParameter("address");
-			String telephone = request.getParameter("telephone");
-			String profession = request.getParameter("profession");
-			String safetyTraining = request.getParameter("safetyTraining");
-			String medicalVisit = request.getParameter("medicalVisit");
-			String contractDate = request.getParameter("contractDate");
+			// read document2 info from form data
+			int id = Integer.parseInt(request.getParameter("doc2Id"));
+			String provider = request.getParameter("provider");
+			String product = request.getParameter("product");
+			int qty = Integer.parseInt(request.getParameter("qty"));
 
-			// create a new employee object
-			Employee employee = new Employee(id, name, surname, address, telephone, profession, safetyTraining,
-					medicalVisit, contractDate);
+			// create a new price object
+			Document2 theDocument = new Document2(id, provider, product, qty);
 
 			// perform update on database
-			employeesDbUtil.updateEmployee(employee);
+			documents2DbUtil.updateDocument2(theDocument);
 
 			// write activity to db
 			session = request.getSession();
@@ -253,40 +237,7 @@ public class EmployeesControllerServlet extends HttpServlet {
 			LocalDateTime now = LocalDateTime.now();
 			System.out.println(dtf.format(now));
 			try {
-				Activity activity = new Activity(session.getAttribute("userName").toString(), "update employee",
-						dtf.format(now), id);
-				documents1DbUtil.monitorActivity(activity);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			// send them back to the "list employees" page
-			listEmployees(request, response);
-
-		}
-
-	}
-
-	private void deleteEmployee(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-		HttpSession session = request.getSession();
-
-		if (session.getAttribute("userName") != null) {
-
-			// read employee info from form data
-			int id = Integer.parseInt(request.getParameter("employeeId"));
-
-			// perform delete on database
-			employeesDbUtil.deleteEmployee(id);
-
-			// write activity to db
-			session = request.getSession();
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-			LocalDateTime now = LocalDateTime.now();
-			System.out.println(dtf.format(now));
-			try {
-				Activity activity = new Activity(session.getAttribute("userName").toString(), "del employee",
+				Activity activity = new Activity(session.getAttribute("userName").toString(), "update doc1",
 						dtf.format(now), id);
 				documents1DbUtil.monitorActivity(activity);
 			} catch (Exception e) {
@@ -295,10 +246,46 @@ public class EmployeesControllerServlet extends HttpServlet {
 			}
 
 			// send them back to the "list price" page
-			listEmployees(request, response);
+			listDocuments2(request, response);
 
 		}
 
 	}
 
+	private void deleteDocument2(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		HttpSession session = request.getSession();
+
+		if (session.getAttribute("userName") != null) {
+
+			// read price info from form data
+			int id = Integer.parseInt(request.getParameter("doc2Id"));
+
+			// perform delete on database
+			documents2DbUtil.deleteDocument2(id);
+
+			// write activity to db
+			session = request.getSession();
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+			LocalDateTime now = LocalDateTime.now();
+			System.out.println(dtf.format(now));
+			try {
+				Activity activity = new Activity(session.getAttribute("userName").toString(), "del doc1",
+						dtf.format(now), id);
+				documents1DbUtil.monitorActivity(activity);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			// send them back to the "list price" page
+			listDocuments2(request, response);
+
+		}
+
+	}
+
+	
+
+	
 }

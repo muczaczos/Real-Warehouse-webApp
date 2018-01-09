@@ -24,10 +24,10 @@
 
 <hr>
 	<a
-		href="update-warehouse-form.jsp?command=LOAD-WAREHOUSE&warehouseId=${THE_WAREHOUSE.id}&theLocale=en_US">Polski
+		href="WarehouseControllerServlet?command=LOAD-WAREHOUSE&warehouseId=${THE_WAREHOUSE.id}&theLocale=en_US">Polski
 		(PL)</a> |
 	<a
-		href="update-warehouse-form.jsp?command=LOAD-WAREHOUSE&warehouseId=${THE_WAREHOUSE.id}&theLocale=pl_PL">English
+		href="WarehouseControllerServlet?command=LOAD-WAREHOUSE&warehouseId=${THE_WAREHOUSE.id}&theLocale=pl_PL">English
 		(US)</a>
 
 	<hr>
@@ -68,7 +68,7 @@
 		<div style="clear: both;"></div>
 
 		<p>
-			<a href="create-warehouse.jsp"><fmt:message
+			<a href="WarehouseControllerServlet"><fmt:message
 					key="label.back.warehouse" /></a>
 		</p>
 	</div>

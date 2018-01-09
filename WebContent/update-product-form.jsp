@@ -23,13 +23,13 @@
 </head>
 
 <body>
-<a href="LogoutServlet">Wyloguj</a>
+
 <hr>
 	<a
-		href="update-product-form.jsp?command=LOAD-PRODUCT&productId=${THE_PRODUCT.id}&theLocale=en_US">Polski
+		href="ProductControllerServlet?command=LOAD-PRODUCT&productId=${THE_PRODUCT.id}&theLocale=en_US">Polski
 		(PL)</a> |
 	<a
-		href="update-product-form.jsp?command=LOAD-PRODUCT&productId=${THE_PRODUCT.id}&theLocale=pl_PL">English
+		href="ProductControllerServlet?command=LOAD-PRODUCT&productId=${THE_PRODUCT.id}&theLocale=pl_PL">English
 		(US)</a>
 	
 	<hr>
@@ -44,7 +44,7 @@
 	<div id="container">
 
 		<br> <br> <br>
-		<form action="WarehouseControllerServlet" method="GET">
+		<form action="ProductControllerServlet" method="GET">
 
 			<input type="hidden" name="command" value="UPDATE-PRODUCT" /> <input
 				type="hidden" name="productId" value="${THE_PRODUCT.id}" />
@@ -76,7 +76,7 @@
 		<div style="clear: both;"></div>
 
 		<p>
-			<a href="create-product.jsp"><fmt:message
+			<a href="ProductControllerServlet"><fmt:message
 					key="label.back.product" /></a>
 		</p>
 	</div>

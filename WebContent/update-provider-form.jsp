@@ -24,10 +24,10 @@
 
 <hr>
 	<a
-		href="update-provider-form.jsp?command=LOAD-PROVIDER&providerId=${THE_CUSTOMER.id}&theLocale=en_US">Polski
+		href="ProviderControllerServlet?command=LOAD-PROVIDER&providerId=${THE_CUSTOMER.id}&theLocale=en_US">Polski
 		(PL)</a> |
 	<a
-		href="update-provider-form.jsp?command=LOAD-PROVIDER&providerId=${THE_CUSTOMER.id}&theLocale=pl_PL">English
+		href="ProviderControllerServlet?command=LOAD-PROVIDER&providerId=${THE_CUSTOMER.id}&theLocale=pl_PL">English
 		(US)</a>
 
 	<hr>
@@ -42,7 +42,7 @@
 	<div id="container">
 
 		<br> <br> <br>
-		<form action="WarehouseControllerServlet" method="GET">
+		<form action="ProviderControllerServlet" method="GET">
 
 			<input type="hidden" name="command" value="UPDATE-PROVIDER" /> <input
 				type="hidden" name="providerId" value="${THE_PROVIDER.id}" />
@@ -80,7 +80,7 @@
 		<div style="clear: both;"></div>
 
 		<p>
-			<a href="create-provider.jsp"><fmt:message
+			<a href="ProviderControllerServlet"><fmt:message
 					key="label.back.provider" /></a>
 		</p>
 	</div>

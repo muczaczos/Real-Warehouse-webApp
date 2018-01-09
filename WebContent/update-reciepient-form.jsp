@@ -24,10 +24,10 @@
 
 <hr>
 	<a
-		href="update-reciepient-form.jsp?command=LOAD-RECIEPIENT&reciepientId=${THE_RECIEPIENT.id}&theLocale=en_US">Polski
+		href="ReciepientControllerServlet?command=LOAD-RECIEPIENT&reciepientId=${THE_RECIEPIENT.id}&theLocale=en_US">Polski
 		(PL)</a> |
 	<a
-		href="update-reciepient-form.jsp?command=LOAD-RECIEPIENT&reciepientId=${THE_RECIEPIENT.id}&theLocale=pl_PL">English
+		href="ReciepientControllerServlet?command=LOAD-RECIEPIENT&reciepientId=${THE_RECIEPIENT.id}&theLocale=pl_PL">English
 		(US)</a>
 	
 	<hr>
@@ -42,7 +42,7 @@
 	<div id="container">
 
 		<br> <br> <br>
-		<form action="WarehouseControllerServlet" method="GET">
+		<form action="ReciepientControllerServlet" method="GET">
 
 			<input type="hidden" name="command" value="UPDATE-RECIEPIENT" /> <input
 				type="hidden" name="customerId" value="${THE_RECIEPIENT.id}" />
@@ -80,7 +80,7 @@
 		<div style="clear: both;"></div>
 
 		<p>
-			<a href="create-reciepient.jsp"><fmt:message
+			<a href="ReciepientControllerServlet"><fmt:message
 					key="label.back.reciepient" /></a>
 		</p>
 	</div>

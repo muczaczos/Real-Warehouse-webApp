@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import com.muczo.mvc.warehouse.blueprint.Activity;
-import com.muczo.mvc.warehouse.blueprint.Employee;
+import com.muczo.mvc.warehouse.blueprint.PriceList;
 import com.muczo.mvc.warehouse.db.CustomersDbUtil;
 import com.muczo.mvc.warehouse.db.Documents1DbUtil;
 import com.muczo.mvc.warehouse.db.Documents2DbUtil;
@@ -30,33 +30,32 @@ import com.muczo.mvc.warehouse.db.WarehousesDbUtil;
 import com.muczo.mvc.warehouse.helperclasses.PrintDocument;
 
 /**
- * Servlet implementation class EmployeesControllerServlet
+ * Servlet implementation class PriceControllerServlet
  */
-@WebServlet("/EmployeesControllerServlet")
-public class EmployeesControllerServlet extends HttpServlet {
+@WebServlet("/PriceControllerServlet")
+public class PriceControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	private Documents1DbUtil documents1DbUtil;
-	private EmployeesDbUtil employeesDbUtil;
+	private PriceDbUtil priceDbUtil;
+
 
 	@Resource(name = "jdbc/kp_warehouse_documents")
 	private DataSource dataSource;
 
 	@Override
 	public void init() throws ServletException {
-
 		super.init();
 
 		// create our warehouse db util ... and pass in the conn pool / datasource
 		try {
 
 			documents1DbUtil = new Documents1DbUtil(dataSource);
-			employeesDbUtil = new EmployeesDbUtil(dataSource);
+			priceDbUtil = new PriceDbUtil(dataSource);
 
 		} catch (Exception exc) {
 			throw new ServletException(exc);
 		}
-		
 	}
 
 	/**
@@ -65,7 +64,6 @@ public class EmployeesControllerServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		request.getRequestDispatcher("link.html").include(request, response);
@@ -80,35 +78,35 @@ public class EmployeesControllerServlet extends HttpServlet {
 
 					// if the command is missing, then default to listing students
 					if (theCommand == null) {
-						theCommand = "LIST-EMPLOYEE";
+						theCommand = "LIST-PRICE";
 					}
 
 					// route to the appropriate method
 					switch (theCommand) {
 
-					///////////////////// Employees List....///////////
-					case "LIST-EMPLOYEE":
-						listEmployees(request, response);
+					///////////////////// Price List....///////////////
+					case "LIST-PRICE":
+						listPrices(request, response);
 						break;
 
-					case "ADD-EMPLOYEE":
-						addEmployee(request, response);
+					case "ADD-PRICE":
+						addPrice(request, response);
 						break;
 
-					case "LOAD-EMPLOYEE":
-						loadEmployee(request, response);
+					case "LOAD-PRICE":
+						loadPrice(request, response);
 						break;
 
-					case "UPDATE-EMPLOYEE":
-						updateEmployee(request, response);
+					case "UPDATE-PRICE":
+						updatePrice(request, response);
 						break;
 
-					case "DELETE-EMPLOYEE":
-						deleteEmployee(request, response);
+					case "DELETE-PRICE":
+						deletePrice(request, response);
 						break;
 
 					default:
-						listEmployees(request, response);
+						listPrices(request, response);
 					}
 
 				} catch (Exception exc) {
@@ -127,65 +125,59 @@ public class EmployeesControllerServlet extends HttpServlet {
 		out.close();
 	}
 
-	/////////////////////////////////////////////////////////////////////////////////
-	////////////////////////// EMPLOYEES ZONE //////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////////////
-	private void listEmployees(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	////////////////////////// PRICE LIST ZONE /////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	private void listPrices(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		HttpSession session = request.getSession();
 
 		if (session.getAttribute("userName") != null) {
 
-			// get employee from db util
-			List<Employee> employees = employeesDbUtil.getEmployees();
+			// get price from db util
+			List<PriceList> prices = priceDbUtil.getPrices();
 
-			// add employee to the request
-			request.setAttribute("EMPLOYEE_LIST", employees);
+			// add prices to the request
+			request.setAttribute("PRICE_LIST", prices);
 
 			session = request.getSession();
-			session.setAttribute("Employees", employees);
+			session.setAttribute("Prices", prices);
 
 			// send to JSP page (view)
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/create-employees.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/create-price.jsp");
 			dispatcher.forward(request, response);
 
 		}
 
 	}
 
-	private void addEmployee(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	private void addPrice(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		HttpSession session = request.getSession();
 
 		if (session.getAttribute("userName") != null) {
 
-			// read employee info from form data
-			String name = request.getParameter("name");
-			String surname = request.getParameter("surname");
-			String address = request.getParameter("address");
-			String telephone = request.getParameter("telephone");
-			String profession = request.getParameter("profession");
-			String safetyTraining = request.getParameter("safetyTraining");
-			String medicalVisit = request.getParameter("medicalVisit");
-			String contractDate = request.getParameter("contractDate");
+			// read price info from form data
+			String customer = request.getParameter("customer");
+			String product = request.getParameter("product");
+			Double price = Double.parseDouble(request.getParameter("price"));
 
-			// create a new employee object
-			Employee theEmployee = new Employee(name, surname, address, telephone, profession, safetyTraining,
-					medicalVisit, contractDate);
+			// create a new price object
+			PriceList thePrice = new PriceList(true, customer, product, price);
 
-			// add the employee to the database
-			employeesDbUtil.addEmployee(theEmployee);
+			// add the price to the database
+			priceDbUtil.addPrice(thePrice);
 
 			// write activity to db
-			List<Employee> employees = employeesDbUtil.getEmployees();
-			int id = employees.get(employees.size() - 1).getId();
+			List<PriceList> priceLists = priceDbUtil.getPrices();
+			int id = priceLists.get(priceLists.size() - 1).getId();
 
 			session = request.getSession();
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 			LocalDateTime now = LocalDateTime.now();
 			System.out.println(dtf.format(now));
 			try {
-				Activity activity = new Activity(session.getAttribute("userName").toString(), "add employee",
+				Activity activity = new Activity(session.getAttribute("userName").toString(), "add price",
 						dtf.format(now), id);
 				documents1DbUtil.monitorActivity(activity);
 			} catch (Exception e) {
@@ -193,59 +185,53 @@ public class EmployeesControllerServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 
-			// send back to main page (the employee list)
-			listEmployees(request, response);
+			// send back to main page (the reciepient list)
+			listPrices(request, response);
 
 		}
 
 	}
 
-	private void loadEmployee(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	private void loadPrice(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		HttpSession session = request.getSession();
 
 		if (session.getAttribute("userName") != null) {
 
-			// read employee id from form data
-			String theEmployeeId = request.getParameter("employeeId");
+			// read price id from form data
+			String thePriceId = request.getParameter("priceId");
 
-			// get employee from database (db util)
-			Employee theEmployee = employeesDbUtil.getEmployee(theEmployeeId);
+			// get price from database (db util)
+			PriceList thePrice = priceDbUtil.getPrice(thePriceId);
 
-			// place employee in the request attribute
-			request.setAttribute("THE_EMPLOYEE", theEmployee);
+			// place price in the request attribute
+			request.setAttribute("THE_PRICE", thePrice);
 
-			// send to jsp page: update-employee-form.jsp
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/update-employee-form.jsp");
+			// send to jsp page: update-price-form.jsp
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/update-price-form.jsp");
 			dispatcher.forward(request, response);
 
 		}
 
 	}
 
-	private void updateEmployee(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	private void updatePrice(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		HttpSession session = request.getSession();
 
 		if (session.getAttribute("userName") != null) {
 
-			// read employee info from form data
-			int id = Integer.parseInt(request.getParameter("employeeId"));
-			String name = request.getParameter("name");
-			String surname = request.getParameter("surname");
-			String address = request.getParameter("address");
-			String telephone = request.getParameter("telephone");
-			String profession = request.getParameter("profession");
-			String safetyTraining = request.getParameter("safetyTraining");
-			String medicalVisit = request.getParameter("medicalVisit");
-			String contractDate = request.getParameter("contractDate");
+			// read price info from form data
+			int id = Integer.parseInt(request.getParameter("priceId"));
+			String customer = request.getParameter("customer");
+			String product = request.getParameter("product");
+			Double price = Double.parseDouble(request.getParameter("price"));
 
-			// create a new employee object
-			Employee employee = new Employee(id, name, surname, address, telephone, profession, safetyTraining,
-					medicalVisit, contractDate);
+			// create a new price object
+			PriceList thePrice = new PriceList(true, id, customer, product, price);
 
 			// perform update on database
-			employeesDbUtil.updateEmployee(employee);
+			priceDbUtil.updatePrice(thePrice);
 
 			// write activity to db
 			session = request.getSession();
@@ -253,40 +239,7 @@ public class EmployeesControllerServlet extends HttpServlet {
 			LocalDateTime now = LocalDateTime.now();
 			System.out.println(dtf.format(now));
 			try {
-				Activity activity = new Activity(session.getAttribute("userName").toString(), "update employee",
-						dtf.format(now), id);
-				documents1DbUtil.monitorActivity(activity);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			// send them back to the "list employees" page
-			listEmployees(request, response);
-
-		}
-
-	}
-
-	private void deleteEmployee(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-		HttpSession session = request.getSession();
-
-		if (session.getAttribute("userName") != null) {
-
-			// read employee info from form data
-			int id = Integer.parseInt(request.getParameter("employeeId"));
-
-			// perform delete on database
-			employeesDbUtil.deleteEmployee(id);
-
-			// write activity to db
-			session = request.getSession();
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-			LocalDateTime now = LocalDateTime.now();
-			System.out.println(dtf.format(now));
-			try {
-				Activity activity = new Activity(session.getAttribute("userName").toString(), "del employee",
+				Activity activity = new Activity(session.getAttribute("userName").toString(), "update price",
 						dtf.format(now), id);
 				documents1DbUtil.monitorActivity(activity);
 			} catch (Exception e) {
@@ -295,10 +248,46 @@ public class EmployeesControllerServlet extends HttpServlet {
 			}
 
 			// send them back to the "list price" page
-			listEmployees(request, response);
+			listPrices(request, response);
 
 		}
 
 	}
+
+	private void deletePrice(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		HttpSession session = request.getSession();
+
+		if (session.getAttribute("userName") != null) {
+
+			// read price info from form data
+			int id = Integer.parseInt(request.getParameter("priceId"));
+
+			// perform delete on database
+			priceDbUtil.deletePrice(id);
+
+			// write activity to db
+			session = request.getSession();
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+			LocalDateTime now = LocalDateTime.now();
+			System.out.println(dtf.format(now));
+			try {
+				Activity activity = new Activity(session.getAttribute("userName").toString(), "del price",
+						dtf.format(now), id);
+				documents1DbUtil.monitorActivity(activity);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+
+			}
+
+			// send them back to the "list price" page
+			listPrices(request, response);
+
+		}
+
+	}
+	
+	/////////////////////// others /////////////////////////////
 
 }

@@ -24,10 +24,10 @@
 
 <hr>
 	<a
-		href="update-price-form.jsp?command=LOAD-PRICE&priceId=${THE_PRICE.id}&theLocale=en_US">Polski
+		href="PriceControllerServlet?command=LOAD-PRICE&priceId=${THE_PRICE.id}&theLocale=en_US">Polski
 		(PL)</a> |
 	<a
-		href="update-price-form.jsp?command=LOAD-PRICE&priceId=${THE_PRICE.id}&theLocale=pl_PL">English
+		href="PriceControllerServlet?command=LOAD-PRICE&priceId=${THE_PRICE.id}&theLocale=pl_PL">English
 		(US)</a>
 	
 	<hr>
@@ -42,7 +42,7 @@
 	<div id="container">
 
 		<br> <br> <br>
-		<form action="WarehouseControllerServlet" method="GET">
+		<form action="PriceControllerServlet" method="GET">
 
 			<input type="hidden" name="command" value="UPDATE-PRICE" /> <input
 				type="hidden" name="priceId" value="${THE_PRICE.id}" />
@@ -80,7 +80,7 @@
 		<div style="clear: both;"></div>
 
 		<p>
-			<a href="create-price.jsp"><fmt:message key="label.back.price" /></a>
+			<a href="PriceControllerServlet"><fmt:message key="label.back.price" /></a>
 		</p>
 	</div>
 </body>

@@ -31,16 +31,15 @@
 <body>
 
 	<form action="LogoutServlet" method="GET">
-						<input type="submit"
-							value="Wyloguj" class="logout" />
-			
-		</form>
+		<input type="submit" value="Wyloguj" class="logout" />
 
-<hr>
+	</form>
+
+	<hr>
 	Jesteś zalogowany jako ${userName}
 	<br>
-	<a href="WarehouseControllerServlet?theLocale=en_US">Polski (PL)</a> |
-	<a href="WarehouseControllerServlet?theLocale=pl_PL">English (US)</a>
+	<a href="Document1ControllerServlet?theLocale=en_US">Polski (PL)</a> |
+	<a href="Document1ControllerServlet?theLocale=pl_PL">English (US)</a>
 
 	<hr>
 
@@ -57,30 +56,30 @@
 		<div id="content">
 
 			<ul>
+				<li><a href="Document1ControllerServlet"><fmt:message
+							key="label.menu.doc" /></a></li>
+				<li><a href="Document2ControllerServlet"><fmt:message
+							key="label.menu.doc2" /></a></li>
+				<li><a href="InvoiceControllerServlet"><fmt:message
+							key="label.menu.inv" /></a></li>
+				<li><a href="ProviderControllerServlet"><fmt:message
+							key="label.menu.prov" /></a></li>
+				<li><a href="CustomerControllerServlet"><fmt:message
+							key="label.menu.cus" /></a></li>
+				<li><a href="ReciepientControllerServlet"><fmt:message
+							key="label.menu.rec" /></a></li>
+				<li><a href="ProductControllerServlet"><fmt:message
+							key="label.menu.pro" /></a></li>
+				<li><a href="PriceControllerServlet"><fmt:message
+							key="label.menu.pri" /></a></li>
+				<li><a href="EmployeesControllerServlet"><fmt:message
+							key="label.menu.emp" /></a></li>
 				<li><a href="WarehouseControllerServlet"><fmt:message
-						key="label.menu.doc" /></a></li>
-			<li><a href="create-doc2.jsp"><fmt:message
-						key="label.menu.doc2" /></a></li>
-			<li><a href="create-invoice.jsp"><fmt:message
-						key="label.menu.inv" /></a></li>
-			<li><a href="create-provider.jsp"><fmt:message
-						key="label.menu.prov" /></a></li>
-			<li><a href="create-customer.jsp"><fmt:message
-						key="label.menu.cus" /></a></li>
-			<li><a href="create-reciepient.jsp"><fmt:message
-						key="label.menu.rec" /></a></li>
-			<li><a href="WarehouseControllerServlet?command=LIST-PRODUCTS?"><fmt:message
-						key="label.menu.pro" /></a></li>
-			<li><a href="create-price.jsp"><fmt:message
-						key="label.menu.pri" /></a></li>
-			<li><a href="create-employees.jsp"><fmt:message
-						key="label.menu.emp" /></a></li>
-			<li><a href="create-warehouse.jsp"><fmt:message
-						key="label.menu.war" /></a></li>
+							key="label.menu.war" /></a></li>
 			</ul>
 
 			<br> <br>
-			<form action="WarehouseControllerServlet" method="GET">
+			<form action="Document1ControllerServlet" method="GET">
 				<input type="hidden" name="command" value="FIRST-LIST" />
 
 				<fmt:message key="label.customer" />
@@ -161,7 +160,7 @@
 
 			<br> <br>
 
-			<form action="WarehouseControllerServlet" method="GET">
+			<form action="Document1ControllerServlet" method="GET">
 				<table>
 					<tr>
 
@@ -257,19 +256,19 @@
 				<c:forEach var="tempDoc" items="${DOCUMENTS_LIST}">
 
 					<!-- set up a link for each documents  -->
-					<c:url var="tempLink" value="WarehouseControllerServlet">
+					<c:url var="tempLink" value="Document1ControllerServlet">
 						<c:param name="command" value="LOAD-DOCUMENT" />
 						<c:param name="documentId" value="${tempDoc.id}" />
 					</c:url>
 
 					<!-- set up a link to delete a document -->
-					<c:url var="deleteLink" value="WarehouseControllerServlet">
+					<c:url var="deleteLink" value="Document1ControllerServlet">
 						<c:param name="command" value="DELETE-DOCUMENT" />
 						<c:param name="documentId" value="${tempDoc.id}" />
 					</c:url>
 
 					<!-- set up a link to delete a document -->
-					<c:url var="printLink" value="WarehouseControllerServlet">
+					<c:url var="printLink" value="Document1ControllerServlet">
 						<c:param name="command" value="PRINT-DOCUMENT" />
 						<c:param name="documentId" value="${tempDoc.id}" />
 					</c:url>

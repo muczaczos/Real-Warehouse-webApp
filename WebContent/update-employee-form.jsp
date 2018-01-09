@@ -25,10 +25,10 @@
 
 <hr>
 	<a
-		href="update-employee-form.jsp?command=LOAD-EMPLOYEE&employeeId=${THE_EMPLOYEE.id}&theLocale=en_US">Polski
+		href="EmployeesControllerServlet?command=LOAD-EMPLOYEE&employeeId=${THE_EMPLOYEE.id}&theLocale=en_US">Polski
 		(PL)</a> |
 	<a
-		href="update-employee-form.jsp?command=LOAD-EMPLOYEE&employeeId=${THE_EMPLOYEE.id}&theLocale=pl_PL">English
+		href="EmployeesControllerServlet?command=LOAD-EMPLOYEE&employeeId=${THE_EMPLOYEE.id}&theLocale=pl_PL">English
 		(US)</a>
 	<hr>
 	<div id="wrapper">
@@ -119,7 +119,7 @@
 		<div style="clear: both;"></div>
 
 		<p>
-			<a href="create-employees.jsp"><fmt:message
+			<a href="EmployeesControllerServlet"><fmt:message
 					key="label.back.employee" /></a>
 		</p>
 

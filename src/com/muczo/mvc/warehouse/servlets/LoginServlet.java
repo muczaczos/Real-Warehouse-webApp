@@ -64,7 +64,7 @@ public class LoginServlet extends HttpServlet {
 			out.print("Welcome, " + name);
 			HttpSession session = request.getSession();
 			session.setAttribute("userName", name);
-			response.sendRedirect("WarehouseControllerServlet");
+			response.sendRedirect("Document1ControllerServlet");
 
 			//write activity to db
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");

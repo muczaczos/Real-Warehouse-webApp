@@ -27,10 +27,10 @@
 
 <hr>
 	<a
-		href="update-customer-form.jsp?command=LOAD-CUSTOMER&customerId=${THE_CUSTOMER.id}&theLocale=en_US">Polski
+		href="CustomerControllerServlet?command=LOAD-CUSTOMER&customerId=${THE_CUSTOMER.id}&theLocale=en_US">Polski
 		(PL)</a> |
 	<a
-		href="update-customer-form.jsp?command=LOAD-CUSTOMER&customerId=${THE_CUSTOMER.id}&theLocale=pl_PL">English
+		href="CustomerControllerServlet?command=LOAD-CUSTOMER&customerId=${THE_CUSTOMER.id}&theLocale=pl_PL">English
 		(US)</a>
 	<hr>
 	<br>
@@ -94,7 +94,7 @@
 		<div style="clear: both;"></div>
 
 		<p>
-			<a href="create-customer.jsp"><fmt:message
+			<a href="CustomerControllerServlet"><fmt:message
 					key="label.back.customer" /></a>
 		</p>
 
