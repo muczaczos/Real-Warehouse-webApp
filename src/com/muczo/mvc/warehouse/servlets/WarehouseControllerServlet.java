@@ -168,20 +168,10 @@ public class WarehouseControllerServlet extends HttpServlet {
 			// write activity to db
 			List<Warehouse> warehouses = warehousesDbUtil.getWarehouses();
 			int id = warehouses.get(warehouses.size() - 1).getId();
-
 			session = request.getSession();
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-			LocalDateTime now = LocalDateTime.now();
-			System.out.println(dtf.format(now));
-			try {
-				Activity activity = new Activity(session.getAttribute("userName").toString(), "add warehouse",
-						dtf.format(now), id);
-				documents1DbUtil.monitorActivity(activity);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
+			Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
+					"add warehouse", id);
+			
 			// send back to main page (the employee list)
 			listWarehouses(request, response);
 
@@ -230,17 +220,8 @@ public class WarehouseControllerServlet extends HttpServlet {
 
 			// write activity to db
 			session = request.getSession();
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-			LocalDateTime now = LocalDateTime.now();
-			System.out.println(dtf.format(now));
-			try {
-				Activity activity = new Activity(session.getAttribute("userName").toString(), "update warehouse",
-						dtf.format(now), id);
-				documents1DbUtil.monitorActivity(activity);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
+					"update warehouse", id);
 
 			// send them back to the "list employees" page
 			listWarehouses(request, response);
@@ -263,17 +244,8 @@ public class WarehouseControllerServlet extends HttpServlet {
 
 			// write activity to db
 			session = request.getSession();
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-			LocalDateTime now = LocalDateTime.now();
-			System.out.println(dtf.format(now));
-			try {
-				Activity activity = new Activity(session.getAttribute("userName").toString(), "del warehouse",
-						dtf.format(now), id);
-				documents1DbUtil.monitorActivity(activity);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
+					"del warehouse", id);
 
 			// send them back to the "list price" page
 			listWarehouses(request, response);

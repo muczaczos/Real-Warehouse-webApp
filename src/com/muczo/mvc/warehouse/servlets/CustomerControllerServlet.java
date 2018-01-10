@@ -183,12 +183,8 @@ public class CustomerControllerServlet extends HttpServlet {
 
 			try {
 				session = request.getSession();
-				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-				LocalDateTime now = LocalDateTime.now();
-				System.out.println(dtf.format(now));
-				Activity activity = new Activity(session.getAttribute("userName").toString(), "add customer",
-						dtf.format(now), id);
-				documents1DbUtil.monitorActivity(activity);
+				Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
+						"add customer", id);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -244,12 +240,8 @@ public class CustomerControllerServlet extends HttpServlet {
 
 				// write activity to db
 				session = request.getSession();
-				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-				LocalDateTime now = LocalDateTime.now();
-				System.out.println(dtf.format(now));
-				Activity activity = new Activity(session.getAttribute("userName").toString(), "update customer",
-						dtf.format(now), id);
-				documents1DbUtil.monitorActivity(activity);
+				Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
+						"update customer", id);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -275,13 +267,8 @@ public class CustomerControllerServlet extends HttpServlet {
 			try {
 				// write activity to db
 				session = request.getSession();
-				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-				LocalDateTime now = LocalDateTime.now();
-				System.out.println(dtf.format(now));
-
-				Activity activity = new Activity(session.getAttribute("userName").toString(), "delete customer",
-						dtf.format(now), id);
-				documents1DbUtil.monitorActivity(activity);
+				Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
+						"del customer", id);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

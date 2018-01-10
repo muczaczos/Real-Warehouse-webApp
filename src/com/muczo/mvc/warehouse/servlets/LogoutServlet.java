@@ -51,12 +51,9 @@ public class LogoutServlet extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 		
 		HttpSession session = request.getSession();
-		
-		
-		
+				
 		try {
-			
-			
+				
 			//write activity to db
 			Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
 					"Logout", 0);

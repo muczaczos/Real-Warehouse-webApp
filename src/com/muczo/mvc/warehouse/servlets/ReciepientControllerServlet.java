@@ -58,10 +58,12 @@ public class ReciepientControllerServlet extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		request.getRequestDispatcher("link.html").include(request, response);
@@ -103,8 +105,8 @@ public class ReciepientControllerServlet extends HttpServlet {
 						deleteReciepient(request, response);
 						break;
 
-								default:
-									listReciepients(request, response);
+					default:
+						listReciepients(request, response);
 					}
 
 				} catch (Exception exc) {
@@ -122,7 +124,6 @@ public class ReciepientControllerServlet extends HttpServlet {
 		}
 		out.close();
 	}
-
 
 	/////////////////////////////////////////////////////////////////////////////////
 	////////////////////////// RECIEPIENTS ZONE ////////////////////////////////////
@@ -172,14 +173,9 @@ public class ReciepientControllerServlet extends HttpServlet {
 			List<Reciepient> reciepients = reciepientsDbUtil.getReciepients();
 			int id = reciepients.get(reciepients.size() - 1).getId();
 
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-			LocalDateTime now = LocalDateTime.now();
-			System.out.println(dtf.format(now));
 			try {
-
-				Activity activity = new Activity(session.getAttribute("userName").toString(), "add reciepient",
-						dtf.format(now), id);
-				documents1DbUtil.monitorActivity(activity);
+				Activity.monitorSpecificActivity(session, request, dataSource,
+						session.getAttribute("userName").toString(), "add reciepient", id);
 
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -233,17 +229,9 @@ public class ReciepientControllerServlet extends HttpServlet {
 
 			// write activity to db
 			session = request.getSession();
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-			LocalDateTime now = LocalDateTime.now();
-			System.out.println(dtf.format(now));
-			try {
-				Activity activity = new Activity(session.getAttribute("userName").toString(), "update reciepient",
-						dtf.format(now), id);
-				documents1DbUtil.monitorActivity(activity);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+
+			Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
+					"update reciepient", id);
 
 			// send them back to the "list reciepient" page
 			listReciepients(request, response);
@@ -264,17 +252,9 @@ public class ReciepientControllerServlet extends HttpServlet {
 
 			// write activity to db
 			session = request.getSession();
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-			LocalDateTime now = LocalDateTime.now();
-			System.out.println(dtf.format(now));
-			try {
-				Activity activity = new Activity(session.getAttribute("userName").toString(), "del reciepient",
-						dtf.format(now), id);
-				documents1DbUtil.monitorActivity(activity);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+
+			Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
+					"del reciepient", id);
 
 			// send them back to the "list reciepient" page
 			listReciepients(request, response);

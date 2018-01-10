@@ -181,13 +181,9 @@ public class EmployeesControllerServlet extends HttpServlet {
 			int id = employees.get(employees.size() - 1).getId();
 
 			session = request.getSession();
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-			LocalDateTime now = LocalDateTime.now();
-			System.out.println(dtf.format(now));
 			try {
-				Activity activity = new Activity(session.getAttribute("userName").toString(), "add employee",
-						dtf.format(now), id);
-				documents1DbUtil.monitorActivity(activity);
+				Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
+						"add employee", id);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -253,9 +249,8 @@ public class EmployeesControllerServlet extends HttpServlet {
 			LocalDateTime now = LocalDateTime.now();
 			System.out.println(dtf.format(now));
 			try {
-				Activity activity = new Activity(session.getAttribute("userName").toString(), "update employee",
-						dtf.format(now), id);
-				documents1DbUtil.monitorActivity(activity);
+				Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
+						"update employee", id);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -286,9 +281,8 @@ public class EmployeesControllerServlet extends HttpServlet {
 			LocalDateTime now = LocalDateTime.now();
 			System.out.println(dtf.format(now));
 			try {
-				Activity activity = new Activity(session.getAttribute("userName").toString(), "del employee",
-						dtf.format(now), id);
-				documents1DbUtil.monitorActivity(activity);
+				Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
+						"del employee", id);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

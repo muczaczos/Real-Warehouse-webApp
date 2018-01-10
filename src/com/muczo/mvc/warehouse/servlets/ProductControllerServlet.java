@@ -49,14 +49,7 @@ public class ProductControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	private Documents1DbUtil documents1DbUtil;
-	private Documents2DbUtil documents2DbUtil;
-	private ProvidersDbUtil providersDbUtil;
 	private ProductsDbUtil productsDbUtil;
-	private CustomersDbUtil customersDbUtil;
-	private ReciepientsDbUtil reciepientsDbUtil;
-	private PriceDbUtil priceDbUtil;
-	private WarehousesDbUtil warehousesDbUtil;
-	private EmployeesDbUtil employeesDbUtil;
 
 	@Resource(name = "jdbc/kp_warehouse_documents")
 	private DataSource dataSource;
@@ -69,14 +62,7 @@ public class ProductControllerServlet extends HttpServlet {
 		try {
 
 			documents1DbUtil = new Documents1DbUtil(dataSource);
-			documents2DbUtil = new Documents2DbUtil(dataSource);
-			providersDbUtil = new ProvidersDbUtil(dataSource);
 			productsDbUtil = new ProductsDbUtil(dataSource);
-			customersDbUtil = new CustomersDbUtil(dataSource);
-			reciepientsDbUtil = new ReciepientsDbUtil(dataSource);
-			priceDbUtil = new PriceDbUtil(dataSource);
-			warehousesDbUtil = new WarehousesDbUtil(dataSource);
-			employeesDbUtil = new EmployeesDbUtil(dataSource);
 			PrintDocument.dataSource = dataSource;
 
 		} catch (Exception exc) {
@@ -201,13 +187,9 @@ public class ProductControllerServlet extends HttpServlet {
 			int id = products.get(products.size() - 1).getId();
 
 			session = request.getSession();
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-			LocalDateTime now = LocalDateTime.now();
-			System.out.println(dtf.format(now));
 			try {
-				Activity activity = new Activity(session.getAttribute("userName").toString(), "add product",
-						dtf.format(now), id);
-				documents1DbUtil.monitorActivity(activity);
+				Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
+						"add product", id);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -262,13 +244,9 @@ public class ProductControllerServlet extends HttpServlet {
 
 			// write activity to db
 			session = request.getSession();
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-			LocalDateTime now = LocalDateTime.now();
-			System.out.println(dtf.format(now));
 			try {
-				Activity activity = new Activity(session.getAttribute("userName").toString(), "update product",
-						dtf.format(now), id);
-				documents1DbUtil.monitorActivity(activity);
+				Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
+						"update product", id);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -295,13 +273,9 @@ public class ProductControllerServlet extends HttpServlet {
 
 			// write activity to db
 			session = request.getSession();
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-			LocalDateTime now = LocalDateTime.now();
-			System.out.println(dtf.format(now));
 			try {
-				Activity activity = new Activity(session.getAttribute("userName").toString(), "del product",
-						dtf.format(now), id);
-				documents1DbUtil.monitorActivity(activity);
+				Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
+						"del product", id);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

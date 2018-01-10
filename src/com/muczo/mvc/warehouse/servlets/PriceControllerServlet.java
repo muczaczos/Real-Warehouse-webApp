@@ -173,13 +173,9 @@ public class PriceControllerServlet extends HttpServlet {
 			int id = priceLists.get(priceLists.size() - 1).getId();
 
 			session = request.getSession();
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-			LocalDateTime now = LocalDateTime.now();
-			System.out.println(dtf.format(now));
 			try {
-				Activity activity = new Activity(session.getAttribute("userName").toString(), "add price",
-						dtf.format(now), id);
-				documents1DbUtil.monitorActivity(activity);
+				Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
+						"add price", id);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -235,13 +231,9 @@ public class PriceControllerServlet extends HttpServlet {
 
 			// write activity to db
 			session = request.getSession();
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-			LocalDateTime now = LocalDateTime.now();
-			System.out.println(dtf.format(now));
 			try {
-				Activity activity = new Activity(session.getAttribute("userName").toString(), "update price",
-						dtf.format(now), id);
-				documents1DbUtil.monitorActivity(activity);
+				Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
+						"update price", id);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -272,9 +264,8 @@ public class PriceControllerServlet extends HttpServlet {
 			LocalDateTime now = LocalDateTime.now();
 			System.out.println(dtf.format(now));
 			try {
-				Activity activity = new Activity(session.getAttribute("userName").toString(), "del price",
-						dtf.format(now), id);
-				documents1DbUtil.monitorActivity(activity);
+				Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
+						"del price", id);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
