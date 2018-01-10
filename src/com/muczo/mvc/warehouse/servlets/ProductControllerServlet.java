@@ -47,7 +47,7 @@ import com.muczo.mvc.warehouse.helperclasses.PrintDocument;
 @WebServlet("/ProductControllerServlet")
 public class ProductControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
 	private Documents1DbUtil documents1DbUtil;
 	private ProductsDbUtil productsDbUtil;
 
@@ -70,13 +70,13 @@ public class ProductControllerServlet extends HttpServlet {
 		}
 	}
 
-
-
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		request.getRequestDispatcher("link.html").include(request, response);
@@ -118,7 +118,6 @@ public class ProductControllerServlet extends HttpServlet {
 						deleteProduct(request, response);
 						break;
 
-
 					default:
 						listProducts(request, response);
 					}
@@ -138,7 +137,6 @@ public class ProductControllerServlet extends HttpServlet {
 		}
 		out.close();
 	}
-
 
 	////////////////////////////////////////////////////////////////////////////////
 	////////////////////////// PRODUCTS ZONE //////////////////////////////////////
@@ -188,8 +186,8 @@ public class ProductControllerServlet extends HttpServlet {
 
 			session = request.getSession();
 			try {
-				Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
-						"add product", id);
+				Activity.monitorSpecificActivity(session, request, dataSource,
+						session.getAttribute("userName").toString(), "add product", id);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -245,8 +243,8 @@ public class ProductControllerServlet extends HttpServlet {
 			// write activity to db
 			session = request.getSession();
 			try {
-				Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
-						"update product", id);
+				Activity.monitorSpecificActivity(session, request, dataSource,
+						session.getAttribute("userName").toString(), "update product", id);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -273,13 +271,9 @@ public class ProductControllerServlet extends HttpServlet {
 
 			// write activity to db
 			session = request.getSession();
-			try {
-				Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
-						"del product", id);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+
+			Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
+					"del product", id);
 
 			// send them back to the "list product" page
 			listProducts(request, response);

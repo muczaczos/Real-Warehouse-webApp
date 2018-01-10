@@ -66,15 +66,17 @@ public class LoginServlet extends HttpServlet {
 			session.setAttribute("userName", name);
 			response.sendRedirect("Document1ControllerServlet");
 
-			//write activity to db
+			// write activity to db
+
 			try {
-				Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
-						"Login", 0);
+				Activity.monitorSpecificActivity(session, request, dataSource,
+						session.getAttribute("userName").toString(), "Login", 0);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
+			
 		} else {
 			out.print("Wpisane has³o lub login jest niepoprawne!");
 

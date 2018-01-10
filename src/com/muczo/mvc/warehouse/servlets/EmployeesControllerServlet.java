@@ -35,7 +35,7 @@ import com.muczo.mvc.warehouse.helperclasses.PrintDocument;
 @WebServlet("/EmployeesControllerServlet")
 public class EmployeesControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	private Documents1DbUtil documents1DbUtil;
 	private EmployeesDbUtil employeesDbUtil;
 
@@ -56,7 +56,7 @@ public class EmployeesControllerServlet extends HttpServlet {
 		} catch (Exception exc) {
 			throw new ServletException(exc);
 		}
-		
+
 	}
 
 	/**
@@ -182,8 +182,8 @@ public class EmployeesControllerServlet extends HttpServlet {
 
 			session = request.getSession();
 			try {
-				Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
-						"add employee", id);
+				Activity.monitorSpecificActivity(session, request, dataSource,
+						session.getAttribute("userName").toString(), "add employee", id);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -249,8 +249,8 @@ public class EmployeesControllerServlet extends HttpServlet {
 			LocalDateTime now = LocalDateTime.now();
 			System.out.println(dtf.format(now));
 			try {
-				Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
-						"update employee", id);
+				Activity.monitorSpecificActivity(session, request, dataSource,
+						session.getAttribute("userName").toString(), "update employee", id);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -277,16 +277,9 @@ public class EmployeesControllerServlet extends HttpServlet {
 
 			// write activity to db
 			session = request.getSession();
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-			LocalDateTime now = LocalDateTime.now();
-			System.out.println(dtf.format(now));
-			try {
-				Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
-						"del employee", id);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+
+			Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
+					"del employee", id);
 
 			// send them back to the "list price" page
 			listEmployees(request, response);

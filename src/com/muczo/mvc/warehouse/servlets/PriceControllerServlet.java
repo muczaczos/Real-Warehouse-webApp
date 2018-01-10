@@ -39,7 +39,6 @@ public class PriceControllerServlet extends HttpServlet {
 	private Documents1DbUtil documents1DbUtil;
 	private PriceDbUtil priceDbUtil;
 
-
 	@Resource(name = "jdbc/kp_warehouse_documents")
 	private DataSource dataSource;
 
@@ -173,13 +172,9 @@ public class PriceControllerServlet extends HttpServlet {
 			int id = priceLists.get(priceLists.size() - 1).getId();
 
 			session = request.getSession();
-			try {
-				Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
-						"add price", id);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+
+			Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
+					"add price", id);
 
 			// send back to main page (the reciepient list)
 			listPrices(request, response);
@@ -231,13 +226,9 @@ public class PriceControllerServlet extends HttpServlet {
 
 			// write activity to db
 			session = request.getSession();
-			try {
-				Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
-						"update price", id);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+
+			Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
+					"update price", id);
 
 			// send them back to the "list price" page
 			listPrices(request, response);
@@ -260,17 +251,9 @@ public class PriceControllerServlet extends HttpServlet {
 
 			// write activity to db
 			session = request.getSession();
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-			LocalDateTime now = LocalDateTime.now();
-			System.out.println(dtf.format(now));
-			try {
-				Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
-						"del price", id);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 
-			}
+			Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
+					"del price", id);
 
 			// send them back to the "list price" page
 			listPrices(request, response);
@@ -278,7 +261,7 @@ public class PriceControllerServlet extends HttpServlet {
 		}
 
 	}
-	
+
 	/////////////////////// others /////////////////////////////
 
 }

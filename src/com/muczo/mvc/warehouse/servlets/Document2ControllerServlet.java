@@ -36,7 +36,6 @@ import com.muczo.mvc.warehouse.helperclasses.PrintDocument;
 public class Document2ControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private Documents1DbUtil documents1DbUtil;
 	private Documents2DbUtil documents2DbUtil;
 
 	@Resource(name = "jdbc/kp_warehouse_documents")
@@ -49,7 +48,6 @@ public class Document2ControllerServlet extends HttpServlet {
 		// create our warehouse db util ... and pass in the conn pool / datasource
 		try {
 
-			documents1DbUtil = new Documents1DbUtil(dataSource);
 			documents2DbUtil = new Documents2DbUtil(dataSource);
 
 		} catch (Exception exc) {
