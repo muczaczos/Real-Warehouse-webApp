@@ -351,19 +351,10 @@ public class Document1ControllerServlet extends HttpServlet {
 			// write activity to db
 			List<Document> documents = documents1DbUtil.getDocuments();
 			int id = documents.get(0).getId();
+			
+			Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
+					"add doc1", id);
 
-			session = request.getSession();
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-			LocalDateTime now = LocalDateTime.now();
-			System.out.println(dtf.format(now));
-			try {
-				Activity activity = new Activity(session.getAttribute("userName").toString(), "add doc1",
-						dtf.format(now), id);
-				documents1DbUtil.monitorActivity(activity);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			// send back to main page (the documents list)
 			firstList(request, response);
 		}
@@ -426,20 +417,9 @@ public class Document1ControllerServlet extends HttpServlet {
 			documents1DbUtil.updateDocument(theDocument);
 
 			// write activity to db
-			session = request.getSession();
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-			LocalDateTime now = LocalDateTime.now();
-			System.out.println(dtf.format(now));
-			try {
-				Activity activity = new Activity(session.getAttribute("userName").toString(), "update doc1",
-						dtf.format(now), id);
-				documents1DbUtil.monitorActivity(activity);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			System.out.println("update dupate");
-
+			Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
+					"update doc1", id);
+			
 			firstList(request, response);
 
 		}
@@ -456,19 +436,8 @@ public class Document1ControllerServlet extends HttpServlet {
 			// perform delete on database
 			documents1DbUtil.deleteDocument(id);
 
-			try {
-				// write activity to db
-				session = request.getSession();
-				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-				LocalDateTime now = LocalDateTime.now();
-
-				Activity activity = new Activity(session.getAttribute("userName").toString(), "del doc1",
-						dtf.format(now), id);
-				documents1DbUtil.monitorActivity(activity);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
+					"del doc1", id);
 
 			// send back to main page (the documents list)
 			firstList(request, response);
@@ -486,18 +455,8 @@ public class Document1ControllerServlet extends HttpServlet {
 			// write activity to db
 			int id = Integer.parseInt(request.getParameter("documentId"));
 
-			try {
-				session = request.getSession();
-				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-				LocalDateTime now = LocalDateTime.now();
-				System.out.println(dtf.format(now));
-				Activity activity = new Activity(session.getAttribute("userName").toString(), "print doc1",
-						dtf.format(now), id);
-				documents1DbUtil.monitorActivity(activity);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
+					"print doc1", id);
 
 			// Process p = Runtime.getRuntime().exec("wscript test.vbs");
 

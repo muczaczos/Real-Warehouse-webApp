@@ -26,10 +26,10 @@
 
 <hr>
 	<a
-		href="Document2ControllerServlet?command=LOAD-DOCUMENT2&productId=${THE_DOCUMENT2.id}&theLocale=en_US">Polski
+		href="Document2ControllerServlet?command=LOAD-DOCUMENT2&doc2Id=${THE_DOCUMENT2.id}&theLocale=en_US">Polski
 		(PL)</a> |
 	<a
-		href="Document2ControllerServlet?command=LOAD-DOCUMENT2&productId=${THE_DOCUMENT2.id}&theLocale=pl_PL">English
+		href="Document2ControllerServlet?command=LOAD-DOCUMENT2&doc2Id=${THE_DOCUMENT2.id}&theLocale=pl_PL">English
 		(US)</a>
 	
 	<hr>

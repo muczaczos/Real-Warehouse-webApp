@@ -173,18 +173,8 @@ public class ProviderControllerServlet extends HttpServlet {
 			List<Provider> provider = providersDbUtil.getProviders();
 			int id = provider.get(provider.size() - 1).getId();
 
-			session = request.getSession();
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-			LocalDateTime now = LocalDateTime.now();
-			System.out.println(dtf.format(now));
-			try {
-				Activity activity = new Activity(session.getAttribute("userName").toString(), "add provider",
-						dtf.format(now), id);
-				documents1DbUtil.monitorActivity(activity);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
+					"add provider", id);
 
 			// send back to main page (the provider list)
 			listProviders(request, response);
@@ -235,18 +225,8 @@ public class ProviderControllerServlet extends HttpServlet {
 			providersDbUtil.updateProvider(theProvider);
 
 			// write activity to db
-			session = request.getSession();
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-			LocalDateTime now = LocalDateTime.now();
-			System.out.println(dtf.format(now));
-			try {
-				Activity activity = new Activity(session.getAttribute("userName").toString(), "update provider",
-						dtf.format(now), id);
-				documents1DbUtil.monitorActivity(activity);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
+					"update provider", id);
 
 			// send them back to the "list providers" page
 			listProviders(request, response);
@@ -268,18 +248,8 @@ public class ProviderControllerServlet extends HttpServlet {
 			providersDbUtil.deleteProvider(id);
 
 			// write activity to db
-			session = request.getSession();
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-			LocalDateTime now = LocalDateTime.now();
-			System.out.println(dtf.format(now));
-			try {
-				Activity activity = new Activity(session.getAttribute("userName").toString(), "del provider",
-						dtf.format(now), id);
-				documents1DbUtil.monitorActivity(activity);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
+					"del provider", id);
 
 			// send them back to the "list providers" page
 			listProviders(request, response);

@@ -67,12 +67,9 @@ public class LoginServlet extends HttpServlet {
 			response.sendRedirect("Document1ControllerServlet");
 
 			//write activity to db
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-			LocalDateTime now = LocalDateTime.now();
-			System.out.println(dtf.format(now));
 			try {
-				Activity activity = new Activity(name, "Login", dtf.format(now), 0);
-				warehouseDbUtil.monitorActivity(activity);
+				Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
+						"Login", 0);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

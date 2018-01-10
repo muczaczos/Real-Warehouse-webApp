@@ -294,34 +294,6 @@ public class Documents2DbUtil {
 	//////////////////////////////////////////////////////////////////////////////
 	////////////////////////// OTHER ZONE ////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////
-	public void monitorActivity(Activity activity) throws Exception {
-
-		Connection myConn = null;
-		PreparedStatement myStmt = null;
-
-		try {
-			// get db connection
-			myConn = dataSource.getConnection();
-
-			// create sql for insert
-			String sql = "insert into activity " + "(userName, activityName, dateTime, activityId) " + "values (?, ?, ?, ?)";
-
-			myStmt = myConn.prepareStatement(sql);
-
-			// set the param values for the student
-			myStmt.setString(1, activity.getUserName());
-			myStmt.setString(2, activity.getActivityName());
-			myStmt.setString(3, activity.getDateTime());
-			myStmt.setInt(4, activity.getActivityId());
-
-			// execute sql insert
-			myStmt.execute();
-		} finally {
-			// clean up JDBC objects
-			DbUtil.close(myConn, myStmt, null);
-		}
-	}
-	
 	public void updateProductQty(Product theProduct) throws Exception {
 
 		Connection myConn = null;
@@ -352,6 +324,7 @@ public class Documents2DbUtil {
 		}
 
 	}
+	
 	public Product getProductByName(String theProductName) throws Exception {
 
 		Product theProduct = null;

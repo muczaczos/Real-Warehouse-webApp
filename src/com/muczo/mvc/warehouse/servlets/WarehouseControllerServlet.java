@@ -37,14 +37,7 @@ public class WarehouseControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private Documents1DbUtil documents1DbUtil;
-	private Documents2DbUtil documents2DbUtil;
-	private ProvidersDbUtil providersDbUtil;
-	private ProductsDbUtil productsDbUtil;
-	private CustomersDbUtil customersDbUtil;
-	private ReciepientsDbUtil reciepientsDbUtil;
-	private PriceDbUtil priceDbUtil;
 	private WarehousesDbUtil warehousesDbUtil;
-	private EmployeesDbUtil employeesDbUtil;
 
 	@Resource(name = "jdbc/kp_warehouse_documents")
 	private DataSource dataSource;
@@ -55,16 +48,8 @@ public class WarehouseControllerServlet extends HttpServlet {
 		try {
 
 			documents1DbUtil = new Documents1DbUtil(dataSource);
-			documents2DbUtil = new Documents2DbUtil(dataSource);
-			providersDbUtil = new ProvidersDbUtil(dataSource);
-			productsDbUtil = new ProductsDbUtil(dataSource);
-			customersDbUtil = new CustomersDbUtil(dataSource);
-			reciepientsDbUtil = new ReciepientsDbUtil(dataSource);
-			priceDbUtil = new PriceDbUtil(dataSource);
 			warehousesDbUtil = new WarehousesDbUtil(dataSource);
-			employeesDbUtil = new EmployeesDbUtil(dataSource);
-			PrintDocument.dataSource = dataSource;
-
+	
 		} catch (Exception exc) {
 			throw new ServletException(exc);
 		}

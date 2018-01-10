@@ -58,10 +58,12 @@ public class Document2ControllerServlet extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		request.getRequestDispatcher("link.html").include(request, response);
@@ -167,20 +169,10 @@ public class Document2ControllerServlet extends HttpServlet {
 			// write activity to db
 			List<Document2> documents2 = documents2DbUtil.getDocuments2();
 			int id = documents2.get(documents2.size() - 1).getId();
-
-			session = request.getSession();
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-			LocalDateTime now = LocalDateTime.now();
-			System.out.println(dtf.format(now));
-
-			try {
-				Activity activity = new Activity(session.getAttribute("userName").toString(), "add doc2",
-						dtf.format(now), id);
-				documents1DbUtil.monitorActivity(activity);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
+			// write activity to db
+			Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
+					"add doc2", id);
 
 			// send back to main page (the documents2 list)
 			// listProducts(request, response);
@@ -232,18 +224,8 @@ public class Document2ControllerServlet extends HttpServlet {
 			documents2DbUtil.updateDocument2(theDocument);
 
 			// write activity to db
-			session = request.getSession();
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-			LocalDateTime now = LocalDateTime.now();
-			System.out.println(dtf.format(now));
-			try {
-				Activity activity = new Activity(session.getAttribute("userName").toString(), "update doc1",
-						dtf.format(now), id);
-				documents1DbUtil.monitorActivity(activity);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
+					"update doc2", id);
 
 			// send them back to the "list price" page
 			listDocuments2(request, response);
@@ -265,18 +247,8 @@ public class Document2ControllerServlet extends HttpServlet {
 			documents2DbUtil.deleteDocument2(id);
 
 			// write activity to db
-			session = request.getSession();
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-			LocalDateTime now = LocalDateTime.now();
-			System.out.println(dtf.format(now));
-			try {
-				Activity activity = new Activity(session.getAttribute("userName").toString(), "del doc1",
-						dtf.format(now), id);
-				documents1DbUtil.monitorActivity(activity);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
+					"del doc2", id);
 
 			// send them back to the "list price" page
 			listDocuments2(request, response);
@@ -285,7 +257,4 @@ public class Document2ControllerServlet extends HttpServlet {
 
 	}
 
-	
-
-	
 }

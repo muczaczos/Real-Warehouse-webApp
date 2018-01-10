@@ -24,10 +24,10 @@
 
 <hr>
 	<a
-		href="ProviderControllerServlet?command=LOAD-PROVIDER&providerId=${THE_CUSTOMER.id}&theLocale=en_US">Polski
+		href="ProviderControllerServlet?command=LOAD-PROVIDER&providerId=${THE_PROVIDER.id}&theLocale=en_US">Polski
 		(PL)</a> |
 	<a
-		href="ProviderControllerServlet?command=LOAD-PROVIDER&providerId=${THE_CUSTOMER.id}&theLocale=pl_PL">English
+		href="ProviderControllerServlet?command=LOAD-PROVIDER&providerId=${THE_PROVIDER.id}&theLocale=pl_PL">English
 		(US)</a>
 
 	<hr>

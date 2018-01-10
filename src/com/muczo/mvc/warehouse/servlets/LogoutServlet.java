@@ -58,23 +58,16 @@ public class LogoutServlet extends HttpServlet {
 			
 			
 			//write activity to db
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-			LocalDateTime now = LocalDateTime.now();
-			System.out.println(dtf.format(now));
+			Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
+					"Logout", 0);
 		
-			
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/index.html");
 			dispatcher.forward(request, response);
-			
-			Activity activity = new Activity(session.getAttribute("userName").toString(), "Logout", dtf.format(now), 0);
-			warehouseDbUtil.monitorActivity(activity);
 			
 			session.setAttribute("userName", null);
 			System.out.println(session.getAttribute("userName"));
 			session.invalidate();  
 	
-			
-		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 
