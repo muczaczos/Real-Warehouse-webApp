@@ -23,7 +23,7 @@ import com.muczo.mvc.warehouse.blueprint.Document;
 import com.muczo.mvc.warehouse.db.DbUtil;
 
 public class PrintDocument {
-	
+
 	public static DataSource dataSource;
 
 	public static Workbook printDocument(Document theDocument) {
@@ -44,7 +44,7 @@ public class PrintDocument {
 			// Blank Document with tables
 			wb = new HSSFWorkbook();
 			Sheet sheet = wb.createSheet("new sheet");
-		
+
 			// double leftMarginInches = sheet.getMargin(Sheet.LeftMargin);
 			sheet.setMargin(Sheet.RightMargin, 0.5 /* inches */ );
 			sheet.setMargin(Sheet.LeftMargin, 0.8 /* inches */ );
@@ -62,13 +62,22 @@ public class PrintDocument {
 			Row row8 = sheet.createRow((short) 12);
 			Row row9 = sheet.createRow((short) 13);
 			Row row10 = sheet.createRow((short) 15);
+			
 			Cell cell0, cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8, cell9, cell10, cell11, cell12, cell13,
 					cell14, cell15, cell16, cell17, cell18, cell19, cell20, cell21;
+			cell0 = cell1 = cell2 = cell3 = cell4 = cell5 = cell6 = cell7 = cell8 = cell9 = cell10 = cell11 = cell12 = cell13 = 
+					cell14 = cell15 = cell16 = cell17 = cell18 = cell19 = cell20 = cell21 = null;
+			
 			CellRangeAddress cellRangeAddress1, cellRangeAddress2, cellRangeAddress3, cellRangeAddress4,
 					cellRangeAddress5, cellRangeAddress6, cellRangeAddress7, cellRangeAddress8, cellRangeAddress9,
 					cellRangeAddress10, cellRangeAddress11, cellRangeAddress12, cellRangeAddress13, cellRangeAddress14,
 					cellRangeAddress15, cellRangeAddress16, cellRangeAddress17, cellRangeAddress18, cellRangeAddress19,
 					cellRangeAddress20, cellRangeAddress21;
+			cellRangeAddress1 = cellRangeAddress2 = cellRangeAddress3 = cellRangeAddress4 = 
+					cellRangeAddress5 = cellRangeAddress6 = cellRangeAddress7 = cellRangeAddress8 = cellRangeAddress9 = 
+					cellRangeAddress10 = cellRangeAddress11 = cellRangeAddress12 = cellRangeAddress13 = cellRangeAddress14 = 
+					cellRangeAddress15 = cellRangeAddress16 = cellRangeAddress17 = cellRangeAddress18 = cellRangeAddress19 = 
+					cellRangeAddress20 = cellRangeAddress21 = null;
 
 			Cell cell = row.createCell((short) 0);
 			CellStyle cellStyle = wb.createCellStyle();
@@ -155,6 +164,10 @@ public class PrintDocument {
 			sheet.addMergedRegion(cellRangeAddress13);
 			borderToRegion(cellRangeAddress13, sheet, wb);
 
+			createSheetCell(cell7, cell16, row4, theDocument.getProduct2(), theDocument.getQty2(),
+					cellRangeAddress7, cellRangeAddress16, "2. ", theDocument, sheet, wb, cellStyle, 8, 
+					8, 0, 3, 8, 8, 4, 5, 0, 4);
+			
 			if ((int) theDocument.getQty2() > 0) {
 
 				String product2 = theDocument.getProduct2();
@@ -272,7 +285,7 @@ public class PrintDocument {
 									borderToRegion(cellRangeAddress12, sheet, wb);
 
 									cell21 = row9.createCell((short) 4);
-									cell21.setCellValue("szt. ");
+									cell21.setCellValue("");
 									cellRangeAddress21 = new CellRangeAddress(13, 13, 4, 5);
 									sheet.addMergedRegion(cellRangeAddress21);
 									borderToRegion(cellRangeAddress21, sheet, wb);
@@ -287,7 +300,7 @@ public class PrintDocument {
 								borderToRegion(cellRangeAddress11, sheet, wb);
 
 								cell20 = row8.createCell((short) 4);
-								cell20.setCellValue("szt. ");
+								cell20.setCellValue("");
 								cellRangeAddress20 = new CellRangeAddress(12, 12, 4, 5);
 								sheet.addMergedRegion(cellRangeAddress20);
 								borderToRegion(cellRangeAddress20, sheet, wb);
@@ -300,7 +313,7 @@ public class PrintDocument {
 								borderToRegion(cellRangeAddress12, sheet, wb);
 
 								cell21 = row9.createCell((short) 4);
-								cell21.setCellValue("szt. ");
+								cell21.setCellValue("");
 								cellRangeAddress21 = new CellRangeAddress(13, 13, 4, 5);
 								sheet.addMergedRegion(cellRangeAddress21);
 								borderToRegion(cellRangeAddress21, sheet, wb);
@@ -314,7 +327,7 @@ public class PrintDocument {
 							borderToRegion(cellRangeAddress10, sheet, wb);
 
 							cell19 = row7.createCell((short) 4);
-							cell19.setCellValue("szt. ");
+							cell19.setCellValue("");
 							cellRangeAddress19 = new CellRangeAddress(11, 11, 4, 5);
 							sheet.addMergedRegion(cellRangeAddress19);
 							borderToRegion(cellRangeAddress19, sheet, wb);
@@ -327,7 +340,7 @@ public class PrintDocument {
 							borderToRegion(cellRangeAddress11, sheet, wb);
 
 							cell20 = row8.createCell((short) 4);
-							cell20.setCellValue("szt. ");
+							cell20.setCellValue("");
 							cellRangeAddress20 = new CellRangeAddress(12, 12, 4, 5);
 							sheet.addMergedRegion(cellRangeAddress20);
 							borderToRegion(cellRangeAddress20, sheet, wb);
@@ -340,7 +353,7 @@ public class PrintDocument {
 							borderToRegion(cellRangeAddress12, sheet, wb);
 
 							cell21 = row9.createCell((short) 4);
-							cell21.setCellValue("szt. ");
+							cell21.setCellValue("");
 							cellRangeAddress21 = new CellRangeAddress(13, 13, 4, 5);
 							sheet.addMergedRegion(cellRangeAddress21);
 							borderToRegion(cellRangeAddress21, sheet, wb);
@@ -354,7 +367,7 @@ public class PrintDocument {
 						borderToRegion(cellRangeAddress9, sheet, wb);
 
 						cell18 = row6.createCell((short) 4);
-						cell18.setCellValue("szt. ");
+						cell18.setCellValue("");
 						cellRangeAddress18 = new CellRangeAddress(10, 10, 4, 5);
 						sheet.addMergedRegion(cellRangeAddress18);
 						borderToRegion(cellRangeAddress18, sheet, wb);
@@ -367,7 +380,7 @@ public class PrintDocument {
 						borderToRegion(cellRangeAddress10, sheet, wb);
 
 						cell19 = row7.createCell((short) 4);
-						cell19.setCellValue("szt. ");
+						cell19.setCellValue("");
 						cellRangeAddress19 = new CellRangeAddress(11, 11, 4, 5);
 						sheet.addMergedRegion(cellRangeAddress19);
 						borderToRegion(cellRangeAddress19, sheet, wb);
@@ -380,7 +393,7 @@ public class PrintDocument {
 						borderToRegion(cellRangeAddress11, sheet, wb);
 
 						cell20 = row8.createCell((short) 4);
-						cell20.setCellValue("szt. ");
+						cell20.setCellValue("");
 						cellRangeAddress20 = new CellRangeAddress(12, 12, 4, 5);
 						sheet.addMergedRegion(cellRangeAddress20);
 						borderToRegion(cellRangeAddress20, sheet, wb);
@@ -393,7 +406,7 @@ public class PrintDocument {
 						borderToRegion(cellRangeAddress12, sheet, wb);
 
 						cell21 = row9.createCell((short) 4);
-						cell21.setCellValue("szt. ");
+						cell21.setCellValue("");
 						cellRangeAddress21 = new CellRangeAddress(13, 13, 4, 5);
 						sheet.addMergedRegion(cellRangeAddress21);
 						borderToRegion(cellRangeAddress21, sheet, wb);
@@ -408,7 +421,7 @@ public class PrintDocument {
 					borderToRegion(cellRangeAddress8, sheet, wb);
 
 					cell17 = row5.createCell((short) 4);
-					cell17.setCellValue("szt. ");
+					cell17.setCellValue("");
 					cellRangeAddress17 = new CellRangeAddress(9, 9, 4, 5);
 					sheet.addMergedRegion(cellRangeAddress17);
 					borderToRegion(cellRangeAddress17, sheet, wb);
@@ -421,7 +434,7 @@ public class PrintDocument {
 					borderToRegion(cellRangeAddress9, sheet, wb);
 
 					cell18 = row6.createCell((short) 4);
-					cell18.setCellValue("szt. ");
+					cell18.setCellValue("");
 					cellRangeAddress18 = new CellRangeAddress(10, 10, 4, 5);
 					sheet.addMergedRegion(cellRangeAddress18);
 					borderToRegion(cellRangeAddress18, sheet, wb);
@@ -434,7 +447,7 @@ public class PrintDocument {
 					borderToRegion(cellRangeAddress10, sheet, wb);
 
 					cell19 = row7.createCell((short) 4);
-					cell19.setCellValue("szt. ");
+					cell19.setCellValue("");
 					cellRangeAddress19 = new CellRangeAddress(11, 11, 4, 5);
 					sheet.addMergedRegion(cellRangeAddress19);
 					borderToRegion(cellRangeAddress19, sheet, wb);
@@ -460,7 +473,7 @@ public class PrintDocument {
 					borderToRegion(cellRangeAddress12, sheet, wb);
 
 					cell21 = row9.createCell((short) 4);
-					cell21.setCellValue("szt. ");
+					cell21.setCellValue("");
 					cellRangeAddress21 = new CellRangeAddress(13, 13, 4, 5);
 					sheet.addMergedRegion(cellRangeAddress21);
 					borderToRegion(cellRangeAddress21, sheet, wb);
@@ -474,7 +487,7 @@ public class PrintDocument {
 				borderToRegion(cellRangeAddress7, sheet, wb);
 
 				cell16 = row4.createCell((short) 4);
-				cell16.setCellValue("szt. ");
+				cell16.setCellValue("");
 				cellRangeAddress16 = new CellRangeAddress(8, 8, 4, 5);
 				sheet.addMergedRegion(cellRangeAddress16);
 				borderToRegion(cellRangeAddress16, sheet, wb);
@@ -487,7 +500,7 @@ public class PrintDocument {
 				borderToRegion(cellRangeAddress8, sheet, wb);
 
 				cell17 = row5.createCell((short) 4);
-				cell17.setCellValue("szt. ");
+				cell17.setCellValue("");
 				cellRangeAddress17 = new CellRangeAddress(9, 9, 4, 5);
 				sheet.addMergedRegion(cellRangeAddress17);
 				borderToRegion(cellRangeAddress17, sheet, wb);
@@ -500,7 +513,7 @@ public class PrintDocument {
 				borderToRegion(cellRangeAddress9, sheet, wb);
 
 				cell18 = row6.createCell((short) 4);
-				cell18.setCellValue("szt. ");
+				cell18.setCellValue("");
 				cellRangeAddress18 = new CellRangeAddress(10, 10, 4, 5);
 				sheet.addMergedRegion(cellRangeAddress18);
 				borderToRegion(cellRangeAddress18, sheet, wb);
@@ -513,7 +526,7 @@ public class PrintDocument {
 				borderToRegion(cellRangeAddress10, sheet, wb);
 
 				cell19 = row7.createCell((short) 4);
-				cell19.setCellValue("szt. ");
+				cell19.setCellValue("");
 				cellRangeAddress19 = new CellRangeAddress(11, 11, 4, 5);
 				sheet.addMergedRegion(cellRangeAddress19);
 				borderToRegion(cellRangeAddress19, sheet, wb);
@@ -526,7 +539,7 @@ public class PrintDocument {
 				borderToRegion(cellRangeAddress11, sheet, wb);
 
 				cell20 = row8.createCell((short) 4);
-				cell20.setCellValue("szt. ");
+				cell20.setCellValue("");
 				cellRangeAddress20 = new CellRangeAddress(12, 12, 4, 5);
 				sheet.addMergedRegion(cellRangeAddress20);
 				borderToRegion(cellRangeAddress20, sheet, wb);
@@ -539,12 +552,12 @@ public class PrintDocument {
 				borderToRegion(cellRangeAddress12, sheet, wb);
 
 				cell21 = row9.createCell((short) 4);
-				cell21.setCellValue("szt. ");
+				cell21.setCellValue("");
 				cellRangeAddress21 = new CellRangeAddress(13, 13, 4, 5);
 				sheet.addMergedRegion(cellRangeAddress21);
 				borderToRegion(cellRangeAddress21, sheet, wb);
 			}
-		
+
 		} catch (IndexOutOfBoundsException eb) {
 			JOptionPane.showMessageDialog(new JFrame(), "Mark some document for printing", "Printing error",
 					JOptionPane.ERROR_MESSAGE);
@@ -554,17 +567,55 @@ public class PrintDocument {
 
 	}
 
+	private static void createSheetCell(Cell cell, Cell cell2, Row row, String product, int qty,
+			CellRangeAddress cellRangeAddress, CellRangeAddress cellRangeAddress2, String noOfProduct,
+			Document theDocument, Sheet sheet, Workbook wb, CellStyle cellStyle, int x1, int x2, int x3, int x4, int y1,
+			int y2, int y3, int y4, int row1, int row2) {
+
+		if (qty > 0) {
+
+			cell = row.createCell((short) row1);
+			cell.setCellStyle(cellStyle);
+			cell.setCellValue(noOfProduct + product);
+			cellRangeAddress = new CellRangeAddress(x1, x2, x3, x4);
+			sheet.addMergedRegion(cellRangeAddress);
+			borderToRegion(cellRangeAddress, sheet, wb);
+
+			cell2 = row.createCell((short) row2);
+			cell2.setCellValue("szt. " + qty);
+			cellRangeAddress2 = new CellRangeAddress(y1, y2, y3, y4);
+			sheet.addMergedRegion(cellRangeAddress2);
+			borderToRegion(cellRangeAddress2, sheet, wb);
+		} else {
+
+			cell = row.createCell((short) row1);
+			cell.setCellStyle(cellStyle);
+			cell.setCellValue(noOfProduct);
+			cellRangeAddress = new CellRangeAddress(x1, x2, x3, x4);
+			sheet.addMergedRegion(cellRangeAddress);
+			borderToRegion(cellRangeAddress, sheet, wb);
+
+			cell2 = row.createCell((short) row2);
+			cell2.setCellValue("");
+			cellRangeAddress2 = new CellRangeAddress(y1, y2, y3, y4);
+			sheet.addMergedRegion(cellRangeAddress2);
+			borderToRegion(cellRangeAddress2, sheet, wb);
+		}
+
+	}
+
 	// method helps generating doc for printing
 	private static void borderToRegion(CellRangeAddress cellRangeAddress, Sheet sheet, Workbook wb) {
 
-		RegionUtil.setBorderTop(CellStyle.BORDER_THIN, cellRangeAddress, sheet, wb);
-		RegionUtil.setBorderLeft(CellStyle.BORDER_THIN, cellRangeAddress, sheet, wb);
-		RegionUtil.setBorderRight(CellStyle.BORDER_THIN, cellRangeAddress, sheet, wb);
+		// RegionUtil.setBorderTop(CellStyle.BORDER_THIN, cellRangeAddress, sheet, wb);
+		// RegionUtil.setBorderLeft(CellStyle.BORDER_THIN, cellRangeAddress, sheet, wb);
+		// RegionUtil.setBorderRight(CellStyle.BORDER_THIN, cellRangeAddress, sheet,
+		// wb);
 		RegionUtil.setBorderBottom(CellStyle.BORDER_THIN, cellRangeAddress, sheet, wb);
 
 	}
-	
-	//select any column for choosen reciepient
+
+	// select any column for choosen reciepient
 	private static String selectQuery(String name, String column) throws SQLException {
 
 		String ret;
