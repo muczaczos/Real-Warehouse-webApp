@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
+
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -19,21 +19,8 @@ import java.util.Date;
 import java.util.List;
 
 import javax.sql.DataSource;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.ss.util.RegionUtil;
-
-import com.muczo.mvc.warehouse.blueprint.Activity;
 import com.muczo.mvc.warehouse.blueprint.Document;
-import com.muczo.mvc.warehouse.blueprint.Document2;
 import com.muczo.mvc.warehouse.blueprint.Product;
 import com.muczo.mvc.warehouse.blueprint.User;
 import com.muczo.mvc.warehouse.helperclasses.PrintDocument;
