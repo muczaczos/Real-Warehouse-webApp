@@ -208,33 +208,33 @@ public class Documents1DbUtil {
 				updateProductQty(product);
 				if (theDocument.getQty2() > 0) {
 					Product product2 = getProductByName(theDocument.getProduct2());
-					int qty2 = product.getQty() - theDocument.getQty2();
-					product.setQty(qty2);
+					int qty2 = product2.getQty() - theDocument.getQty2();
+					product2.setQty(qty2);
 					updateProductQty(product2);
 					if (theDocument.getQty3() > 0) {
 						Product product3 = getProductByName(theDocument.getProduct3());
-						int qty3 = product.getQty() - theDocument.getQty3();
-						product.setQty(qty3);
+						int qty3 = product3.getQty() - theDocument.getQty3();
+						product3.setQty(qty3);
 						updateProductQty(product3);
 						if (theDocument.getQty4() > 0) {
 							Product product4 = getProductByName(theDocument.getProduct4());
-							int qty4 = product.getQty() - theDocument.getQty4();
-							product.setQty(qty4);
+							int qty4 = product4.getQty() - theDocument.getQty4();
+							product4.setQty(qty4);
 							updateProductQty(product4);
 							if (theDocument.getQty5() > 0) {
 								Product product5 = getProductByName(theDocument.getProduct5());
-								int qty5 = product.getQty() - theDocument.getQty5();
-								product.setQty(qty5);
+								int qty5 = product5.getQty() - theDocument.getQty5();
+								product5.setQty(qty5);
 								updateProductQty(product5);
 								if (theDocument.getQty6() > 0) {
 									Product product6 = getProductByName(theDocument.getProduct6());
-									int qty6 = product.getQty() - theDocument.getQty6();
-									product.setQty(qty6);
+									int qty6 = product6.getQty() - theDocument.getQty6();
+									product6.setQty(qty6);
 									updateProductQty(product6);
 									if (theDocument.getQty7() > 0) {
 										Product product7 = getProductByName(theDocument.getProduct7());
-										int qty7 = product.getQty() - theDocument.getQty7();
-										product.setQty(qty7);
+										int qty7 = product7.getQty() - theDocument.getQty7();
+										product7.setQty(qty7);
 										updateProductQty(product7);
 									}
 								}
@@ -324,6 +324,8 @@ public class Documents1DbUtil {
 
 		Connection myConn = null;
 		PreparedStatement myStmt = null;
+	
+		Document theDocumentBeforeUpdate = getDocument(Integer.toString(theDocument.getId()));
 
 		try {
 			// get db connection
@@ -363,7 +365,7 @@ public class Documents1DbUtil {
 			myStmt.execute();
 
 		} finally {
-			// clean up JDBC objects
+			// clean up JDBC objects and update products qty
 
 			DbUtil.close(myConn, myStmt, null);
 
@@ -658,12 +660,14 @@ public class Documents1DbUtil {
 		ResultSet checkResult = checkSmt.executeQuery();
 		checkResult.next();
 
+		String stringDate = null;
 		ResultSet results = selectStatement.executeQuery();
 		int count = checkResult.getInt(1);
 		if (count > 0) {
 
 			while (results.next()) {
 				docId = results.getInt("docId");
+				stringDate = results.getString("date");
 			}
 
 			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -680,7 +684,6 @@ public class Documents1DbUtil {
 			cal1.setTime(date2);
 
 			// System.out.println(docs.get(docs.size()-1).getDate());
-			String stringDate = docs.get(docs.size() - 1).getDate();
 			DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 			Date date = null;
 			try {
@@ -692,9 +695,14 @@ public class Documents1DbUtil {
 				int dni = (int) ((date.getTime() - date2.getTime()) / (1000 * 60 * 60 * 24));
 				year1 = cal1.get(Calendar.YEAR);
 				year2 = cal2.get(Calendar.YEAR);
+				
+				System.out.println(year1);
+
+				System.out.println(year2);
 
 				if ((year1 - year2) == 1) {
 					idDoc = 1;
+					System.out.println("kutafonnnnos");
 				} else if ((year1 - year2 == 0)) {
 					idDoc = ++docId;
 				}

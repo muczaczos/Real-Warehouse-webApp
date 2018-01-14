@@ -239,6 +239,7 @@ public class Document1ControllerServlet extends HttpServlet {
 
 			String preCustomer = request.getParameter("customer");
 			int noOfDoc = documents1DbUtil.nextCustomerDoc(preCustomer);
+			System.out.println(noOfDoc);
 			session.setAttribute("noOfDoc", noOfDoc);
 			session.setAttribute("preCustomer", preCustomer);
 
