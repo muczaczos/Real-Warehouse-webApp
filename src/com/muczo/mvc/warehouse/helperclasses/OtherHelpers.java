@@ -48,7 +48,7 @@ public class OtherHelpers {
 				// use the studentId during construction
 				theProduct = new Product(id, name, warehouse, qty);
 			} else {
-				throw new Exception("Could not find product id: " + theProductName);
+				throw new Exception("Could not find product name: " + theProductName);
 			}
 
 			return theProduct;
@@ -58,11 +58,21 @@ public class OtherHelpers {
 		}
 	}
 
-	public static void correctQtyWhenAddOrDelDoc(DataSource dataSource, Product product, int qty) throws Exception {
+	public static void correctQtyWhenAddOrDelDoc2(DataSource dataSource, Product product, int qty) throws Exception {
 
 		if (qty > 0) {
 			
 			int qty2 = product.getQty() - qty;
+			product.setQty(qty2);
+			updateProductQty(product, dataSource);
+		}
+	}
+	
+	public static void correctQtyWhenAddOrDelDoc(DataSource dataSource, Product product, int qty) throws Exception {
+
+		if (qty > 0) {
+			
+			int qty2 = product.getQty() + qty;
 			product.setQty(qty2);
 			updateProductQty(product, dataSource);
 		}
@@ -76,14 +86,29 @@ public class OtherHelpers {
 		
 	}
 
+	public static void correctQtyWhenUpdateDoc2(DataSource dataSource, Product product, int qty1, int qty2) throws Exception {
+
+		if (qty1 > 0) {
+	
+			if (qty1 != qty2) {
+			
+				int qty3 = product.getQty() - qty1;
+				qty3 = qty3 + qty2;
+				product.setQty(qty3);
+				updateProductQty(product, dataSource);
+			}
+		}
+	}
+	
 	public static void correctQtyWhenUpdateDoc(DataSource dataSource, Product product, int qty1, int qty2) throws Exception {
 
 		if (qty1 > 0) {
-			
+	
 			if (qty1 != qty2) {
-				
-				int qty3 = product.getQty() - qty1;
-				qty3 = qty3 + qty2;
+			
+				int qty3 = product.getQty() + qty1;
+				qty3 = qty3 - qty2;
+				product.setQty(qty3);
 				updateProductQty(product, dataSource);
 			}
 		}
