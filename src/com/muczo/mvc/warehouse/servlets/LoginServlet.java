@@ -2,8 +2,6 @@ package com.muczo.mvc.warehouse.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
@@ -17,6 +15,7 @@ import javax.sql.DataSource;
 import com.muczo.mvc.warehouse.blueprint.Activity;
 import com.muczo.mvc.warehouse.blueprint.User;
 import com.muczo.mvc.warehouse.db.Documents1DbUtil;
+import com.muczo.mvc.warehouse.helperclasses.OtherHelpers;
 
 /**
  * Servlet implementation class LoginServlet
@@ -54,7 +53,7 @@ public class LoginServlet extends HttpServlet {
 		name = request.getParameter("name");
 		password = request.getParameter("password");
 		try {
-			user = warehouseDbUtil.getUserByName(name);
+			user = OtherHelpers.getUserByName(name, dataSource);
 			userPass = user.getPassword();
 		} catch (Exception e) {
 

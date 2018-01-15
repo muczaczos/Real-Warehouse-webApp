@@ -68,7 +68,7 @@ public class ReciepientsDbUtil {
 			myConn = dataSource.getConnection();
 
 			// create sql statement
-			String sql = "select * from reciepients";
+			String sql = "select * from reciepients ORDER BY name";
 
 			myStmt = myConn.createStatement();
 

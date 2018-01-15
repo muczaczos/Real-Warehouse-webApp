@@ -40,7 +40,7 @@ public class CustomersDbUtil {
 			myConn = dataSource.getConnection();
 
 			// create sql statement
-			String sql = "select * from customers";
+			String sql = "select * from customers ORDER BY name";
 
 			myStmt = myConn.createStatement();
 

@@ -39,7 +39,7 @@ public class ProvidersDbUtil {
 			myConn = dataSource.getConnection();
 
 			// create sql statement
-			String sql = "select * from providers";
+			String sql = "select * from providers ORDER BY name";
 
 			myStmt = myConn.createStatement();
 

@@ -1,32 +1,18 @@
 package com.muczo.mvc.warehouse.db;
 
-import java.awt.Desktop;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.apache.poi.ss.usermodel.Workbook;
-
-import com.muczo.mvc.warehouse.blueprint.Activity;
-import com.muczo.mvc.warehouse.blueprint.Document;
 import com.muczo.mvc.warehouse.blueprint.Document2;
 import com.muczo.mvc.warehouse.blueprint.Product;
 import com.muczo.mvc.warehouse.blueprint.User;
-import com.muczo.mvc.warehouse.helperclasses.PrintDocument;
+import com.muczo.mvc.warehouse.helperclasses.OtherHelpers;
 
 public class Documents2DbUtil {
 	
@@ -105,14 +91,8 @@ public class Documents2DbUtil {
 			myStmt.setString(1, theDocument2.getProvider());
 			myStmt.setString(2, theDocument2.getProduct());
 			myStmt.setDouble(3, theDocument2.getQty());
-			if (theDocument2.getQty() > 0) {
-
-				Product product = getProductByName(theDocument2.getProduct());
-				int qty = product.getQty() + theDocument2.getQty();
-				product.setQty(qty);
-				updateProductQty(product);
-
-			}
+			
+			OtherHelpers.correctQtyWhenAddDoc2(dataSource, OtherHelpers.getProductByName(theDocument2.getProduct(), dataSource), theDocument2.getQty());
 
 			// execute sql insert
 			myStmt.execute();
@@ -175,6 +155,8 @@ public class Documents2DbUtil {
 
 		Connection myConn = null;
 		PreparedStatement myStmt = null;
+		
+		Document2 document2 = getDocument2(Integer.toString(theDocument.getId()));
 
 		try {
 			// get db connection
@@ -194,6 +176,9 @@ public class Documents2DbUtil {
 
 			// execute SQL statement
 			myStmt.execute();
+			
+			OtherHelpers.correctQtyWhenUpdateDoc(dataSource, OtherHelpers.getProductByName(document2.getProduct(), dataSource), 
+					document2.getQty(), theDocument.getQty());
 
 		} finally {
 			// clean up JDBC objects
@@ -208,6 +193,8 @@ public class Documents2DbUtil {
 
 		Connection myConn = null;
 		PreparedStatement myStmt = null;
+		
+		Document2 document2 = getDocument2(Integer.toString(id));
 
 		try {
 			// get db connection
@@ -224,6 +211,9 @@ public class Documents2DbUtil {
 
 			// execute SQL statement
 			myStmt.execute();
+			
+			OtherHelpers.correctQtyWhenAddOrDelDoc(dataSource, OtherHelpers.getProductByName(document2.getProduct(), dataSource),
+					document2.getQty());
 
 		} finally {
 			// clean up JDBC objects
@@ -233,143 +223,5 @@ public class Documents2DbUtil {
 		}
 
 	}
-
-	
-
-	
-
-	
-
-
-	
-
-	
-
-	//////////////////////////////////////////////////////////////////////////////
-	////////////////////////// OTHER ZONE ////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////////
-	public User getUserByName(String theUserName) throws Exception {
-
-		User theUser = null;
-
-		Connection myConn = null;
-		PreparedStatement myStmt = null;
-		ResultSet myRs = null;
-
-		try {
-			// get connection to database
-			myConn = dataSource.getConnection();
-
-			// create sql to get selected product
-			String sql = "select * from users where name=?";
-
-			// create prepared statement
-			myStmt = myConn.prepareStatement(sql);
-
-			// set params
-			myStmt.setString(1, theUserName);
-
-			// execute statement
-			myRs = myStmt.executeQuery();
-
-			// retrive data from result set row
-			if (myRs.next()) {
-				String name = myRs.getString("name");
-				String password = myRs.getString("password");
-				int id = myRs.getInt("id");
-
-				// use the studentId during construction
-				theUser = new User(id, name, password);
-			} else {
-				//throw new Exception("Could not find user name: " + theUserName);
-			}
-
-			return theUser;
-		} finally {
-			// clean up JDBC objects
-			DbUtil.close(myConn, myStmt, myRs);
-		}
-	}
-
-	//////////////////////////////////////////////////////////////////////////////
-	////////////////////////// OTHER ZONE ////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////////
-	public void updateProductQty(Product theProduct) throws Exception {
-
-		Connection myConn = null;
-		PreparedStatement myStmt = null;
-
-		try {
-			// get db connection
-			myConn = dataSource.getConnection();
-
-			// create SQL update statement
-			String sql = "update products " + "set qty=?" + " where id=?";
-
-			// prepare statement
-			myStmt = myConn.prepareStatement(sql);
-
-			// set params
-			myStmt.setInt(1, theProduct.getQty());
-			myStmt.setInt(2, theProduct.getId());
-
-			// execute SQL statement
-			myStmt.execute();
-
-		} finally {
-			// clean up JDBC objects
-
-			DbUtil.	close(myConn, myStmt, null);
-
-		}
-
-	}
-	
-	public Product getProductByName(String theProductName) throws Exception {
-
-		Product theProduct = null;
-
-		Connection myConn = null;
-		PreparedStatement myStmt = null;
-		ResultSet myRs = null;
-		int productId;
-
-		try {
-
-			// get connection to database
-			myConn = dataSource.getConnection();
-
-			// create sql to get selected product
-			String sql = "select * from products where name=?";
-
-			// create prepared statement
-			myStmt = myConn.prepareStatement(sql);
-
-			// set params
-			myStmt.setString(1, theProductName);
-
-			// execute statement
-			myRs = myStmt.executeQuery();
-
-			// retrive data from result set row
-			if (myRs.next()) {
-				int id = myRs.getInt("id");
-				String name = myRs.getString("name");
-				String warehouse = myRs.getString("warehouse");
-				int qty = myRs.getInt("qty");
-
-				// use the studentId during construction
-				theProduct = new Product(id, name, warehouse, qty);
-			} else {
-				throw new Exception("Could not find product id: " + theProductName);
-			}
-
-			return theProduct;
-		} finally {
-			// clean up JDBC objects
-			DbUtil.close(myConn, myStmt, myRs);
-		}
-	}
-
 
 }

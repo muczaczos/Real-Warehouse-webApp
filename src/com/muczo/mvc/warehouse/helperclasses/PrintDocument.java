@@ -1,5 +1,10 @@
 package com.muczo.mvc.warehouse.helperclasses;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,8 +31,71 @@ public class PrintDocument {
 
 	public static DataSource dataSource;
 
-	public static Workbook printDocument(Document theDocument) {
+	public static void printDocument(DataSource dataSource, String docId) throws Exception {
 
+	  Document theDocument = null;
+
+		Connection myConn = null;
+		PreparedStatement myStmt = null;
+		ResultSet myRs = null;
+		int documentId;
+
+		try {
+
+			// convert document id to int
+			documentId = (int) Integer.parseInt(docId);
+
+			// get connection to database
+			myConn = dataSource.getConnection();
+
+			// create sql to get selected product
+			String sql = "select * from documents where id=?";
+
+			// create prepared statement
+			myStmt = myConn.prepareStatement(sql);
+
+			// set params
+			myStmt.setInt(1, documentId);
+
+			// execute statement
+			myRs = myStmt.executeQuery();
+
+			// retrive data from result set row
+			if (myRs.next()) {
+
+				String customer = myRs.getString("customer");
+				String reciepient = myRs.getString("reciepient");
+				int localDocId = myRs.getInt("docId");
+				String date = myRs.getString("date");
+				String product1 = myRs.getString("product1");
+				int qty1 = myRs.getInt("qty1");
+				String product2 = myRs.getString("product2");
+				int qty2 = myRs.getInt("qty2");
+				String product3 = myRs.getString("product3");
+				int qty3 = myRs.getInt("qty3");
+				String product4 = myRs.getString("product4");
+				int qty4 = myRs.getInt("qty4");
+				String product5 = myRs.getString("product5");
+				int qty5 = myRs.getInt("qty5");
+				String product6 = myRs.getString("product6");
+				int qty6 = myRs.getInt("qty6");
+				String product7 = myRs.getString("product7");
+				int qty7 = myRs.getInt("qty7");
+				String info = myRs.getString("info");
+
+				// use the documentId during construction
+				theDocument = new Document(true, documentId, customer, reciepient, localDocId, date, product1, qty1,
+						product2, qty2, product3, qty3, product4, qty4, product5, qty5, product6, qty6, product7, qty7,
+						info);
+			} else {
+				throw new Exception("Could not find document id: " + documentId);
+			}
+
+		} finally {
+			// clean up JDBC objects
+			DbUtil.close(myConn, myStmt, myRs);
+		}
+		
 		Workbook wb = null;
 		try {
 
@@ -123,8 +191,8 @@ public class PrintDocument {
 			cell5 = row2.createCell((short) 0);
 		//	cell5.setCellStyle(cellStyle);
 			try {
-				cell5.setCellValue("Odbiorca: " + selectQuery(reciepient, "name") + "; "
-						+ selectQuery(reciepient, "address") + "; " + selectQuery(reciepient, "telephone"));
+				cell5.setCellValue("Odbiorca: " + selectFromReciepientsQuery(reciepient, "name") + "; "
+						+ selectFromReciepientsQuery(reciepient, "address") + "; " + selectFromReciepientsQuery(reciepient, "telephone"));
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -193,7 +261,35 @@ public class PrintDocument {
 					JOptionPane.ERROR_MESSAGE);
 		}
 
-		return wb;
+		// Write the output to a file
+				FileOutputStream fileOut = null;
+				try {
+					fileOut = new FileOutputStream("workbook.xls");
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				try {
+					wb.write(fileOut);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				try {
+					fileOut.close();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+				Desktop dt = Desktop.getDesktop();
+				try {
+					dt.open(new File("workbook.xls"));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
 
 	}
 
@@ -239,7 +335,7 @@ public class PrintDocument {
 	}
 
 	// select any column for choosen reciepient
-	private static String selectQuery(String name, String column) throws SQLException {
+	private static String selectFromReciepientsQuery(String name, String column) throws SQLException {
 
 		String ret;
 		String sql = "select " + column + " from reciepients where name ='" + name + "'";

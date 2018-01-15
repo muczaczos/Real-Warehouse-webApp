@@ -38,7 +38,7 @@ public class ProductsDbUtil {
 			myConn = dataSource.getConnection();
 
 			// create sql statement
-			String sql = "select * from products";
+			String sql = "select * from products ORDER BY name";
 
 			// create prepared statement
 			myStmt = myConn.prepareStatement(sql);
@@ -109,7 +109,7 @@ public class ProductsDbUtil {
 			myConn = dataSource.getConnection();
 
 			// create sql statement
-			String sql = "select * from products where warehouse=?";
+			String sql = "select * from products where warehouse=? ORDER BY name";
 
 			// create prepared statement
 			myStmt = myConn.prepareStatement(sql);

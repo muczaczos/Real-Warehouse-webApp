@@ -451,7 +451,8 @@ public class Document1ControllerServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		if (session.getAttribute("userName") != null) {
-			documents1DbUtil.printDocument(request.getParameter("documentId"));
+			
+			PrintDocument.printDocument(dataSource, request.getParameter("documentId"));
 
 			// write activity to db
 			int id = Integer.parseInt(request.getParameter("documentId"));
