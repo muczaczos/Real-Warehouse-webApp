@@ -212,7 +212,7 @@ public class Documents2DbUtil {
 			// execute SQL statement
 			myStmt.execute();
 			
-			OtherHelpers.correctQtyWhenAddOrDelDoc2(dataSource, OtherHelpers.getProductByName(document2.getProduct(), dataSource),
+			OtherHelpers.correctQtyWhenDelDoc2(dataSource, OtherHelpers.getProductByName(document2.getProduct(), dataSource),
 					document2.getQty());
 
 		} finally {

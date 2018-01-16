@@ -58,7 +58,7 @@ public class OtherHelpers {
 		}
 	}
 
-	public static void correctQtyWhenAddOrDelDoc2(DataSource dataSource, Product product, int qty) throws Exception {
+	public static void correctQtyWhenDelDoc2(DataSource dataSource, Product product, int qty) throws Exception {
 
 		if (qty > 0) {
 			
@@ -68,7 +68,17 @@ public class OtherHelpers {
 		}
 	}
 	
-	public static void correctQtyWhenAddOrDelDoc(DataSource dataSource, Product product, int qty) throws Exception {
+	public static void correctQtyWhenAddDoc(DataSource dataSource, Product product, int qty) throws Exception {
+
+		if (qty > 0) {
+			
+			int qty2 = product.getQty() - qty;
+			product.setQty(qty2);
+			updateProductQty(product, dataSource);
+		}
+	}
+	
+	public static void correctQtyWhenDelDoc(DataSource dataSource, Product product, int qty) throws Exception {
 
 		if (qty > 0) {
 			

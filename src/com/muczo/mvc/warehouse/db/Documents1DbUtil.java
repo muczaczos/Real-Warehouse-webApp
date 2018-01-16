@@ -200,32 +200,32 @@ public class Documents1DbUtil {
 			myStmt.execute();
 
 			if (theDocument.getQty1() > 0) {
-				OtherHelpers.correctQtyWhenAddOrDelDoc(dataSource,
+				OtherHelpers.correctQtyWhenAddDoc(dataSource,
 						OtherHelpers.getProductByName(theDocument.getProduct1(), dataSource), theDocument.getQty1());
 			}
 			if (theDocument.getQty2() > 0) {
-				OtherHelpers.correctQtyWhenAddOrDelDoc(dataSource,
+				OtherHelpers.correctQtyWhenAddDoc(dataSource,
 						OtherHelpers.getProductByName(theDocument.getProduct2(), dataSource), theDocument.getQty2());
 			}
 			if (theDocument.getQty3() > 0) {
-				OtherHelpers.correctQtyWhenAddOrDelDoc(dataSource,
+				OtherHelpers.correctQtyWhenAddDoc(dataSource,
 						OtherHelpers.getProductByName(theDocument.getProduct3(), dataSource), theDocument.getQty3());
 			}
 			if (theDocument.getQty4() > 0) {
-				OtherHelpers.correctQtyWhenAddOrDelDoc(dataSource,
+				OtherHelpers.correctQtyWhenAddDoc(dataSource,
 						OtherHelpers.getProductByName(theDocument.getProduct4(), dataSource), theDocument.getQty4());
 			}
 			if (theDocument.getQty5() > 0) {
-				OtherHelpers.correctQtyWhenAddOrDelDoc(dataSource,
+				OtherHelpers.correctQtyWhenAddDoc(dataSource,
 						OtherHelpers.getProductByName(theDocument.getProduct5(), dataSource), theDocument.getQty5());
 			}
 			if (theDocument.getQty6() > 0) {
-				OtherHelpers.correctQtyWhenAddOrDelDoc(dataSource,
+				OtherHelpers.correctQtyWhenAddDoc(dataSource,
 						OtherHelpers.getProductByName(theDocument.getProduct6(), dataSource), theDocument.getQty6());
 			}
 			if (theDocument.getQty7() > 0) {
 
-				OtherHelpers.correctQtyWhenAddOrDelDoc(dataSource,
+				OtherHelpers.correctQtyWhenAddDoc(dataSource,
 						OtherHelpers.getProductByName(theDocument.getProduct7(), dataSource), theDocument.getQty7());
 			}
 
@@ -403,31 +403,31 @@ public class Documents1DbUtil {
 			myStmt.execute();
 
 			if (document.getQty1() > 0) {
-				OtherHelpers.correctQtyWhenAddOrDelDoc(dataSource,
+				OtherHelpers.correctQtyWhenDelDoc(dataSource,
 						OtherHelpers.getProductByName(document.getProduct1(), dataSource), document.getQty1());
 			}
 			if (document.getQty2() > 0) {
-				OtherHelpers.correctQtyWhenAddOrDelDoc(dataSource,
+				OtherHelpers.correctQtyWhenDelDoc(dataSource,
 						OtherHelpers.getProductByName(document.getProduct2(), dataSource), document.getQty2());
 			}
 			if (document.getQty3() > 0) {
-				OtherHelpers.correctQtyWhenAddOrDelDoc(dataSource,
+				OtherHelpers.correctQtyWhenDelDoc(dataSource,
 						OtherHelpers.getProductByName(document.getProduct3(), dataSource), document.getQty3());
 			}
 			if (document.getQty4() > 0) {
-				OtherHelpers.correctQtyWhenAddOrDelDoc(dataSource,
+				OtherHelpers.correctQtyWhenDelDoc(dataSource,
 						OtherHelpers.getProductByName(document.getProduct4(), dataSource), document.getQty4());
 			}
 			if (document.getQty5() > 0) {
-				OtherHelpers.correctQtyWhenAddOrDelDoc(dataSource,
+				OtherHelpers.correctQtyWhenDelDoc(dataSource,
 						OtherHelpers.getProductByName(document.getProduct5(), dataSource), document.getQty5());
 			}
 			if (document.getQty6() > 0) {
-				OtherHelpers.correctQtyWhenAddOrDelDoc(dataSource,
+				OtherHelpers.correctQtyWhenDelDoc(dataSource,
 						OtherHelpers.getProductByName(document.getProduct6(), dataSource), document.getQty6());
 			}
 			if (document.getQty7() > 0) {
-				OtherHelpers.correctQtyWhenAddOrDelDoc(dataSource,
+				OtherHelpers.correctQtyWhenDelDoc(dataSource,
 						OtherHelpers.getProductByName(document.getProduct7(), dataSource), document.getQty7());
 			}
 
