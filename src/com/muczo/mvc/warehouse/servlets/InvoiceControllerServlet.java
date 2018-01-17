@@ -154,12 +154,12 @@ public class InvoiceControllerServlet extends HttpServlet {
 
 	}
 
-	private void addInvoice(HttpServletRequest request, HttpServletResponse response) {
+	private void addInvoice(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		HttpSession session = request.getSession();
 
 		if (session.getAttribute("userName") != null) {
-			
+
 			// read invoice info from form data
 			String customer = request.getParameter("customer");
 			String date = request.getParameter("date");
@@ -176,15 +176,15 @@ public class InvoiceControllerServlet extends HttpServlet {
 
 			// write activity to db
 			List<Invoice> invoiceList = invoiceDbUtil.getInvoices();
-			int id = invoiceList.get(priceLists.size() - 1).getId();
+			int id = invoiceList.get(invoiceList.size() - 1).getId();
 
 			session = request.getSession();
 
 			Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
-					"add price", id);
+					"add invoice", id);
 
 			// send back to main page (the reciepient list)
-			listPrices(request, response);
+			listInvoices(request, response);
 		}
 
 	}
@@ -212,21 +212,60 @@ public class InvoiceControllerServlet extends HttpServlet {
 
 	}
 
-	private void updateInvoice(HttpServletRequest request, HttpServletResponse response) {
+	private void updateInvoice(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		HttpSession session = request.getSession();
 
 		if (session.getAttribute("userName") != null) {
+
+			// read invoice info from form data
+			int id = Integer.parseInt(request.getParameter("invoiceId"));
+			String customer = request.getParameter("customer");
+			String date = request.getParameter("date");
+			int invNumber = Integer.parseInt(request.getParameter("invNumber"));
+			int startDocRange = Integer.parseInt(request.getParameter("startDocRange"));
+			int endDocRange = Integer.parseInt(request.getParameter("endDocRange"));
+			Double grossAmount = Double.parseDouble(request.getParameter("grossAmount"));
+
+			// create a new invoice object
+			Invoice invoice = new Invoice(customer, date, invNumber, startDocRange, endDocRange, grossAmount);
+
+			// perform update on database
+			invoiceDbUtil.updateInvoice(invoice);
+
+			// write activity to db
+			session = request.getSession();
+
+			Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
+					"update invoice", id);
+
+			// send them back to the "list price" page
+			listInvoices(request, response);
 
 		}
 
 	}
 
-	private void deleteInvoice(HttpServletRequest request, HttpServletResponse response) {
+	private void deleteInvoice(HttpServletRequest request, HttpServletResponse response) throws Exception{
 
 		HttpSession session = request.getSession();
 
 		if (session.getAttribute("userName") != null) {
+
+			// read price info from form data
+			int id = Integer.parseInt(request.getParameter("invoiceId"));
+
+			// perform delete on database
+			invoiceDbUtil.deleteInvoice(id);
+
+			// write activity to db
+			session = request.getSession();
+
+			Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
+					"del invoice", id);
+
+			// send them back to the "list price" page
+			listInvoices(request, response);
 
 		}
 

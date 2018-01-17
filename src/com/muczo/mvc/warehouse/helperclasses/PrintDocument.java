@@ -17,12 +17,12 @@ import javax.swing.JOptionPane;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.RegionUtil;
-import org.apache.poi.xssf.usermodel.XSSFPrintSetup;
 
 import com.muczo.mvc.warehouse.blueprint.Document;
 import com.muczo.mvc.warehouse.db.DbUtil;
@@ -111,6 +111,18 @@ public class PrintDocument {
 			// https://www.tutorialspoint.com/apache_poi_word/apache_poi_word_quick_guide.htm
 			// Blank Document with tables
 			wb = new HSSFWorkbook();
+			Font font = wb.createFont();
+		    font.setFontHeightInPoints((short)11);
+		    font.setFontName("Bookman Old Style");
+		    font.setItalic(false);
+		    font.setBold(true);
+		    
+		    Font font2 = wb.createFont();
+		    font2.setFontHeightInPoints((short)10);
+		    font2.setFontName("Bookman Old Style");
+		    font2.setItalic(false);
+		    font2.setBold(true);
+		    
 			Sheet sheet = wb.createSheet("new sheet");
 
 			// double leftMarginInches = sheet.getMargin(Sheet.LeftMargin);
@@ -149,13 +161,15 @@ public class PrintDocument {
 
 			Cell cell = row.createCell((short) 0);
 			CellStyle cellStyle = wb.createCellStyle();
+			cellStyle.setFont(font2);
 			cellStyle.setAlignment(CellStyle.ALIGN_LEFT);
 			cellStyle.setVerticalAlignment(CellStyle.VERTICAL_TOP);
-			cellStyle.setBorderBottom(CellStyle.BORDER_THIN);
-			cellStyle.setBorderTop(CellStyle.BORDER_THIN);
-			cellStyle.setBorderRight(CellStyle.BORDER_THIN);
-			cellStyle.setBorderLeft(CellStyle.BORDER_THIN);
-			//cell.setCellStyle(cellStyle);
+		//	cellStyle.setBorderBottom(CellStyle.BORDER_THIN);
+		//	cellStyle.setBorderTop(CellStyle.BORDER_THIN);
+		//	cellStyle.setBorderRight(CellStyle.BORDER_THIN);
+		//	cellStyle.setBorderLeft(CellStyle.BORDER_THIN);
+			cell.setCellStyle(cellStyle);
+			
 			cell.setCellValue("KP-Karton K. Piekarniak Sp. J. \n" + "Kobylin 35, 05-600 Grójec \n"
 					+ " NIP 797 18 60 878 \n " + "tel. 502 04 04 05");
 			cellRangeAddress1 = new CellRangeAddress(0, // first row (0-based)
@@ -168,6 +182,7 @@ public class PrintDocument {
 
 			cell2 = row.createCell((short) 3);
 			CellStyle cellStyle2 = wb.createCellStyle();
+			cellStyle2.setFont(font);
 			cellStyle2.setAlignment(CellStyle.ALIGN_CENTER);
 			cellStyle2.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
 			cellStyle2.setVerticalAlignment(CellStyle.VERTICAL_TOP);
@@ -179,6 +194,7 @@ public class PrintDocument {
 
 			cell0 = row.createCell((short) 6);
 			CellStyle cellStyle0 = wb.createCellStyle();
+			cellStyle0.setFont(font);
 			cellStyle0.setAlignment(CellStyle.ALIGN_CENTER);
 			cellStyle0.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
 			cellStyle0.setVerticalAlignment(CellStyle.VERTICAL_TOP);
@@ -189,7 +205,7 @@ public class PrintDocument {
 			borderToRegion(cellRangeAddress0, sheet, wb);
 
 			cell5 = row2.createCell((short) 0);
-		//	cell5.setCellStyle(cellStyle);
+			cell5.setCellStyle(cellStyle2);
 			try {
 				cell5.setCellValue("Odbiorca: " + selectFromReciepientsQuery(reciepient, "name") + "; "
 						+ selectFromReciepientsQuery(reciepient, "address") + "; " + selectFromReciepientsQuery(reciepient, "telephone"));
@@ -201,28 +217,35 @@ public class PrintDocument {
 			sheet.addMergedRegion(cellRangeAddress5);
 			borderToRegion(cellRangeAddress5, sheet, wb);
 
+			CellStyle cellStyle00 = wb.createCellStyle();
+			cellStyle00.setFont(font);
+			cellStyle00.setAlignment(CellStyle.ALIGN_LEFT);
+			cellStyle00.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+			cellStyle00.setVerticalAlignment(CellStyle.VERTICAL_TOP);
+			
 			cell6 = row3.createCell((short) 0);
-		//	cell6.setCellStyle(cellStyle);
+			cell6.setCellStyle(cellStyle00);
 			cell6.setCellValue("1. " + product1);
 			cellRangeAddress6 = new CellRangeAddress(7, 7, 0, 3);
 			sheet.addMergedRegion(cellRangeAddress6);
-			borderToRegion(cellRangeAddress6, sheet, wb);
+		//	borderToRegion(cellRangeAddress6, sheet, wb);
 
 			cell15 = row3.createCell((short) 4);
+			cell15.setCellStyle(cellStyle00);
 			cell15.setCellValue("szt. " + qty1);
 			cellRangeAddress15 = new CellRangeAddress(7, 7, 4, 5);
 			sheet.addMergedRegion(cellRangeAddress15);
-			borderToRegion(cellRangeAddress15, sheet, wb);
+		//	borderToRegion(cellRangeAddress15, sheet, wb);
 
 			cell14 = row10.createCell((short) 0);
-		//	cell14.setCellStyle(cellStyle);
+			cell14.setCellStyle(cellStyle00);
 			cell14.setCellValue("Wystawi³:                                                              Odebra³: ");
 			cellRangeAddress14 = new CellRangeAddress(15, 15, 0, 9);
 			sheet.addMergedRegion(cellRangeAddress14);
 			borderToRegion(cellRangeAddress14, sheet, wb);
 
 			cell13 = row3.createCell((short) 6);
-		//	cell13.setCellStyle(cellStyle);
+			cell13.setCellStyle(cellStyle2);
 			cell13.setCellValue(info);
 			CellStyle cellStyle3 = wb.createCellStyle();
 			cellStyle3.setAlignment(CellStyle.ALIGN_CENTER);
@@ -233,27 +256,27 @@ public class PrintDocument {
 		//	borderToRegion(cellRangeAddress13, sheet, wb);
 
 			createSheetCell(cell7, cell16, row4, theDocument.getProduct2(), theDocument.getQty2(),
-					cellRangeAddress7, cellRangeAddress16, "2. ", theDocument, sheet, wb, cellStyle, 8, 
+					cellRangeAddress7, cellRangeAddress16, "2. ", theDocument, sheet, wb, cellStyle00, 8, 
 					8, 0, 3, 8, 8, 4, 5, 0, 4);
 			
 			createSheetCell(cell8, cell17, row5, theDocument.getProduct3(), theDocument.getQty3(),
-					cellRangeAddress8, cellRangeAddress17, "3. ", theDocument, sheet, wb, cellStyle, 9, 
+					cellRangeAddress8, cellRangeAddress17, "3. ", theDocument, sheet, wb, cellStyle00, 9, 
 					9, 0, 3, 9, 9, 4, 5, 0, 4);
 			
 			createSheetCell(cell9, cell18, row6, theDocument.getProduct4(), theDocument.getQty4(),
-					cellRangeAddress9, cellRangeAddress18, "4. ", theDocument, sheet, wb, cellStyle, 10, 
+					cellRangeAddress9, cellRangeAddress18, "4. ", theDocument, sheet, wb, cellStyle00, 10, 
 					10, 0, 3, 10, 10, 4, 5, 0, 4);
 			
 			createSheetCell(cell10, cell19, row7, theDocument.getProduct5(), theDocument.getQty5(),
-					cellRangeAddress10, cellRangeAddress19, "5. ", theDocument, sheet, wb, cellStyle, 11, 
+					cellRangeAddress10, cellRangeAddress19, "5. ", theDocument, sheet, wb, cellStyle00, 11, 
 					11, 0, 3, 11, 11, 4, 5, 0, 4);
 			
 			createSheetCell(cell11, cell20, row8, theDocument.getProduct6(), theDocument.getQty6(),
-					cellRangeAddress11, cellRangeAddress20, "6. ", theDocument, sheet, wb, cellStyle, 12, 
+					cellRangeAddress11, cellRangeAddress20, "6. ", theDocument, sheet, wb, cellStyle00, 12, 
 					12, 0, 3, 12, 12, 4, 5, 0, 4);
 			
 			createSheetCell(cell12, cell21, row9, theDocument.getProduct7(), theDocument.getQty7(),
-					cellRangeAddress12, cellRangeAddress21, "7. ", theDocument, sheet, wb, cellStyle, 13, 
+					cellRangeAddress12, cellRangeAddress21, "7. ", theDocument, sheet, wb, cellStyle00, 13, 
 					13, 0, 3, 13, 13, 4, 5, 0, 4);
 	
 		} catch (IndexOutOfBoundsException eb) {
@@ -301,24 +324,26 @@ public class PrintDocument {
 		if (qty > 0) {
 
 			cell = row.createCell((short) row1);
-		//	cell.setCellStyle(cellStyle);
+			cell.setCellStyle(cellStyle);
 			cell.setCellValue(noOfProduct + product);
 			cellRangeAddress = new CellRangeAddress(x1, x2, x3, x4);
 			sheet.addMergedRegion(cellRangeAddress);
-			borderToRegion(cellRangeAddress, sheet, wb);
+		//	borderToRegion(cellRangeAddress, sheet, wb);
 
 			cell2 = row.createCell((short) row2);
+			cell2.setCellStyle(cellStyle);
 			cell2.setCellValue("szt. " + qty);
 			cellRangeAddress2 = new CellRangeAddress(y1, y2, y3, y4);
 			sheet.addMergedRegion(cellRangeAddress2);
-			borderToRegion(cellRangeAddress2, sheet, wb);
+		//  borderToRegion(cellRangeAddress2, sheet, wb);
 			
 		} else {
 			cell = row.createCell((short) row1);
-		//	cell.setCellStyle(cellStyle);
+			cell.setCellStyle(cellStyle);
 			cell.setCellValue(noOfProduct);
 		//	cellRangeAddress = new CellRangeAddress(x1, x2, x3, x4);
 		//	sheet.addMergedRegion(cellRangeAddress);
+			
 		}
 
 	}
