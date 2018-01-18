@@ -164,12 +164,16 @@ public class InvoiceControllerServlet extends HttpServlet {
 			String customer = request.getParameter("customer");
 			String date = request.getParameter("date");
 			int invNumber = Integer.parseInt(request.getParameter("invNumber"));
+			System.out.println(customer);
 			int startDocRange = Integer.parseInt(request.getParameter("startDocRange"));
+			System.out.println(startDocRange);
 			int endDocRange = Integer.parseInt(request.getParameter("endDocRange"));
+			System.out.println(endDocRange);
 			Double grossAmount = Double.parseDouble(request.getParameter("grossAmount"));
-
+			System.out.println(grossAmount);
+			
 			// create a new invoice object
-			Invoice invoice = new Invoice(customer, date, invNumber, startDocRange, endDocRange, grossAmount);
+			Invoice invoice = new Invoice(customer, date, invNumber, endDocRange, startDocRange, grossAmount);
 
 			// add the price to the database
 			invoiceDbUtil.addInvoice(invoice);
@@ -180,6 +184,8 @@ public class InvoiceControllerServlet extends HttpServlet {
 
 			session = request.getSession();
 
+			
+			
 			Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
 					"add invoice", id);
 
@@ -308,9 +314,15 @@ public class InvoiceControllerServlet extends HttpServlet {
 			String theCustomer = request.getParameter("inv2customer");
 			String[] ids = request.getParameterValues("docId");
 
-			String invoice = CalculateInvoice.calculate(ids, theCustomer, priceDbUtil, documents1DbUtil);
-			session = request.getSession();
-			session.setAttribute("amount", invoice);
+			CalculateInvoice calculate = new CalculateInvoice();
+			
+			String invoice = calculate.calculate(ids, theCustomer, priceDbUtil, documents1DbUtil);
+			System.out.println(calculate.getGrossAmount());
+			request.setAttribute("amount", invoice);
+			request.setAttribute("grossAmount", calculate.getGrossAmount());
+			request.setAttribute("startDocRange", calculate.getStartDocRange());
+			request.setAttribute("endDocRange", calculate.getEndDocRange());
+			request.setAttribute("inv2customer", theCustomer);
 
 			// send to JSP page (view)
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/create-invoice.jsp");

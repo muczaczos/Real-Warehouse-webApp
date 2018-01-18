@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -25,6 +23,7 @@ import com.muczo.mvc.warehouse.blueprint.Customer;
 import com.muczo.mvc.warehouse.blueprint.Document;
 import com.muczo.mvc.warehouse.blueprint.Document2;
 import com.muczo.mvc.warehouse.blueprint.Employee;
+import com.muczo.mvc.warehouse.blueprint.Invoice;
 import com.muczo.mvc.warehouse.blueprint.PriceList;
 import com.muczo.mvc.warehouse.blueprint.Product;
 import com.muczo.mvc.warehouse.blueprint.Provider;
@@ -34,6 +33,7 @@ import com.muczo.mvc.warehouse.db.CustomersDbUtil;
 import com.muczo.mvc.warehouse.db.Documents1DbUtil;
 import com.muczo.mvc.warehouse.db.Documents2DbUtil;
 import com.muczo.mvc.warehouse.db.EmployeesDbUtil;
+import com.muczo.mvc.warehouse.db.InvoiceDbUtil;
 import com.muczo.mvc.warehouse.db.PriceDbUtil;
 import com.muczo.mvc.warehouse.db.ProductsDbUtil;
 import com.muczo.mvc.warehouse.db.ProvidersDbUtil;
@@ -57,6 +57,7 @@ public class Document1ControllerServlet extends HttpServlet {
 	private PriceDbUtil priceDbUtil;
 	private WarehousesDbUtil warehousesDbUtil;
 	private EmployeesDbUtil employeesDbUtil;
+	private InvoiceDbUtil invoiceDbUtil;
 
 	@Resource(name = "jdbc/kp_warehouse_documents")
 	private DataSource dataSource;
@@ -77,6 +78,7 @@ public class Document1ControllerServlet extends HttpServlet {
 			priceDbUtil = new PriceDbUtil(dataSource);
 			warehousesDbUtil = new WarehousesDbUtil(dataSource);
 			employeesDbUtil = new EmployeesDbUtil(dataSource);
+			invoiceDbUtil = new InvoiceDbUtil(dataSource);
 			PrintDocument.dataSource = dataSource;
 
 		} catch (Exception exc) {
@@ -193,6 +195,13 @@ public class Document1ControllerServlet extends HttpServlet {
 			request.setAttribute("CUSTOMERS_LIST", customers);
 
 			session.setAttribute("Customers", customers);
+			
+			// get invoices from db util
+			List<Invoice> invoices = invoiceDbUtil.getInvoices();
+			// add invoices to the request
+			request.setAttribute("INVOICES_LIST", invoices);
+
+			session.setAttribute("Invoices", customers);
 
 			// get reciepients from db util
 			List<Reciepient> reciepients = reciepientsDbUtil.getReciepients();

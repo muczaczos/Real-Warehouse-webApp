@@ -56,7 +56,7 @@ public class InvoiceDbUtil {
 				String date = myRs.getString("date");
 				int invNumber = myRs.getInt("invNumber");
 				int startDocRange = myRs.getInt("startDocRange");
-				int endDocRange = myRs.getInt("startDocRange");
+				int endDocRange = myRs.getInt("endDocRange");
 				Double grossAmount = myRs.getDouble("grossAmount");
 
 				// create new invoice object

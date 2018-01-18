@@ -12,13 +12,19 @@ import com.muczo.mvc.warehouse.db.Documents1DbUtil;
 
 public class CalculateInvoice {
 	
-	public static String calculate(String[] ids, String theCustomer, PriceDbUtil priceDbUtil,
+	private Double grossAmount;
+	private int startDocRange;
+	private int endDocRange;
+	
+	public String calculate(String[] ids, String theCustomer, PriceDbUtil priceDbUtil,
 			Documents1DbUtil warehouseDbUtil) throws Exception{
+		
 		
 		ArrayList<String> productList = new ArrayList<String>();
 		ArrayList<String> product = new ArrayList<String>();
 		ArrayList<Integer> qty = new ArrayList<Integer>();
 		ArrayList<ProductList> sumList = new ArrayList<ProductList>();
+		ArrayList<Document> documents = new ArrayList<Document>();
 		String grossAmount;
 
 		
@@ -26,6 +32,8 @@ public class CalculateInvoice {
 		for (String id : ids) {
 
 			Document document = warehouseDbUtil.getDocument(id);
+			
+			documents.add(document);
 
 			product.add(document.getProduct1());
 			qty.add(document.getQty1());
@@ -81,6 +89,10 @@ public class CalculateInvoice {
 		}
 		StringBuilder sb = new StringBuilder();
 		Double sum = 0.00;
+		
+		this.grossAmount = sum;
+		this.startDocRange = documents.get(0).getNoOfDoc();
+		this.endDocRange = documents.get(documents.size()-1).getNoOfDoc();
 
 		for (ProductList element : sumList) {
 
@@ -115,5 +127,20 @@ public class CalculateInvoice {
 		return invoice;
 		
 	}
+
+	
+	public Double getGrossAmount() {
+		return grossAmount;
+	}
+
+	public int getStartDocRange() {
+		return startDocRange;
+	}
+
+	public int getEndDocRange() {
+		return endDocRange;
+	}
+	
+	
 
 }
