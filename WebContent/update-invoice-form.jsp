@@ -24,10 +24,10 @@
 
 	<hr>
 	<a
-		href="InvoiceControllerServlet?command=LOAD-DOCUMENT&documentId=${THE_DOCUMENT.id}&theLocale=en_US">Polski
+		href="InvoiceControllerServlet?command=LOAD-INVOICE&invoiceId=${THE_INVOICE.id}&theLocale=en_US">Polski
 		(PL)</a> |
 	<a
-		href="InvoiceControllerServlet?command=LOAD-DOCUMENT&documentId=${THE_DOCUMENT.id}&theLocale=pl_PL">English
+		href="InvoiceControllerServlet?command=LOAD-INVOICE&invoiceId=${THE_INVOICE.id}&theLocale=pl_PL">English
 		(US)</a>
 
 	<hr>
@@ -35,7 +35,7 @@
 	<div id="wrapper">
 		<div id="header">
 			<h2>
-				<fmt:message key="label.title.update-document" />
+				<fmt:message key="label.title.update-invoice" />
 			</h2>
 		</div>
 	</div>
@@ -46,102 +46,47 @@
 
 		<form action="InvoiceControllerServlet" method="GET">
 
-			<input type="hidden" name="command" value="UPDATE-DOCUMENT" /> <input
-				type="hidden" name="documentId" value="${THE_DOCUMENT.id}" />
+			<input type="hidden" name="command" value="UPDATE-INVOICE" /> <input
+				type="hidden" name="invoiceId" value="${THE_INVOICE.id}" />
 
 			<table>
 				<tbody>
 					<tr>
 						<td><label><fmt:message key="label.customer" />:</label></td>
 						<td><input type="text" name="customer"
-							value="${THE_DOCUMENT.customer}" /></td>
-					</tr>
-
-					<tr>
-						<td><label><fmt:message key="label.reciepient" />:</label></td>
-						<td><input type="text" name="reciepient"
-							value="${THE_DOCUMENT.reciepient}" /></td>
-					</tr>
-
-					<tr>
-						<td><label><fmt:message key="label.docno" />:</label></td>
-						<td><input type="text" name="noOfDoc"
-							value="${THE_DOCUMENT.noOfDoc}" /></td>
+							value="${THE_INVOICE.customer}" /></td>
 					</tr>
 
 					<tr>
 						<td><label><fmt:message key="label.date" />:</label></td>
 						<td><input type="text" name="date"
-							value="${THE_DOCUMENT.date}" /></td>
+							value="${THE_INVOICE.date}" /></td>
 					</tr>
 
 					<tr>
-						<td><label><fmt:message key="label.product" /> 1:</label></td>
-						<td><input type="text" name="product1"
-							value="${THE_DOCUMENT.product1}" /></td>
-						<td><label><fmt:message key="label.qty" />:</label></td>
-						<td><input type="text" name="qty1"
-							value="${THE_DOCUMENT.qty1}" /></td>
+						<td><label><fmt:message key="label.invNumber" />:</label></td>
+						<td><input type="text" name="invNumber"
+							value="${THE_INVOICE.invNumber}" /></td>
 					</tr>
 
 					<tr>
-						<td><label><fmt:message key="label.product" /> 2:</label></td>
-						<td><input type="text" name="product2"
-							value="${THE_DOCUMENT.product2}" /></td>
-						<td><label><fmt:message key="label.qty" />:</label></td>
-						<td><input type="text" name="qty2"
-							value="${THE_DOCUMENT.qty2}" /></td>
+						<td><label><fmt:message key="label.startDocRange" />:</label></td>
+						<td><input type="text" name="startDocRange"
+							value="${THE_INVOICE.startDocRange}" /></td>
+					</tr>
+					
+					<tr>
+						<td><label><fmt:message key="label.endDocRange" />:</label></td>
+						<td><input type="text" name="endDocRange"
+							value="${THE_INVOICE.endDocRange}" /></td>
+					</tr>
+					
+					<tr>
+						<td><label><fmt:message key="label.grossAmount" />:</label></td>
+						<td><input type="text" name="grossAmount"
+							value="${THE_INVOICE.grossAmount}" /></td>
 					</tr>
 
-					<tr>
-						<td><label><fmt:message key="label.product" /> 3:</label></td>
-						<td><input type="text" name="product3"
-							value="${THE_DOCUMENT.product3}" /></td>
-						<td><label><fmt:message key="label.qty" />:</label></td>
-						<td><input type="text" name="qty3"
-							value="${THE_DOCUMENT.qty3}" /></td>
-					</tr>
-
-					<tr>
-						<td><label><fmt:message key="label.product" /> 4:</label></td>
-						<td><input type="text" name="product4"
-							value="${THE_DOCUMENT.product4}" /></td>
-						<td><label><fmt:message key="label.qty" />:</label></td>
-						<td><input type="text" name="qty4"
-							value="${THE_DOCUMENT.qty4}" /></td>
-					</tr>
-
-					<tr>
-						<td><label><fmt:message key="label.product" /> 5:</label></td>
-						<td><input type="text" name="product5"
-							value="${THE_DOCUMENT.product5}" /></td>
-						<td><label><fmt:message key="label.qty" />:</label></td>
-						<td><input type="text" name="qty5"
-							value="${THE_DOCUMENT.qty5}" /></td>
-					</tr>
-
-					<tr>
-						<td><label><fmt:message key="label.product" /> 6:</label></td>
-						<td><input type="text" name="product6"
-							value="${THE_DOCUMENT.product6}" /></td>
-						<td><label><fmt:message key="label.qty" />:</label></td>
-						<td><input type="text" name="qty6"
-							value="${THE_DOCUMENT.qty6}" /></td>
-					</tr>
-
-					<tr>
-						<td><label><fmt:message key="label.product" /> 7:</label></td>
-						<td><input type="text" name="product7"
-							value="${THE_DOCUMENT.product7}" /></td>
-						<td><label><fmt:message key="label.qty" />:</label></td>
-						<td><input type="text" name="qty7"
-							value="${THE_DOCUMENT.qty7}" /></td>
-					</tr>
-
-					<tr>
-						<td><label><fmt:message key="label.info" />:</label></td>
-						<td><input name="info" value="${THE_DOCUMENT.info}" /></td>
-					</tr>
 
 					<tr>
 						<td><label></label></td>
@@ -157,7 +102,7 @@
 
 		<p>
 			<a href="InvoiceControllerServlet"><fmt:message
-					key="label.back.home" /></a>
+					key="label.back.create.invoice" /></a>
 		</p>
 	</div>
 </body>

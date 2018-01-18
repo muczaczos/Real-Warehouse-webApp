@@ -136,7 +136,7 @@ public class InvoiceDbUtil {
 			// retrive data from result set row
 			if (myRs.next()) {
 				String customer = myRs.getString("customer");
-				String date = myRs.getString("data");
+				String date = myRs.getString("date");
 				int invNumber = myRs.getInt("invNumber");
 				int startDocNumber = myRs.getInt("startDocRange");
 				int endDocNumber = myRs.getInt("endDocRange");
@@ -178,7 +178,8 @@ public class InvoiceDbUtil {
 			myStmt.setInt(4, invoice.getStartDocRange());
 			myStmt.setInt(5, invoice.getEndDocRange());
 			myStmt.setDouble(6, invoice.getGrossAmount());
-
+			myStmt.setInt(7, invoice.getId());
+System.out.println(invoice.getGrossAmount());
 			// execute SQL statement
 			myStmt.execute();
 

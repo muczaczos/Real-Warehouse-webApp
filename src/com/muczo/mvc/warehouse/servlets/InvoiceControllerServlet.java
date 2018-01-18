@@ -68,6 +68,7 @@ public class InvoiceControllerServlet extends HttpServlet {
 			if (session.getAttribute("userName") != "") {
 				System.out.println(session.getAttribute("userName"));
 				try {
+					
 					// read the "command" parameter
 					String theCommand = request.getParameter("command");
 
@@ -121,9 +122,9 @@ public class InvoiceControllerServlet extends HttpServlet {
 				out.print("Proszê siê najpierw zalogowaæ!");
 			}
 		} catch (Exception e) {
-			System.out.println(e.toString());
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/index.html");
-			dispatcher.forward(request, response);
+			System.out.println("fiut");
+		//	RequestDispatcher dispatcher = request.getRequestDispatcher("/index.html");
+		//	dispatcher.forward(request, response);
 		}
 		out.close();
 	}
@@ -200,13 +201,12 @@ public class InvoiceControllerServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		if (session.getAttribute("userName") != null) {
-
+			
 			// read price id from form data
 			String theInvoiceId = request.getParameter("invoiceId");
 
 			// get price from database (db util)
 			Invoice invoice = invoiceDbUtil.getInvoice(theInvoiceId);
-
 			// place price in the request attribute
 			request.setAttribute("THE_INVOICE", invoice);
 

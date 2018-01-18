@@ -219,7 +219,7 @@
 
 					<c:forEach var="tempInvoice" items="${Invoices}">
 						<!-- set up a link for each customers  -->
-						<c:url var="tempLink" value="InvoiceControllerServlet">
+						<c:url var="updateLink" value="InvoiceControllerServlet">
 							<c:param name="command" value="LOAD-INVOICE" />
 							<c:param name="invoiceId" value="${tempInvoice.id}" />
 						</c:url>
@@ -240,7 +240,7 @@
 							<td>${tempInvoice.endDocRange}</td>
 							<td>${tempInvoice.grossAmount}</td>
 
-							<td><a href="${tempLink}"><fmt:message
+							<td><a href="${updateLink}"><fmt:message
 										key="label.update" /></a> | <a href="${deleteLink}"
 								onClick="if (!(confirm('<fmt:message key="label.delete.message"/>'))) return false">
 									<fmt:message key="label.delete" />

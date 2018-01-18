@@ -90,7 +90,7 @@ public class CalculateInvoice {
 		StringBuilder sb = new StringBuilder();
 		Double sum = 0.00;
 		
-		this.grossAmount = sum;
+		
 		this.startDocRange = documents.get(0).getNoOfDoc();
 		this.endDocRange = documents.get(documents.size()-1).getNoOfDoc();
 
@@ -105,6 +105,8 @@ public class CalculateInvoice {
 
 		sum *= 1.23;
 
+		this.grossAmount = sum;
+		
 		// Rounding number to up and two digits after dot.
 		NumberFormat fmt = NumberFormat.getNumberInstance();
 		fmt.setMaximumFractionDigits(2);
