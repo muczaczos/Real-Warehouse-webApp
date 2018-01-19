@@ -57,11 +57,24 @@ public class Documents2DbUtil {
 				// retrieve data from result set row
 				int id = myRs.getInt("id");
 				String provider = myRs.getString("provider");
-				String product = myRs.getString("productName");
-				int qty = myRs.getInt("qty");
+				String product1 = myRs.getString("product1");
+				int qty1 = myRs.getInt("qty1");
+				String product2 = myRs.getString("product2");
+				int qty2 = myRs.getInt("qty2");
+				String product3 = myRs.getString("product3");
+				int qty3 = myRs.getInt("qty3");
+				String product4 = myRs.getString("product4");
+				int qty4 = myRs.getInt("qty4");
+				String product5 = myRs.getString("product5");
+				int qty5 = myRs.getInt("qty5");
+				String product6 = myRs.getString("product6");
+				int qty6 = myRs.getInt("qty6");
+				String product7 = myRs.getString("product7");
+				int qty7 = myRs.getInt("qty7");
 
 				// create new student object
-				Document2 tempDocument2 = new Document2(id, provider, product, qty);
+				Document2 tempDocument2 = new Document2(id, provider, product1, qty1, product2, qty2, product3, qty3,
+						 product4, qty4, product5, qty5, product6, qty6, product7, qty7);
 
 				// add it to the list of students
 				documents2.add(tempDocument2);
@@ -77,23 +90,44 @@ public class Documents2DbUtil {
 	public void addDocument2(Document2 theDocument2) throws Exception {
 		Connection myConn = null;
 		PreparedStatement myStmt = null;
-
+	
 		try {
 			// get db connection
 			myConn = dataSource.getConnection();
 
 			// create sql for insert
-			String sql = "insert into documents2 " + "(provider, productName, qty) " + "values (?, ?, ?)";
+			String sql = "insert into documents2 " + "(provider, product1, qty1, product2, qty2, product3, qty3, product4, qty4, product5, qty5, product6, qty6, product7, qty7) "
+			+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 			myStmt = myConn.prepareStatement(sql);
 
 			// set the param values for the student
 			myStmt.setString(1, theDocument2.getProvider());
-			myStmt.setString(2, theDocument2.getProduct());
-			myStmt.setDouble(3, theDocument2.getQty());
+			myStmt.setString(2, theDocument2.getProduct1());
+			myStmt.setDouble(3, theDocument2.getQty1());
+			myStmt.setString(4, theDocument2.getProduct2());
+			myStmt.setDouble(5, theDocument2.getQty2());
+			myStmt.setString(6, theDocument2.getProduct3());
+			myStmt.setDouble(7, theDocument2.getQty3());
+			myStmt.setString(8, theDocument2.getProduct4());
+			myStmt.setDouble(9, theDocument2.getQty4());
+			myStmt.setString(10, theDocument2.getProduct5());
+			myStmt.setDouble(11, theDocument2.getQty5());
+			myStmt.setString(12, theDocument2.getProduct6());
+			myStmt.setDouble(13, theDocument2.getQty6());
+			myStmt.setString(14, theDocument2.getProduct7());
+			myStmt.setDouble(15, theDocument2.getQty7());
 			
-			OtherHelpers.correctQtyWhenAddDoc2(dataSource, OtherHelpers.getProductByName(theDocument2.getProduct(), dataSource), theDocument2.getQty());
-
+		
+			
+			OtherHelpers.correctQtyWhenAddDoc2(dataSource, OtherHelpers.getProductByName(theDocument2.getProduct1(), dataSource), theDocument2.getQty1());
+			OtherHelpers.correctQtyWhenAddDoc2(dataSource, OtherHelpers.getProductByName(theDocument2.getProduct2(), dataSource), theDocument2.getQty2());
+			OtherHelpers.correctQtyWhenAddDoc2(dataSource, OtherHelpers.getProductByName(theDocument2.getProduct3(), dataSource), theDocument2.getQty3());
+			OtherHelpers.correctQtyWhenAddDoc2(dataSource, OtherHelpers.getProductByName(theDocument2.getProduct4(), dataSource), theDocument2.getQty4());
+			OtherHelpers.correctQtyWhenAddDoc2(dataSource, OtherHelpers.getProductByName(theDocument2.getProduct5(), dataSource), theDocument2.getQty5());
+			OtherHelpers.correctQtyWhenAddDoc2(dataSource, OtherHelpers.getProductByName(theDocument2.getProduct6(), dataSource), theDocument2.getQty6());
+			OtherHelpers.correctQtyWhenAddDoc2(dataSource, OtherHelpers.getProductByName(theDocument2.getProduct7(), dataSource), theDocument2.getQty7());
+			
 			// execute sql insert
 			myStmt.execute();
 		} finally {
@@ -135,11 +169,24 @@ public class Documents2DbUtil {
 			// retrive data from result set row
 			if (myRs.next()) {
 				String provider = myRs.getString("provider");
-				String product = myRs.getString("productName");
-				int qty = myRs.getInt("qty");
+				String product1 = myRs.getString("product1");
+				int qty1 = myRs.getInt("qty1");
+				String product2 = myRs.getString("product2");
+				int qty2 = myRs.getInt("qty2");
+				String product3 = myRs.getString("product3");
+				int qty3 = myRs.getInt("qty3");
+				String product4 = myRs.getString("product4");
+				int qty4 = myRs.getInt("qty4");
+				String product5 = myRs.getString("product5");
+				int qty5 = myRs.getInt("qty5");
+				String product6 = myRs.getString("product6");
+				int qty6 = myRs.getInt("qty6");
+				String product7 = myRs.getString("product7");
+				int qty7 = myRs.getInt("qty7");
 
 				// use the document2id during construction
-				document2 = new Document2(document2id, provider, product, qty);
+				document2 = new Document2(document2id, provider, product1, qty1, product2, qty2, product3, qty3,
+						 product4, qty4, product5, qty5, product6, qty6, product7, qty7);
 			} else {
 				throw new Exception("Could not find price id: " + theDocument2id);
 			}
@@ -151,34 +198,59 @@ public class Documents2DbUtil {
 		}
 	}
 
-	public void updateDocument2(Document2 theDocument) throws Exception {
+	public void updateDocument2(Document2 theDocument2) throws Exception {
 
 		Connection myConn = null;
 		PreparedStatement myStmt = null;
 		
-		Document2 document2 = getDocument2(Integer.toString(theDocument.getId()));
+		Document2 document2 = getDocument2(Integer.toString(theDocument2.getId()));
 
 		try {
 			// get db connection
 			myConn = dataSource.getConnection();
 
 			// create SQL update statement
-			String sql = "update documents2 " + "set provider=?, productName=?, qty=? " + "where id=?";
+			String sql = "update documents2 " + "set provider=?, product1=?, qty1=?, product2=?, qty2=? , product3=?, qty3=? "
+					+ ", product4=?, qty4=? , product5=?, qty5=? , product6=?, qty6=? , product7=?, qty7=?  " + "where id=?";
 
 			// prepare statement
 			myStmt = myConn.prepareStatement(sql);
 
 			// set params
-			myStmt.setString(1, theDocument.getProvider());
-			myStmt.setString(2, theDocument.getProduct());
-			myStmt.setDouble(3, theDocument.getQty());
-			myStmt.setInt(4, theDocument.getId());
+			myStmt.setString(1, theDocument2.getProvider());
+			myStmt.setString(2, theDocument2.getProduct1());
+			myStmt.setDouble(3, theDocument2.getQty1());
+			myStmt.setString(4, theDocument2.getProduct2());
+			myStmt.setDouble(5, theDocument2.getQty2());
+			myStmt.setString(6, theDocument2.getProduct3());
+			myStmt.setDouble(7, theDocument2.getQty3());
+			myStmt.setString(8, theDocument2.getProduct4());
+			myStmt.setDouble(9, theDocument2.getQty4());
+			myStmt.setString(10, theDocument2.getProduct5());
+			myStmt.setDouble(11, theDocument2.getQty5());
+			myStmt.setString(12, theDocument2.getProduct6());
+			myStmt.setDouble(13, theDocument2.getQty6());
+			myStmt.setString(14, theDocument2.getProduct7());
+			myStmt.setDouble(15, theDocument2.getQty7());
+			myStmt.setInt(16, theDocument2.getId());
 
 			// execute SQL statement
 			myStmt.execute();
 			
-			OtherHelpers.correctQtyWhenUpdateDoc2(dataSource, OtherHelpers.getProductByName(document2.getProduct(), dataSource), 
-					document2.getQty(), theDocument.getQty());
+			OtherHelpers.correctQtyWhenUpdateDoc2(dataSource, OtherHelpers.getProductByName(document2.getProduct1(), dataSource), 
+					document2.getQty1(), theDocument2.getQty1());
+			OtherHelpers.correctQtyWhenUpdateDoc2(dataSource, OtherHelpers.getProductByName(document2.getProduct2(), dataSource), 
+					document2.getQty1(), theDocument2.getQty1());
+			OtherHelpers.correctQtyWhenUpdateDoc2(dataSource, OtherHelpers.getProductByName(document2.getProduct3(), dataSource), 
+					document2.getQty1(), theDocument2.getQty1());
+			OtherHelpers.correctQtyWhenUpdateDoc2(dataSource, OtherHelpers.getProductByName(document2.getProduct4(), dataSource), 
+					document2.getQty1(), theDocument2.getQty1());
+			OtherHelpers.correctQtyWhenUpdateDoc2(dataSource, OtherHelpers.getProductByName(document2.getProduct5(), dataSource), 
+					document2.getQty1(), theDocument2.getQty1());
+			OtherHelpers.correctQtyWhenUpdateDoc2(dataSource, OtherHelpers.getProductByName(document2.getProduct6(), dataSource), 
+					document2.getQty1(), theDocument2.getQty1());
+			OtherHelpers.correctQtyWhenUpdateDoc2(dataSource, OtherHelpers.getProductByName(document2.getProduct7(), dataSource), 
+					document2.getQty1(), theDocument2.getQty1());
 
 		} finally {
 			// clean up JDBC objects
@@ -212,8 +284,20 @@ public class Documents2DbUtil {
 			// execute SQL statement
 			myStmt.execute();
 			
-			OtherHelpers.correctQtyWhenDelDoc2(dataSource, OtherHelpers.getProductByName(document2.getProduct(), dataSource),
-					document2.getQty());
+			OtherHelpers.correctQtyWhenDelDoc2(dataSource, OtherHelpers.getProductByName(document2.getProduct1(), dataSource),
+					document2.getQty1());
+			OtherHelpers.correctQtyWhenDelDoc2(dataSource, OtherHelpers.getProductByName(document2.getProduct2(), dataSource),
+					document2.getQty2());
+			OtherHelpers.correctQtyWhenDelDoc2(dataSource, OtherHelpers.getProductByName(document2.getProduct3(), dataSource),
+					document2.getQty3());
+			OtherHelpers.correctQtyWhenDelDoc2(dataSource, OtherHelpers.getProductByName(document2.getProduct4(), dataSource),
+					document2.getQty4());
+			OtherHelpers.correctQtyWhenDelDoc2(dataSource, OtherHelpers.getProductByName(document2.getProduct5(), dataSource),
+					document2.getQty5());
+			OtherHelpers.correctQtyWhenDelDoc2(dataSource, OtherHelpers.getProductByName(document2.getProduct6(), dataSource),
+					document2.getQty6());
+			OtherHelpers.correctQtyWhenDelDoc2(dataSource, OtherHelpers.getProductByName(document2.getProduct7(), dataSource),
+					document2.getQty7());
 
 		} finally {
 			// clean up JDBC objects

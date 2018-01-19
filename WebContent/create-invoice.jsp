@@ -155,7 +155,10 @@
 			
 			<form action="InvoiceControllerServlet" method="GET">
 			<input type="hidden" name="command" value="ADD-INVOICE" />
-
+			<input type="hidden" name="grossAmount" value="${grossAmount}" />
+			<input type="hidden" name="startDocRange" value="${startDocRange}" />
+			<input type="hidden" name="endDocRange" value="${endDocRange}" />
+			<input type="hidden" name="customer" value="${inv2customer}" />
 			<table>
 				<tbody>
 					<tr>
@@ -176,20 +179,8 @@
 						<td><input type="text" name="date" value="${Date}"
 							id="datepicker2"></td>
 					</tr>
-					
-						<tr>
-						<td><input type="hidden" name="startDocRange" value="${startDocRange}" /></td>
-					</tr>
-					
-						<tr>
-						<td><input type="hidden" name="endDocRange" value="${endDocRange}" /></td>
-					</tr>
-					
 					<tr>
-						<td><input type="hidden" name="grossAmount" value="${grossAmount}" /></td>
-					</tr>
-						
-					<tr>
+					
 						<td><label></label></td>
 						<td><input type="submit"
 							value="<fmt:message key="label.button.save"/>" class="save" /></td>

@@ -85,8 +85,8 @@
 					</tr>
 
 					<tr>
-						<td><fmt:message key="label.product" /></td>
-						<td><select style="width: 12em" name="product">
+						<td><fmt:message key="label.product" />: 1</td>
+						<td><select style="width: 12em" name="product1">
 								<option>---select---</option>
 								<c:forEach var="tempProduct" items="${Products}">
 									<option>${tempProduct.productName}</option>
@@ -96,7 +96,97 @@
 
 					<tr>
 						<td><label><fmt:message key="label.qty" />: </label></td>
-						<td><input type="text" name="qty" /></td>
+						<td><input type="text" name="qty1" /></td>
+					</tr>
+					
+					<tr>
+						<td><fmt:message key="label.product" />: 2</td>
+						<td><select style="width: 12em" name="product2">
+								<option>---select---</option>
+								<c:forEach var="tempProduct" items="${Products}">
+									<option>${tempProduct.productName}</option>
+								</c:forEach>
+						</select></td>
+					</tr>
+
+					<tr>
+						<td><label><fmt:message key="label.qty" />: </label></td>
+						<td><input type="text" name="qty2" /></td>
+					</tr>
+					
+					<tr>
+						<td><fmt:message key="label.product" />: 3</td>
+						<td><select style="width: 12em" name="product3">
+								<option>---select---</option>
+								<c:forEach var="tempProduct" items="${Products}">
+									<option>${tempProduct.productName}</option>
+								</c:forEach>
+						</select></td>
+					</tr>
+
+					<tr>
+						<td><label><fmt:message key="label.qty" />: </label></td>
+						<td><input type="text" name="qty3" /></td>
+					</tr>
+					
+					<tr>
+						<td><fmt:message key="label.product" />: 4</td>
+						<td><select style="width: 12em" name="product4">
+								<option>---select---</option>
+								<c:forEach var="tempProduct" items="${Products}">
+									<option>${tempProduct.productName}</option>
+								</c:forEach>
+						</select></td>
+					</tr>
+
+					<tr>
+						<td><label><fmt:message key="label.qty" />: </label></td>
+						<td><input type="text" name="qty4" /></td>
+					</tr>
+					
+					<tr>
+						<td><fmt:message key="label.product" />: 5</td>
+						<td><select style="width: 12em" name="product5">
+								<option>---select---</option>
+								<c:forEach var="tempProduct" items="${Products}">
+									<option>${tempProduct.productName}</option>
+								</c:forEach>
+						</select></td>
+					</tr>
+
+					<tr>
+						<td><label><fmt:message key="label.qty" />: </label></td>
+						<td><input type="text" name="qty5" /></td>
+					</tr>
+					
+					<tr>
+						<td><fmt:message key="label.product" />: 6</td>
+						<td><select style="width: 12em" name="product6">
+								<option>---select---</option>
+								<c:forEach var="tempProduct" items="${Products}">
+									<option>${tempProduct.productName}</option>
+								</c:forEach>
+						</select></td>
+					</tr>
+
+					<tr>
+						<td><label><fmt:message key="label.qty" />: </label></td>
+						<td><input type="text" name="qty6" /></td>
+					</tr>
+					
+					<tr>
+						<td><fmt:message key="label.product" />: 7</td>
+						<td><select style="width: 12em" name="product7">
+								<option>---select---</option>
+								<c:forEach var="tempProduct" items="${Products}">
+									<option>${tempProduct.productName}</option>
+								</c:forEach>
+						</select></td>
+					</tr>
+
+					<tr>
+						<td><label><fmt:message key="label.qty" />: </label></td>
+						<td><input type="text" name="qty7" /></td>
 					</tr>
 
 					<tr>
@@ -118,7 +208,19 @@
 				<tr>
 					<th>Id</th>
 					<th><fmt:message key="label.provider" /></th>
-					<th><fmt:message key="label.product" /></th>
+					<th><fmt:message key="label.product"/> 1</th>
+					<th><fmt:message key="label.qty" /></th>
+					<th><fmt:message key="label.product" />2</th>
+					<th><fmt:message key="label.qty" /></th>
+					<th><fmt:message key="label.product" />3</th>
+					<th><fmt:message key="label.qty" /></th>
+					<th><fmt:message key="label.product" />4</th>
+					<th><fmt:message key="label.qty" /></th>
+					<th><fmt:message key="label.product"/>5</th>
+					<th><fmt:message key="label.qty" /></th>
+					<th><fmt:message key="label.product"/>6</th>
+					<th><fmt:message key="label.qty" /></th>
+					<th><fmt:message key="label.product"/>7</th>
 					<th><fmt:message key="label.qty" /></th>
 					<th><fmt:message key="label.action" /></th>
 				</tr>
@@ -140,8 +242,20 @@
 
 						<td>${tempDoc2.id}</td>
 						<td>${tempDoc2.provider}</td>
-						<td>${tempDoc2.product}</td>
-						<td>${tempDoc2.qty}</td>
+						<td>${tempDoc2.product1}</td>
+						<td>${tempDoc2.qty1}</td>
+						<td>${tempDoc2.product2}</td>
+						<td>${tempDoc2.qty2}</td>
+						<td>${tempDoc2.product3}</td>
+						<td>${tempDoc2.qty3}</td>
+						<td>${tempDoc2.product4}</td>
+						<td>${tempDoc2.qty4}</td>
+						<td>${tempDoc2.product5}</td>
+						<td>${tempDoc2.qty5}</td>
+						<td>${tempDoc2.product6}</td>
+						<td>${tempDoc2.qty6}</td>
+						<td>${tempDoc2.product7}</td>
+						<td>${tempDoc2.qty7}</td>
 
 						<td><a href="${tempLink}"><fmt:message key="label.update" /></a>
 							| <a href="${deleteLink}"

@@ -1,5 +1,6 @@
 package com.muczo.mvc.warehouse.helperclasses;
 
+import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -7,8 +8,8 @@ import java.util.ArrayList;
 
 import com.muczo.mvc.warehouse.blueprint.Document;
 import com.muczo.mvc.warehouse.blueprint.ProductList;
-import com.muczo.mvc.warehouse.db.PriceDbUtil;
 import com.muczo.mvc.warehouse.db.Documents1DbUtil;
+import com.muczo.mvc.warehouse.db.PriceDbUtil;
 
 public class CalculateInvoice {
 	
@@ -105,7 +106,7 @@ public class CalculateInvoice {
 
 		sum *= 1.23;
 
-		this.grossAmount = sum;
+		
 		
 		// Rounding number to up and two digits after dot.
 		NumberFormat fmt = NumberFormat.getNumberInstance();
@@ -113,9 +114,9 @@ public class CalculateInvoice {
 		fmt.setRoundingMode(RoundingMode.CEILING);
 		sb.append("\n Gross amount: " + fmt.format(sum));
 		grossAmount = fmt.format(sum).toString();
-
+	    this.grossAmount = round(sum,2);
+	    
 		// Convert from NumberFormat to Double
-
 		try {
 			Double myNumber = 0.00;
 			myNumber = fmt.parse(grossAmount).doubleValue();
@@ -130,6 +131,13 @@ public class CalculateInvoice {
 		
 	}
 
+	public static double round(double value, int places) {
+	    if (places < 0) throw new IllegalArgumentException();
+
+	    BigDecimal bd = new BigDecimal(value);
+	    bd = bd.setScale(places, RoundingMode.HALF_UP);
+	    return bd.doubleValue();
+	}
 	
 	public Double getGrossAmount() {
 		return grossAmount;

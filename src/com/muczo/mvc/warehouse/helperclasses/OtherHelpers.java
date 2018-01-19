@@ -11,7 +11,7 @@ import com.muczo.mvc.warehouse.blueprint.User;
 import com.muczo.mvc.warehouse.db.DbUtil;
 
 public class OtherHelpers {
-	
+
 	public static Product getProductByName(String theProductName, DataSource dataSource) throws Exception {
 
 		Product theProduct = null;
@@ -19,89 +19,94 @@ public class OtherHelpers {
 		Connection myConn = null;
 		PreparedStatement myStmt = null;
 		ResultSet myRs = null;
-		int productId;
 
-		try {
+	
+			try {
 
-			// get connection to database
-			myConn = dataSource.getConnection();
+				// get connection to database
+				myConn = dataSource.getConnection();
 
-			// create sql to get selected product
-			String sql = "select * from products where name=?";
+				// create sql to get selected product
+				String sql = "select * from products where name=?";
 
-			// create prepared statement
-			myStmt = myConn.prepareStatement(sql);
+				// create prepared statement
+				myStmt = myConn.prepareStatement(sql);
 
-			// set params
-			myStmt.setString(1, theProductName);
+				// set params
+				myStmt.setString(1, theProductName);
 
-			// execute statement
-			myRs = myStmt.executeQuery();
+				// execute statement
+				myRs = myStmt.executeQuery();
 
-			// retrive data from result set row
-			if (myRs.next()) {
-				int id = myRs.getInt("id");
-				String name = myRs.getString("name");
-				String warehouse = myRs.getString("warehouse");
-				int qty = myRs.getInt("qty");
+				// retrive data from result set row
+				if (myRs.next()) {
+					int id = myRs.getInt("id");
+					String name = myRs.getString("name");
+					String warehouse = myRs.getString("warehouse");
+					int qty = myRs.getInt("qty");
 
-				// use the studentId during construction
-				theProduct = new Product(id, name, warehouse, qty);
-			} else {
-				throw new Exception("Could not find product name: " + theProductName);
+					// use the studentId during construction
+					theProduct = new Product(id, name, warehouse, qty);
+				} else {
+					
+				}
+
+				
+			} finally {
+				// clean up JDBC objects
+				DbUtil.close(myConn, myStmt, myRs);
 			}
-
-			return theProduct;
-		} finally {
-			// clean up JDBC objects
-			DbUtil.close(myConn, myStmt, myRs);
-		}
+		
+		
+		return theProduct;
 	}
 
 	public static void correctQtyWhenDelDoc2(DataSource dataSource, Product product, int qty) throws Exception {
 
 		if (qty > 0) {
-			
+
 			int qty2 = product.getQty() - qty;
 			product.setQty(qty2);
 			updateProductQty(product, dataSource);
 		}
 	}
-	
+
 	public static void correctQtyWhenAddDoc(DataSource dataSource, Product product, int qty) throws Exception {
 
 		if (qty > 0) {
-			
+
 			int qty2 = product.getQty() - qty;
 			product.setQty(qty2);
 			updateProductQty(product, dataSource);
 		}
 	}
-	
+
 	public static void correctQtyWhenDelDoc(DataSource dataSource, Product product, int qty) throws Exception {
 
 		if (qty > 0) {
-			
+
 			int qty2 = product.getQty() + qty;
 			product.setQty(qty2);
 			updateProductQty(product, dataSource);
 		}
 	}
-	
+
 	public static void correctQtyWhenAddDoc2(DataSource dataSource, Product product, int qty) throws Exception {
 
+		if (qty > 0) {
 			int qty2 = product.getQty() + qty;
 			product.setQty(qty2);
 			updateProductQty(product, dataSource);
-		
+		}
 	}
 
-	public static void correctQtyWhenUpdateDoc2(DataSource dataSource, Product product, int qty1, int qty2) throws Exception {
+	public static void correctQtyWhenUpdateDoc2(DataSource dataSource, Product product, int qty1, int qty2)
+			throws Exception {
 
 		if (qty1 > 0) {
-	
+
 			if (qty1 != qty2) {
-			
+
 				int qty3 = product.getQty() - qty1;
 				qty3 = qty3 + qty2;
 				product.setQty(qty3);
@@ -109,13 +114,14 @@ public class OtherHelpers {
 			}
 		}
 	}
-	
-	public static void correctQtyWhenUpdateDoc(DataSource dataSource, Product product, int qty1, int qty2) throws Exception {
+
+	public static void correctQtyWhenUpdateDoc(DataSource dataSource, Product product, int qty1, int qty2)
+			throws Exception {
 
 		if (qty1 > 0) {
-	
+
 			if (qty1 != qty2) {
-			
+
 				int qty3 = product.getQty() + qty1;
 				qty3 = qty3 - qty2;
 				product.setQty(qty3);
@@ -123,7 +129,7 @@ public class OtherHelpers {
 			}
 		}
 	}
-	
+
 	private static void updateProductQty(Product theProduct, DataSource dataSource) throws Exception {
 
 		Connection myConn = null;
@@ -149,12 +155,12 @@ public class OtherHelpers {
 		} finally {
 			// clean up JDBC objects
 
-			DbUtil.	close(myConn, myStmt, null);
+			DbUtil.close(myConn, myStmt, null);
 
 		}
 
 	}
-	
+
 	public static User getUserByName(String theUserName, DataSource dataSource) throws Exception {
 
 		User theUser = null;
@@ -188,7 +194,7 @@ public class OtherHelpers {
 				// use the studentId during construction
 				theUser = new User(id, name, password);
 			} else {
-				//throw new Exception("Could not find user name: " + theUserName);
+				// throw new Exception("Could not find user name: " + theUserName);
 			}
 
 			return theUser;
@@ -197,6 +203,5 @@ public class OtherHelpers {
 			DbUtil.close(myConn, myStmt, myRs);
 		}
 	}
-	
-	
+
 }

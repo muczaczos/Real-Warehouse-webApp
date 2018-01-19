@@ -59,15 +59,88 @@
 
 					<tr>
 						<td><label><fmt:message key="label.product" />:</label></td>
-						<td><input type="text" name="product"
-							value="${THE_DOCUMENT2.product}" /></td>
+						<td><input type="text" name="product1"
+							value="${THE_DOCUMENT2.product1}" /></td>
 					</tr>
 					
 					<tr>
 						<td><label><fmt:message key="label.qty" />:</label></td>
-						<td><input type="text" name="qty"
-							value="${THE_DOCUMENT2.qty}" /></td>
+						<td><input type="text" name="qty1"
+							value="${THE_DOCUMENT2.qty1}" /></td>
 					</tr>
+					
+					<tr>
+						<td><label><fmt:message key="label.product" />:</label></td>
+						<td><input type="text" name="product2"
+							value="${THE_DOCUMENT2.product2}" /></td>
+					</tr>
+					
+					<tr>
+						<td><label><fmt:message key="label.qty" />:</label></td>
+						<td><input type="text" name="qty2"
+							value="${THE_DOCUMENT2.qty2}" /></td>
+					</tr>
+					
+						<tr>
+						<td><label><fmt:message key="label.product" />:</label></td>
+						<td><input type="text" name="product3"
+							value="${THE_DOCUMENT2.product3}" /></td>
+					</tr>
+					
+					<tr>
+						<td><label><fmt:message key="label.qty" />:</label></td>
+						<td><input type="text" name="qty3"
+							value="${THE_DOCUMENT2.qty3}" /></td>
+					</tr>
+					
+						<tr>
+						<td><label><fmt:message key="label.product" />:</label></td>
+						<td><input type="text" name="product4"
+							value="${THE_DOCUMENT2.product4}" /></td>
+					</tr>
+					
+					<tr>
+						<td><label><fmt:message key="label.qty" />:</label></td>
+						<td><input type="text" name="qty4"
+							value="${THE_DOCUMENT2.qty4}" /></td>
+					</tr>
+					
+						<tr>
+						<td><label><fmt:message key="label.product" />:</label></td>
+						<td><input type="text" name="product5"
+							value="${THE_DOCUMENT2.product5}" /></td>
+					</tr>
+					
+					<tr>
+						<td><label><fmt:message key="label.qty" />:</label></td>
+						<td><input type="text" name="qty5"
+							value="${THE_DOCUMENT2.qty5}" /></td>
+					</tr>
+					
+						<tr>
+						<td><label><fmt:message key="label.product" />:</label></td>
+						<td><input type="text" name="product6"
+							value="${THE_DOCUMENT2.product6}" /></td>
+					</tr>
+					
+					<tr>
+						<td><label><fmt:message key="label.qty" />:</label></td>
+						<td><input type="text" name="qty6"
+							value="${THE_DOCUMENT2.qty6}" /></td>
+					</tr>
+					
+						<tr>
+						<td><label><fmt:message key="label.product" />:</label></td>
+						<td><input type="text" name="product7"
+							value="${THE_DOCUMENT2.product7}" /></td>
+					</tr>
+					
+					<tr>
+						<td><label><fmt:message key="label.qty" />:</label></td>
+						<td><input type="text" name="qty7"
+							value="${THE_DOCUMENT2.qty7}" /></td>
+					</tr>
+					
 
 					<tr>
 						<td><label></label></td>

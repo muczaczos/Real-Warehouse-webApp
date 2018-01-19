@@ -234,7 +234,7 @@ public class InvoiceControllerServlet extends HttpServlet {
 			Double grossAmount = Double.parseDouble(request.getParameter("grossAmount"));
 
 			// create a new invoice object
-			Invoice invoice = new Invoice(customer, date, invNumber, startDocRange, endDocRange, grossAmount);
+			Invoice invoice = new Invoice(id, customer, date, invNumber, startDocRange, endDocRange, grossAmount);
 
 			// perform update on database
 			invoiceDbUtil.updateInvoice(invoice);

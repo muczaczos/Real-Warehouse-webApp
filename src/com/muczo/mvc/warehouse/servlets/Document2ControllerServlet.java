@@ -150,24 +150,55 @@ public class Document2ControllerServlet extends HttpServlet {
 	private void addDocument2(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		HttpSession session = request.getSession();
-
+		int qty1 = 0, qty2 = 0, qty3 = 0, qty4 = 0, qty5 = 0, qty6 = 0, qty7 = 0;
 		if (session.getAttribute("userName") != null) {
 
 			// read document2 info from form data
 			String provider = request.getParameter("provider");
-			String product = request.getParameter("product");
-			int qty = Integer.parseInt(request.getParameter("qty"));
+			String product1 = request.getParameter("product1");
+			if (!request.getParameter("qty1").equals("")) {
+				qty1 = Integer.parseInt(request.getParameter("qty1"));
+			}
+			String product2 = request.getParameter("product2");
+			if (!request.getParameter("qty2").equals("")) {
+				qty2 = Integer.parseInt(request.getParameter("qty2"));
+			}
+			String product3 = request.getParameter("product3");
+			if (!request.getParameter("qty3").equals("")) {
+				qty3 = Integer.parseInt(request.getParameter("qty3"));
+			}
+			String product4 = request.getParameter("product4");
+			if (!request.getParameter("qty4").equals("")) {
+				qty4 = Integer.parseInt(request.getParameter("qty4"));
+			}
+			String product5 = request.getParameter("product5");
+			if (!request.getParameter("qty5").equals("")) {
+				qty5 = Integer.parseInt(request.getParameter("qty5"));
+			}
+			String product6 = request.getParameter("product6");
+			if (!request.getParameter("qty6").equals("")) {
+				qty6 = Integer.parseInt(request.getParameter("qty6"));
+			}
+			String product7 = request.getParameter("product7");
+			if (!request.getParameter("qty7").equals("")) {
+				qty7 = Integer.parseInt(request.getParameter("qty7"));
+			}
 
+			System.out.println("product1: " + product1 );
+			
 			// create a new price object
-			Document2 theDocument2 = new Document2(provider, product, qty);
+			Document2 theDocument2 = new Document2(provider, product1, qty1, product2, qty2, product3, qty3, product4,
+					qty4, product5, qty5, product6, qty6, product7, qty7);
 
+			System.out.println("product1: " + theDocument2.getProduct1() + " product2: " + theDocument2.getProduct2());
+			
 			// add the price to the database
 			documents2DbUtil.addDocument2(theDocument2);
 
 			// write activity to db
 			List<Document2> documents2 = documents2DbUtil.getDocuments2();
 			int id = documents2.get(documents2.size() - 1).getId();
-			
+
 			// write activity to db
 			Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
 					"add doc2", id);
@@ -212,11 +243,24 @@ public class Document2ControllerServlet extends HttpServlet {
 			// read document2 info from form data
 			int id = Integer.parseInt(request.getParameter("doc2Id"));
 			String provider = request.getParameter("provider");
-			String product = request.getParameter("product");
-			int qty = Integer.parseInt(request.getParameter("qty"));
+			String product1 = request.getParameter("product1");
+			int qty1 = Integer.parseInt(request.getParameter("qty1"));
+			String product2 = request.getParameter("product2");
+			int qty2 = Integer.parseInt(request.getParameter("qty2"));
+			String product3 = request.getParameter("product3");
+			int qty3 = Integer.parseInt(request.getParameter("qty3"));
+			String product4 = request.getParameter("product4");
+			int qty4 = Integer.parseInt(request.getParameter("qty4"));
+			String product5 = request.getParameter("product5");
+			int qty5 = Integer.parseInt(request.getParameter("qty5"));
+			String product6 = request.getParameter("product6");
+			int qty6 = Integer.parseInt(request.getParameter("qty6"));
+			String product7 = request.getParameter("product7");
+			int qty7 = Integer.parseInt(request.getParameter("qty7"));
 
-			// create a new price object
-			Document2 theDocument = new Document2(id, provider, product, qty);
+			// create a new Document2 object
+			Document2 theDocument = new Document2(id, provider, product1, qty1, product2, qty2, product3, qty3,
+					product4, qty4, product5, qty5, product6, qty6, product7, qty7);
 
 			// perform update on database
 			documents2DbUtil.updateDocument2(theDocument);
@@ -225,7 +269,7 @@ public class Document2ControllerServlet extends HttpServlet {
 			Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
 					"update doc2", id);
 
-			// send them back to the "list price" page
+			// send them back to the "list documents2" page
 			listDocuments2(request, response);
 
 		}

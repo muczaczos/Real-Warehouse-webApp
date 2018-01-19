@@ -166,7 +166,7 @@ public class InvoiceDbUtil {
 			myConn = dataSource.getConnection();
 
 			// create SQL update statement
-			String sql = "update invoices " + "set customer=?, date=?, invNumber=?, startDocRange=?, endDocRange=?, grossAmount=?" + "where id=?";
+			String sql = "update invoices " + "set customer=?, date=?, invNumber=?, startDocRange=?, endDocRange=?, grossAmount=? " + "where id=?";
 
 			// prepare statement
 			myStmt = myConn.prepareStatement(sql);
@@ -179,8 +179,11 @@ public class InvoiceDbUtil {
 			myStmt.setInt(5, invoice.getEndDocRange());
 			myStmt.setDouble(6, invoice.getGrossAmount());
 			myStmt.setInt(7, invoice.getId());
-System.out.println(invoice.getGrossAmount());
+
+			System.out.println("id to: " + invoice.getId());
+
 			// execute SQL statement
+			//myStmt.execute();
 			myStmt.execute();
 
 		} finally {
