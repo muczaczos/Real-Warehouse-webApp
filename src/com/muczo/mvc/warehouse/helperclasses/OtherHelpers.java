@@ -103,15 +103,13 @@ public class OtherHelpers {
 	public static void correctQtyWhenUpdateDoc2(DataSource dataSource, Product product, int qty1, int qty2)
 			throws Exception {
 
-		if (qty1 > 0) {
-
 			if (qty1 != qty2) {
 
 				int qty3 = product.getQty() - qty1;
 				qty3 = qty3 + qty2;
 				product.setQty(qty3);
 				updateProductQty(product, dataSource);
-			}
+			
 		}
 	}
 

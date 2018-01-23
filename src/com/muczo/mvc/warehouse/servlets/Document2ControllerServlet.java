@@ -155,6 +155,8 @@ public class Document2ControllerServlet extends HttpServlet {
 
 			// read document2 info from form data
 			String provider = request.getParameter("provider");
+			String date = request.getParameter("date");
+			String documentNumber = request.getParameter("documentNumber");
 			String product1 = request.getParameter("product1");
 			if (!request.getParameter("qty1").equals("")) {
 				qty1 = Integer.parseInt(request.getParameter("qty1"));
@@ -187,7 +189,7 @@ public class Document2ControllerServlet extends HttpServlet {
 			System.out.println("product1: " + product1 );
 			
 			// create a new price object
-			Document2 theDocument2 = new Document2(provider, product1, qty1, product2, qty2, product3, qty3, product4,
+			Document2 theDocument2 = new Document2(provider, date, documentNumber, product1, qty1, product2, qty2, product3, qty3, product4,
 					qty4, product5, qty5, product6, qty6, product7, qty7);
 
 			System.out.println("product1: " + theDocument2.getProduct1() + " product2: " + theDocument2.getProduct2());
@@ -243,6 +245,8 @@ public class Document2ControllerServlet extends HttpServlet {
 			// read document2 info from form data
 			int id = Integer.parseInt(request.getParameter("doc2Id"));
 			String provider = request.getParameter("provider");
+			String date = request.getParameter("date");
+			String documentNumber = request.getParameter("documentNumber");
 			String product1 = request.getParameter("product1");
 			int qty1 = Integer.parseInt(request.getParameter("qty1"));
 			String product2 = request.getParameter("product2");
@@ -259,7 +263,7 @@ public class Document2ControllerServlet extends HttpServlet {
 			int qty7 = Integer.parseInt(request.getParameter("qty7"));
 
 			// create a new Document2 object
-			Document2 theDocument = new Document2(id, provider, product1, qty1, product2, qty2, product3, qty3,
+			Document2 theDocument = new Document2(id, provider, date, documentNumber, product1, qty1, product2, qty2, product3, qty3,
 					product4, qty4, product5, qty5, product6, qty6, product7, qty7);
 
 			// perform update on database

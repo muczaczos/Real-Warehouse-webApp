@@ -19,6 +19,9 @@
 
 <link type="text/css" rel="stylesheet" href="css/style2.css">
 <link type="text/css" rel="stylesheet" href="css/add.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 </head>
 
 <body>
@@ -74,6 +77,19 @@
 
 			<table>
 				<tbody>
+
+					<tr>
+						<td><label for="datepicker1"><fmt:message
+									key="label.date" />:</label></td>
+						<td><input type="text" name="date" value="${Date}"
+							id="datepicker1"></td>
+					</tr>
+
+					<tr>
+						<td><label><fmt:message key="label.noOfDoc" />: </label></td>
+						<td><input type="text" name="documentNumber" /></td>
+					</tr>
+
 					<tr>
 						<td><fmt:message key="label.provider" /></td>
 						<td><select style="width: 12em" name="provider">
@@ -98,7 +114,7 @@
 						<td><label><fmt:message key="label.qty" />: </label></td>
 						<td><input type="text" name="qty1" /></td>
 					</tr>
-					
+
 					<tr>
 						<td><fmt:message key="label.product" />: 2</td>
 						<td><select style="width: 12em" name="product2">
@@ -113,7 +129,7 @@
 						<td><label><fmt:message key="label.qty" />: </label></td>
 						<td><input type="text" name="qty2" /></td>
 					</tr>
-					
+
 					<tr>
 						<td><fmt:message key="label.product" />: 3</td>
 						<td><select style="width: 12em" name="product3">
@@ -128,7 +144,7 @@
 						<td><label><fmt:message key="label.qty" />: </label></td>
 						<td><input type="text" name="qty3" /></td>
 					</tr>
-					
+
 					<tr>
 						<td><fmt:message key="label.product" />: 4</td>
 						<td><select style="width: 12em" name="product4">
@@ -143,7 +159,7 @@
 						<td><label><fmt:message key="label.qty" />: </label></td>
 						<td><input type="text" name="qty4" /></td>
 					</tr>
-					
+
 					<tr>
 						<td><fmt:message key="label.product" />: 5</td>
 						<td><select style="width: 12em" name="product5">
@@ -158,7 +174,7 @@
 						<td><label><fmt:message key="label.qty" />: </label></td>
 						<td><input type="text" name="qty5" /></td>
 					</tr>
-					
+
 					<tr>
 						<td><fmt:message key="label.product" />: 6</td>
 						<td><select style="width: 12em" name="product6">
@@ -173,7 +189,7 @@
 						<td><label><fmt:message key="label.qty" />: </label></td>
 						<td><input type="text" name="qty6" /></td>
 					</tr>
-					
+
 					<tr>
 						<td><fmt:message key="label.product" />: 7</td>
 						<td><select style="width: 12em" name="product7">
@@ -208,20 +224,8 @@
 				<tr>
 					<th>Id</th>
 					<th><fmt:message key="label.provider" /></th>
-					<th><fmt:message key="label.product"/> 1</th>
-					<th><fmt:message key="label.qty" /></th>
-					<th><fmt:message key="label.product" />2</th>
-					<th><fmt:message key="label.qty" /></th>
-					<th><fmt:message key="label.product" />3</th>
-					<th><fmt:message key="label.qty" /></th>
-					<th><fmt:message key="label.product" />4</th>
-					<th><fmt:message key="label.qty" /></th>
-					<th><fmt:message key="label.product"/>5</th>
-					<th><fmt:message key="label.qty" /></th>
-					<th><fmt:message key="label.product"/>6</th>
-					<th><fmt:message key="label.qty" /></th>
-					<th><fmt:message key="label.product"/>7</th>
-					<th><fmt:message key="label.qty" /></th>
+					<th><fmt:message key="label.date" /></th>
+					<th><fmt:message key="label.noOfDoc" /></th>
 					<th><fmt:message key="label.action" /></th>
 				</tr>
 
@@ -242,20 +246,9 @@
 
 						<td>${tempDoc2.id}</td>
 						<td>${tempDoc2.provider}</td>
-						<td>${tempDoc2.product1}</td>
-						<td>${tempDoc2.qty1}</td>
-						<td>${tempDoc2.product2}</td>
-						<td>${tempDoc2.qty2}</td>
-						<td>${tempDoc2.product3}</td>
-						<td>${tempDoc2.qty3}</td>
-						<td>${tempDoc2.product4}</td>
-						<td>${tempDoc2.qty4}</td>
-						<td>${tempDoc2.product5}</td>
-						<td>${tempDoc2.qty5}</td>
-						<td>${tempDoc2.product6}</td>
-						<td>${tempDoc2.qty6}</td>
-						<td>${tempDoc2.product7}</td>
-						<td>${tempDoc2.qty7}</td>
+						<td>${tempDoc2.date}</td>
+						<td>${tempDoc2.documentNumber}</td>
+						
 
 						<td><a href="${tempLink}"><fmt:message key="label.update" /></a>
 							| <a href="${deleteLink}"
@@ -280,7 +273,14 @@
 		</p>
 	</div>
 
+	<script>
+		$(function() {
 
+			$('#datepicker1').datepicker({
+				dateFormat : 'dd/mm/yy'
+			});
+		});
+	</script>
 
 </body>
 

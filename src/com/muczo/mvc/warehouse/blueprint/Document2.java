@@ -12,6 +12,8 @@ public class Document2 implements Serializable{
 	/////////////////////////////// Main variables///////////////////////
 	/////////////////////////////////////////////////////////////////////
 	private int id;
+	private String date;
+	private String documentNumber;
 	private String provider;
 	private String product1;
 	private int qty1;
@@ -33,49 +35,53 @@ public class Document2 implements Serializable{
 	/////////////////////////////////////////////////////////////////////
 	//////////////////////////// Constructors ///////////////////////////
 	////////////////////////////////////////////////////////////////////
-	public Document2(int id, String provider, String product1, int qty1, String product2, int qty2, 
+	public Document2(int id, String provider, String date, String documentNumber, String product1, int qty1, String product2, int qty2, 
 			String product3, int qty3, String product4, int qty4, String product5, int qty5,
 			String product6, int qty6, String product7, int qty7) {
 
 	
 		this.id = id;
 		this.provider = provider;
+		this.date = date;
+		this.documentNumber = documentNumber;
 		this.product1 = product1;
 		this.qty1 = qty1;
-		this.product1 = product2;
-		this.qty1 = qty2;
-		this.product1 = product3;
-		this.qty1 = qty3;
-		this.product1 = product4;
-		this.qty1 = qty4;
-		this.product1 = product5;
-		this.qty1 = qty5;
-		this.product1 = product6;
-		this.qty1 = qty6;
-		this.product1 = product7;
-		this.qty1 = qty7;
+		this.product2 = product2;
+		this.qty2 = qty2;
+		this.product3 = product3;
+		this.qty3 = qty3;
+		this.product4 = product4;
+		this.qty4 = qty4;
+		this.product5 = product5;
+		this.qty5 = qty5;
+		this.product6 = product6;
+		this.qty6 = qty6;
+		this.product7 = product7;
+		this.qty7 = qty7;
 		
 	}
 	
-	public Document2(String provider, String product1, int qty1, String product2, int qty2, 
+	public Document2(String provider, String date, String documentNumber, String product1, int qty1, String product2, int qty2, 
 			String product3, int qty3, String product4, int qty4, String product5, int qty5,
 			String product6, int qty6, String product7, int qty7) {
 
 		this.provider = provider;
+		this.date = date;
+		this.documentNumber = documentNumber;
 		this.product1 = product1;
 		this.qty1 = qty1;
-		this.product1 = product2;
-		this.qty1 = qty2;
-		this.product1 = product3;
-		this.qty1 = qty3;
-		this.product1 = product4;
-		this.qty1 = qty4;
-		this.product1 = product5;
-		this.qty1 = qty5;
-		this.product1 = product6;
-		this.qty1 = qty6;
-		this.product1 = product7;
-		this.qty1 = qty7;
+		this.product2 = product2;
+		this.qty2 = qty2;
+		this.product3 = product3;
+		this.qty3 = qty3;
+		this.product4 = product4;
+		this.qty4 = qty4;
+		this.product5 = product5;
+		this.qty5 = qty5;
+		this.product6 = product6;
+		this.qty6 = qty6;
+		this.product7 = product7;
+		this.qty7 = qty7;
 		
 	}
 
@@ -210,7 +216,23 @@ public class Document2 implements Serializable{
 		this.qty7 = qty7;
 	}
 
+	public String getDate() {
+		return date;
+	}
 
+	public void setDate(String date) {
+		this.date = date;
+	}
 
+	public String getDocumentNumber() {
+		return documentNumber;
+	}
+
+	public void setDocumentNumber(String documentNumber) {
+		this.documentNumber = documentNumber;
+	}
+
+	
+	
 
 }
