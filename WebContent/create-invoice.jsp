@@ -71,6 +71,8 @@
 							key="label.menu.emp" /></a></li>
 				<li><a href="WarehouseControllerServlet"><fmt:message
 							key="label.menu.war" /></a></li>
+				<li><a href="ProductionControllerServlet"><fmt:message
+							key="label.production" /></a></li>
 			</ul>
 			<br> <br>
 			<form
@@ -140,8 +142,8 @@
 				</table>
 
 				<hr>
-				
-				
+
+
 
 				<input type="submit"
 					value="<fmt:message key="label.button.calculate"/>">
@@ -150,46 +152,46 @@
 						value="${amount}" /></textarea>
 
 			</form>
-			
+
 			<hr>
-			
+
 			<form action="InvoiceControllerServlet" method="GET">
-			<input type="hidden" name="command" value="ADD-INVOICE" />
-			<input type="hidden" name="grossAmount" value="${grossAmount}" />
-			<input type="hidden" name="startDocRange" value="${startDocRange}" />
-			<input type="hidden" name="endDocRange" value="${endDocRange}" />
-			<input type="hidden" name="customer" value="${inv2customer}" />
-			<table>
-				<tbody>
-					<tr>
-						<td><label><fmt:message key="label.employee.name" />:
-						</label></td>
-						<td><input type="text" name="name" /></td>
-					</tr>
+				<input type="hidden" name="command" value="ADD-INVOICE" /> <input
+					type="hidden" name="grossAmount" value="${grossAmount}" /> <input
+					type="hidden" name="startDocRange" value="${startDocRange}" /> <input
+					type="hidden" name="endDocRange" value="${endDocRange}" /> <input
+					type="hidden" name="customer" value="${inv2customer}" />
+				<table>
+					<tbody>
+						<tr>
+							<td><label><fmt:message key="label.employee.name" />:
+							</label></td>
+							<td><input type="text" name="name" /></td>
+						</tr>
 
-					<tr>
-						<td><label><fmt:message
-									key="label.invoice.no" />: </label></td>
-						<td><input type="text" name="invNumber" /></td>
-					</tr>
+						<tr>
+							<td><label><fmt:message key="label.invoice.no" />:
+							</label></td>
+							<td><input type="text" name="invNumber" /></td>
+						</tr>
 
-					<tr>
-						<td><label for="datepicker2"><fmt:message
-									key="label.date" />:</label></td>
-						<td><input type="text" name="date" value="${Date}"
-							id="datepicker2"></td>
-					</tr>
-					<tr>
-					
-						<td><label></label></td>
-						<td><input type="submit"
-							value="<fmt:message key="label.button.save"/>" class="save" /></td>
-					</tr>
+						<tr>
+							<td><label for="datepicker2"><fmt:message
+										key="label.date" />:</label></td>
+							<td><input type="text" name="date" value="${Date}"
+								id="datepicker2"></td>
+						</tr>
+						<tr>
 
-				</tbody>
-			</table>
-		</form>
-			
+							<td><label></label></td>
+							<td><input type="submit"
+								value="<fmt:message key="label.button.save"/>" class="save" /></td>
+						</tr>
+
+					</tbody>
+				</table>
+			</form>
+
 
 			<hr>
 
@@ -260,7 +262,7 @@
 			});
 		});
 	</script>
-	
+
 	<script>
 		$(function() {
 

@@ -42,7 +42,7 @@
 
 	<div id="container">
 		<br>
-			<ul>
+		<ul>
 			<li><a href="Document1ControllerServlet"><fmt:message
 						key="label.menu.doc" /></a></li>
 			<li><a href="Document2ControllerServlet"><fmt:message
@@ -63,6 +63,8 @@
 						key="label.menu.emp" /></a></li>
 			<li><a href="WarehouseControllerServlet"><fmt:message
 						key="label.menu.war" /></a></li>
+			<li><a href="ProductionControllerServlet"><fmt:message
+						key="label.production" /></a></li>
 		</ul>
 		<br> <br>
 

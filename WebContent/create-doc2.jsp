@@ -48,28 +48,30 @@
 	<div id="container">
 
 		<br>
-		<ul>
-			<li><a href="Document1ControllerServlet"><fmt:message
-						key="label.menu.doc" /></a></li>
-			<li><a href="Document2ControllerServlet"><fmt:message
-						key="label.menu.doc2" /></a></li>
-			<li><a href="InvoiceControllerServlet"><fmt:message
-						key="label.menu.inv" /></a></li>
-			<li><a href="ProviderControllerServlet"><fmt:message
-						key="label.menu.prov" /></a></li>
-			<li><a href="CustomerControllerServlet"><fmt:message
-						key="label.menu.cus" /></a></li>
-			<li><a href="ReciepientControllerServlet"><fmt:message
-						key="label.menu.rec" /></a></li>
-			<li><a href="ProductControllerServlet"><fmt:message
-						key="label.menu.pro" /></a></li>
-			<li><a href="PriceControllerServlet"><fmt:message
-						key="label.menu.pri" /></a></li>
-			<li><a href="EmployeesControllerServlet"><fmt:message
-						key="label.menu.emp" /></a></li>
-			<li><a href="WarehouseControllerServlet"><fmt:message
-						key="label.menu.war" /></a></li>
-		</ul>
+			<ul>
+				<li><a href="Document1ControllerServlet"><fmt:message
+							key="label.menu.doc" /></a></li>
+				<li><a href="Document2ControllerServlet"><fmt:message
+							key="label.menu.doc2" /></a></li>
+				<li><a href="InvoiceControllerServlet"><fmt:message
+							key="label.menu.inv" /></a></li>
+				<li><a href="ProviderControllerServlet"><fmt:message
+							key="label.menu.prov" /></a></li>
+				<li><a href="CustomerControllerServlet"><fmt:message
+							key="label.menu.cus" /></a></li>
+				<li><a href="ReciepientControllerServlet"><fmt:message
+							key="label.menu.rec" /></a></li>
+				<li><a href="ProductControllerServlet"><fmt:message
+							key="label.menu.pro" /></a></li>
+				<li><a href="PriceControllerServlet"><fmt:message
+							key="label.menu.pri" /></a></li>
+				<li><a href="EmployeesControllerServlet"><fmt:message
+							key="label.menu.emp" /></a></li>
+				<li><a href="WarehouseControllerServlet"><fmt:message
+							key="label.menu.war" /></a></li>
+				<li><a href="ProductionControllerServlet"><fmt:message
+							key="label.production" /></a></li>
+			</ul>
 		<br> <br>
 
 		<form action="Document2ControllerServlet" method="GET">
