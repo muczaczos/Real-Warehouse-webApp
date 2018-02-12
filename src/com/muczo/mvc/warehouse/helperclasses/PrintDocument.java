@@ -9,7 +9,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Calendar;
 
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -31,9 +35,10 @@ public class PrintDocument {
 
 	public static DataSource dataSource;
 
-	public static void printDocument(DataSource dataSource, String docId) throws Exception {
+	public static void printDocument(DataSource dataSource, String docId, HttpServletRequest request) throws Exception {
 
 	  Document theDocument = null;
+	  FilterConfig filterConfig = null;
 
 		Connection myConn = null;
 		PreparedStatement myStmt = null;
@@ -81,12 +86,18 @@ public class PrintDocument {
 				int qty6 = myRs.getInt("qty6");
 				String product7 = myRs.getString("product7");
 				int qty7 = myRs.getInt("qty7");
-				String info = myRs.getString("info");
+				String info1 = myRs.getString("info1");
+				String info2 = myRs.getString("info2");
+				String info3 = myRs.getString("info3");
+				String info4 = myRs.getString("info4");
+				String info5 = myRs.getString("info5");
+				String info6 = myRs.getString("info6");
+				String info7 = myRs.getString("info7");
 
 				// use the documentId during construction
 				theDocument = new Document(true, documentId, customer, reciepient, localDocId, date, product1, qty1,
 						product2, qty2, product3, qty3, product4, qty4, product5, qty5, product6, qty6, product7, qty7,
-						info);
+						info1, info2, info3, info4, info5, info6, info7);
 			} else {
 				throw new Exception("Could not find document id: " + documentId);
 			}
@@ -106,7 +117,13 @@ public class PrintDocument {
 			String date = theDocument.getDate();
 			String product1 = theDocument.getProduct1();
 			int qty1 = theDocument.getQty1();
-			String info = theDocument.getInfo();
+			String info1 = theDocument.getInfo1();
+			String info2 = theDocument.getInfo2();
+			String info3 = theDocument.getInfo3();
+			String info4 = theDocument.getInfo4();
+			String info5 = theDocument.getInfo5();
+			String info6 = theDocument.getInfo6();
+			String info7 = theDocument.getInfo7();
 
 			// https://www.tutorialspoint.com/apache_poi_word/apache_poi_word_quick_guide.htm
 			// Blank Document with tables
@@ -144,20 +161,23 @@ public class PrintDocument {
 			Row row10 = sheet.createRow((short) 15);
 			
 			Cell cell0, cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8, cell9, cell10, cell11, cell12, cell13,
-					cell14, cell15, cell16, cell17, cell18, cell19, cell20, cell21;
+					cell14, cell15, cell16, cell17, cell18, cell19, cell20, cell21, cell22, cell23, cell24, cell25, cell26, cell27;
 			cell0 = cell1 = cell2 = cell3 = cell4 = cell5 = cell6 = cell7 = cell8 = cell9 = cell10 = cell11 = cell12 = cell13 = 
-					cell14 = cell15 = cell16 = cell17 = cell18 = cell19 = cell20 = cell21 = null;
+					cell14 = cell15 = cell16 = cell17 = cell18 = cell19 = cell20 = cell21 = cell22 = 
+					cell23 = cell24 = cell25 = cell26 = cell27= null;
 			
 			CellRangeAddress cellRangeAddress1, cellRangeAddress2, cellRangeAddress3, cellRangeAddress4,
 					cellRangeAddress5, cellRangeAddress6, cellRangeAddress7, cellRangeAddress8, cellRangeAddress9,
 					cellRangeAddress10, cellRangeAddress11, cellRangeAddress12, cellRangeAddress13, cellRangeAddress14,
 					cellRangeAddress15, cellRangeAddress16, cellRangeAddress17, cellRangeAddress18, cellRangeAddress19,
-					cellRangeAddress20, cellRangeAddress21;
+					cellRangeAddress20, cellRangeAddress21, cellRangeAddress22, cellRangeAddress23, cellRangeAddress24, 
+					cellRangeAddress25, cellRangeAddress26, cellRangeAddress27;
 			cellRangeAddress1 = cellRangeAddress2 = cellRangeAddress3 = cellRangeAddress4 = 
 					cellRangeAddress5 = cellRangeAddress6 = cellRangeAddress7 = cellRangeAddress8 = cellRangeAddress9 = 
 					cellRangeAddress10 = cellRangeAddress11 = cellRangeAddress12 = cellRangeAddress13 = cellRangeAddress14 = 
 					cellRangeAddress15 = cellRangeAddress16 = cellRangeAddress17 = cellRangeAddress18 = cellRangeAddress19 = 
-					cellRangeAddress20 = cellRangeAddress21 = null;
+					cellRangeAddress20 = cellRangeAddress21 = cellRangeAddress22 = cellRangeAddress23 = cellRangeAddress24 = 
+							cellRangeAddress25 = cellRangeAddress26 = cellRangeAddress27 = null;
 
 			Cell cell = row.createCell((short) 0);
 			CellStyle cellStyle = wb.createCellStyle();
@@ -175,12 +195,12 @@ public class PrintDocument {
 			cellRangeAddress1 = new CellRangeAddress(0, // first row (0-based)
 					3, // last row (0-based)
 					0, // first column (0-based)
-					2 // last column (0-based)
+					3 // last column (0-based)
 			);
 			sheet.addMergedRegion(cellRangeAddress1);
 			borderToRegion(cellRangeAddress1, sheet, wb);
 
-			cell2 = row.createCell((short) 3);
+			cell2 = row.createCell((short) 4);
 			CellStyle cellStyle2 = wb.createCellStyle();
 			cellStyle2.setFont(font);
 			cellStyle2.setAlignment(CellStyle.ALIGN_CENTER);
@@ -188,19 +208,20 @@ public class PrintDocument {
 			cellStyle2.setVerticalAlignment(CellStyle.VERTICAL_TOP);
 			cell2.setCellStyle(cellStyle2);
 			cell2.setCellValue("Nabywca: \n" + customer);
-			cellRangeAddress2 = new CellRangeAddress(0, 3, 3, 5);
+			cellRangeAddress2 = new CellRangeAddress(0, 3, 4, 6);
 			sheet.addMergedRegion(cellRangeAddress2);
 			borderToRegion(cellRangeAddress2, sheet, wb);
 
-			cell0 = row.createCell((short) 6);
+			cell0 = row.createCell((short) 7);
 			CellStyle cellStyle0 = wb.createCellStyle();
 			cellStyle0.setFont(font);
 			cellStyle0.setAlignment(CellStyle.ALIGN_CENTER);
 			cellStyle0.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
 			cellStyle0.setVerticalAlignment(CellStyle.VERTICAL_TOP);
 			cell0.setCellStyle(cellStyle0);
-			cell0.setCellValue("WZ " + noOfDoc + "  Dnia " + date);
-			CellRangeAddress cellRangeAddress0 = new CellRangeAddress(0, 3, 6, 9);
+			Calendar now = Calendar.getInstance();   // Gets the current date and time       
+			cell0.setCellValue("WZ " + noOfDoc + "/K/" + now.get(Calendar.YEAR) +"\n"+ "  Dnia " + date);
+			CellRangeAddress cellRangeAddress0 = new CellRangeAddress(0, 3, 7, 9);
 			sheet.addMergedRegion(cellRangeAddress0);
 			borderToRegion(cellRangeAddress0, sheet, wb);
 
@@ -226,17 +247,17 @@ public class PrintDocument {
 			cell6 = row3.createCell((short) 0);
 			cell6.setCellStyle(cellStyle00);
 			cell6.setCellValue("1. " + product1);
-			cellRangeAddress6 = new CellRangeAddress(7, 7, 0, 3);
+			cellRangeAddress6 = new CellRangeAddress(7, 7, 0, 4);
 			sheet.addMergedRegion(cellRangeAddress6);
 		//	borderToRegion(cellRangeAddress6, sheet, wb);
 
-			cell15 = row3.createCell((short) 4);
+			cell15 = row3.createCell((short) 5);
 			cell15.setCellStyle(cellStyle00);
 			cell15.setCellValue("szt. " + qty1);
-			cellRangeAddress15 = new CellRangeAddress(7, 7, 4, 5);
+			cellRangeAddress15 = new CellRangeAddress(7, 7, 5, 6);
 			sheet.addMergedRegion(cellRangeAddress15);
 		//	borderToRegion(cellRangeAddress15, sheet, wb);
-
+			
 			cell14 = row10.createCell((short) 0);
 			cell14.setCellStyle(cellStyle00);
 			cell14.setCellValue("Wystawi³:                                                              Odebra³: ");
@@ -244,50 +265,115 @@ public class PrintDocument {
 			sheet.addMergedRegion(cellRangeAddress14);
 			borderToRegion(cellRangeAddress14, sheet, wb);
 
-			cell13 = row3.createCell((short) 6);
+			cell13 = row3.createCell((short) 7);
 			cell13.setCellStyle(cellStyle2);
-			cell13.setCellValue(info);
+			cell13.setCellValue(info1);
 			CellStyle cellStyle3 = wb.createCellStyle();
 			cellStyle3.setAlignment(CellStyle.ALIGN_CENTER);
 			cellStyle3.setVerticalAlignment(CellStyle.VERTICAL_TOP);
 			cell13.setCellStyle(cellStyle3);
-			cellRangeAddress13 = new CellRangeAddress(7, 13, 6, 9);
+			cellRangeAddress13 = new CellRangeAddress(7, 7, 7, 9);
 			sheet.addMergedRegion(cellRangeAddress13);
+			
+			cell22 = row4.createCell((short) 7);
+			cell22.setCellStyle(cellStyle2);
+			cell22.setCellValue(info2);
+			CellStyle cellStyle22 = wb.createCellStyle();
+			cellStyle22.setAlignment(CellStyle.ALIGN_CENTER);
+			cellStyle22.setVerticalAlignment(CellStyle.VERTICAL_TOP);
+			cell22.setCellStyle(cellStyle22);
+			cellRangeAddress22 = new CellRangeAddress(8, 8, 7, 9);
+			sheet.addMergedRegion(cellRangeAddress22);
+			
+			cell23 = row5.createCell((short) 7);
+			cell23.setCellValue(info3);
+			cell23.setCellStyle(cellStyle2);
+			cellStyle3.setAlignment(CellStyle.ALIGN_CENTER);
+			cellStyle3.setVerticalAlignment(CellStyle.VERTICAL_TOP);
+			cell23.setCellStyle(cellStyle3);
+			cellRangeAddress23 = new CellRangeAddress(9, 9, 7, 9);
+			sheet.addMergedRegion(cellRangeAddress23);
+			
+			cell24 = row6.createCell((short) 7);
+			cell24.setCellValue(info4);
+			cell24.setCellStyle(cellStyle2);
+			cellStyle3.setAlignment(CellStyle.ALIGN_CENTER);
+			cellStyle3.setVerticalAlignment(CellStyle.VERTICAL_TOP);
+			cell24.setCellStyle(cellStyle3);
+			cellRangeAddress24 = new CellRangeAddress(10, 10, 7, 9);
+			sheet.addMergedRegion(cellRangeAddress24);
+			
+			cell25 = row7.createCell((short) 7);
+			cell25.setCellValue(info5);
+			cell25.setCellStyle(cellStyle2);
+			cellStyle3.setAlignment(CellStyle.ALIGN_CENTER);
+			cellStyle3.setVerticalAlignment(CellStyle.VERTICAL_TOP);
+			cell25.setCellStyle(cellStyle3);
+			cellRangeAddress25 = new CellRangeAddress(11, 11, 7, 9);
+			sheet.addMergedRegion(cellRangeAddress25);
+			
+			cell26 = row8.createCell((short) 7);
+			cell26.setCellValue(info6);
+			cell26.setCellStyle(cellStyle2);
+			cellStyle3.setAlignment(CellStyle.ALIGN_CENTER);
+			cellStyle3.setVerticalAlignment(CellStyle.VERTICAL_TOP);
+			cell26.setCellStyle(cellStyle3);
+			cellRangeAddress26 = new CellRangeAddress(12, 12, 7, 9);
+			sheet.addMergedRegion(cellRangeAddress26);
+			
+			cell27 = row9.createCell((short) 7);
+			cell27.setCellValue(info7);
+			cell27.setCellStyle(cellStyle2);
+			cellStyle3.setAlignment(CellStyle.ALIGN_CENTER);
+			cellStyle3.setVerticalAlignment(CellStyle.VERTICAL_TOP);
+			cell27.setCellStyle(cellStyle3);
+			cellRangeAddress27 = new CellRangeAddress(13, 13, 7, 9);
+			sheet.addMergedRegion(cellRangeAddress27);
+			
 		//	borderToRegion(cellRangeAddress13, sheet, wb);
 
 			createSheetCell(cell7, cell16, row4, theDocument.getProduct2(), theDocument.getQty2(),
 					cellRangeAddress7, cellRangeAddress16, "2. ", theDocument, sheet, wb, cellStyle00, 8, 
-					8, 0, 3, 8, 8, 4, 5, 0, 4);
+					8, 0, 4, 8, 8, 5, 6, 0, 5);
 			
 			createSheetCell(cell8, cell17, row5, theDocument.getProduct3(), theDocument.getQty3(),
 					cellRangeAddress8, cellRangeAddress17, "3. ", theDocument, sheet, wb, cellStyle00, 9, 
-					9, 0, 3, 9, 9, 4, 5, 0, 4);
+					9, 0, 4, 9, 9, 5, 6, 0, 5);
 			
 			createSheetCell(cell9, cell18, row6, theDocument.getProduct4(), theDocument.getQty4(),
 					cellRangeAddress9, cellRangeAddress18, "4. ", theDocument, sheet, wb, cellStyle00, 10, 
-					10, 0, 3, 10, 10, 4, 5, 0, 4);
+					10, 0, 4, 10, 10, 5, 6, 0, 5);
 			
 			createSheetCell(cell10, cell19, row7, theDocument.getProduct5(), theDocument.getQty5(),
 					cellRangeAddress10, cellRangeAddress19, "5. ", theDocument, sheet, wb, cellStyle00, 11, 
-					11, 0, 3, 11, 11, 4, 5, 0, 4);
+					11, 0, 4, 11, 11, 5, 6, 0, 5);
 			
 			createSheetCell(cell11, cell20, row8, theDocument.getProduct6(), theDocument.getQty6(),
 					cellRangeAddress11, cellRangeAddress20, "6. ", theDocument, sheet, wb, cellStyle00, 12, 
-					12, 0, 3, 12, 12, 4, 5, 0, 4);
+					12, 0, 4, 12, 12, 5, 6, 0, 5);
 			
 			createSheetCell(cell12, cell21, row9, theDocument.getProduct7(), theDocument.getQty7(),
 					cellRangeAddress12, cellRangeAddress21, "7. ", theDocument, sheet, wb, cellStyle00, 13, 
-					13, 0, 3, 13, 13, 4, 5, 0, 4);
+					13, 0, 4, 13, 13, 5, 6, 0, 5);
 	
 		} catch (IndexOutOfBoundsException eb) {
 			JOptionPane.showMessageDialog(new JFrame(), "Mark some document for printing", "Printing error",
 					JOptionPane.ERROR_MESSAGE);
 		}
 
+		
+	
+		
+		//System.out.println(contextPath);
+		
 		// Write the output to a file
 				FileOutputStream fileOut = null;
 				try {
+				//	ServletContext servletContext = filterConfig.getServletContext();
+					//String contextPath = servletContext.getRealPath(File.separator);
 					fileOut = new FileOutputStream("workbook.xls");
+				//	fileOut = new FileOutputStream( request.getSession().getServletContext().getRealPath("WEB-INF/classes/workbook.xls"), false);
+					wb.write(fileOut);
 				} catch (FileNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -305,14 +391,16 @@ public class PrintDocument {
 					e1.printStackTrace();
 				}
 
+				/*
 				Desktop dt = Desktop.getDesktop();
 				try {
+			//	dt.open(new File(request.getSession().getServletContext().getRealPath("WEB-INF/classes/workbook.xls")));
 					dt.open(new File("workbook.xls"));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
+*/
 
 	}
 

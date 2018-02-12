@@ -76,12 +76,22 @@
 				<tbody>
 					<tr>
 						<td><label><fmt:message key="label.customer" />: </label></td>
-						<td><input type="text" name="customer" /></td>
+						<td><select style="width: 15em" name="customer">
+								<option>---select---</option>
+								<c:forEach var="tempCombo" items="${Customers }">
+									<option>${tempCombo.name}</option>
+								</c:forEach>
+						</select></td>
 					</tr>
 
 					<tr>
 						<td><label><fmt:message key="label.product" />: </label></td>
-						<td><input type="text" name="product" /></td>
+						<td><select style="width: 15em" name="product">
+								<option>---select---</option>
+								<c:forEach var="tempCombo" items="${Products}">
+									<option>${tempCombo.productName}</option>
+								</c:forEach>
+						</select></td>
 					</tr>
 
 					<tr>

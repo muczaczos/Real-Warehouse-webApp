@@ -18,6 +18,7 @@ import javax.sql.DataSource;
 
 import com.muczo.mvc.warehouse.blueprint.Activity;
 import com.muczo.mvc.warehouse.blueprint.PriceList;
+import com.muczo.mvc.warehouse.blueprint.Product;
 import com.muczo.mvc.warehouse.db.CustomersDbUtil;
 import com.muczo.mvc.warehouse.db.Documents1DbUtil;
 import com.muczo.mvc.warehouse.db.Documents2DbUtil;
@@ -38,6 +39,7 @@ public class PriceControllerServlet extends HttpServlet {
 
 	private Documents1DbUtil documents1DbUtil;
 	private PriceDbUtil priceDbUtil;
+
 
 	@Resource(name = "jdbc/kp_warehouse_documents")
 	private DataSource dataSource;
@@ -63,14 +65,16 @@ public class PriceControllerServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		request.getRequestDispatcher("link.html").include(request, response);
 
 		HttpSession session = request.getSession(false);
+		
 		try {
 			if (session.getAttribute("userName") != "") {
-				System.out.println(session.getAttribute("userName"));
 				try {
 					// read the "command" parameter
 					String theCommand = request.getParameter("command");
@@ -117,9 +121,9 @@ public class PriceControllerServlet extends HttpServlet {
 				out.print("Proszê siê najpierw zalogowaæ!");
 			}
 		} catch (Exception e) {
-			System.out.println(e.toString());
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/index.html");
-			dispatcher.forward(request, response);
+		//	System.out.println(e.toString());
+		//	RequestDispatcher dispatcher = request.getRequestDispatcher("/index.html");
+		//	dispatcher.forward(request, response);
 		}
 		out.close();
 	}

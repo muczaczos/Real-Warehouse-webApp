@@ -78,12 +78,18 @@ public class Documents1DbUtil {
 				int qty6 = myRs.getInt("qty6");
 				String product7 = myRs.getString("product7");
 				int qty7 = myRs.getInt("qty7");
-				String info = myRs.getString("info");
+				String info1 = myRs.getString("info1");
+				String info2 = myRs.getString("info2");
+				String info3 = myRs.getString("info3");
+				String info4 = myRs.getString("info4");
+				String info5 = myRs.getString("info5");
+				String info6 = myRs.getString("info6");
+				String info7 = myRs.getString("info7");
 
 				// create new student object
 				Document tempDocument = new Document(true, id, customer, reciepient, docId, date, product1, qty1,
 						product2, qty2, product3, qty3, product4, qty4, product5, qty5, product6, qty6, product7, qty7,
-						info);
+						info1, info2, info3, info4, info5, info6, info7);
 
 				// add it to the list of students
 				documents.add(tempDocument);
@@ -142,12 +148,18 @@ public class Documents1DbUtil {
 				int qty6 = myRs.getInt("qty6");
 				String product7 = myRs.getString("product7");
 				int qty7 = myRs.getInt("qty7");
-				String info = myRs.getString("info");
+				String info1 = myRs.getString("info1");
+				String info2 = myRs.getString("info2");
+				String info3 = myRs.getString("info3");
+				String info4 = myRs.getString("info4");
+				String info5 = myRs.getString("info5");
+				String info6 = myRs.getString("info6");
+				String info7 = myRs.getString("info7");
 
 				// use the documentId during construction
 				Document theDocument = new Document(true, id, customer, reciepient, docId, date, product1, qty1,
 						product2, qty2, product3, qty3, product4, qty4, product5, qty5, product6, qty6, product7, qty7,
-						info);
+						info1, info2, info3, info4, info5, info6, info7);
 				documents.add(theDocument);
 			}
 
@@ -170,8 +182,9 @@ public class Documents1DbUtil {
 
 			// create sql for insert
 			String sql = "insert into documents (customer, reciepient, docId, date, product1, qty1, product2, qty2, product3, qty3, "
-					+ "product4, qty4, product5, qty5, product6, qty6, product7, qty7, info) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?"
-					+ ", ?, ?, ?, ?, ?, ?, ?, ?)";
+					+ "product4, qty4, product5, qty5, product6, qty6, product7, qty7, info1, info2, info3, "
+					+ "info4, info5, info6, info7) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?"
+					+ ", ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 			myStmt = myConn.prepareStatement(sql);
 
@@ -194,7 +207,13 @@ public class Documents1DbUtil {
 			myStmt.setInt(16, theDocument.getQty6());
 			myStmt.setString(17, theDocument.getProduct7());
 			myStmt.setInt(18, theDocument.getQty7());
-			myStmt.setString(19, theDocument.getInfo());
+			myStmt.setString(19, theDocument.getInfo1());
+			myStmt.setString(20, theDocument.getInfo2());
+			myStmt.setString(21, theDocument.getInfo3());
+			myStmt.setString(22, theDocument.getInfo4());
+			myStmt.setString(23, theDocument.getInfo5());
+			myStmt.setString(24, theDocument.getInfo6());
+			myStmt.setString(25, theDocument.getInfo7());
 
 			// execute sql insert
 			myStmt.execute();
@@ -286,12 +305,18 @@ public class Documents1DbUtil {
 				int qty6 = myRs.getInt("qty6");
 				String product7 = myRs.getString("product7");
 				int qty7 = myRs.getInt("qty7");
-				String info = myRs.getString("info");
+				String info1 = myRs.getString("info1");
+				String info2 = myRs.getString("info2");
+				String info3 = myRs.getString("info3");
+				String info4 = myRs.getString("info4");
+				String info5 = myRs.getString("info5");
+				String info6 = myRs.getString("info6");
+				String info7 = myRs.getString("info7");
 
 				// use the documentId during construction
 				theDocument = new Document(true, documentId, customer, reciepient, docId, date, product1, qty1,
 						product2, qty2, product3, qty3, product4, qty4, product5, qty5, product6, qty6, product7, qty7,
-						info);
+						info1, info2, info3, info4, info5, info6, info7);
 			} else {
 				throw new Exception("Could not find document id: " + documentId);
 			}
@@ -317,7 +342,7 @@ public class Documents1DbUtil {
 			// create SQL update statement
 			String sql = "update documents set customer=?, reciepient=?, docId=?, date=?, product1=?, qty1=?, product2=?, qty2=?, "
 					+ "product3=?, qty3=?, product4=?, qty4=?, product5=?, qty5=?, product6=?, qty6=?, product7=?, qty7=?, "
-					+ "info=? where id=?";
+					+ "info1=?, info2=?, info3=?, info4=?, info5=?, info6=?, info7=? where id=?";
 
 			// prepare statement
 			myStmt = myConn.prepareStatement(sql);
@@ -342,8 +367,14 @@ public class Documents1DbUtil {
 			myStmt.setInt(16, theDocument.getQty6());
 			myStmt.setString(17, theDocument.getProduct7());
 			myStmt.setInt(18, theDocument.getQty7());
-			myStmt.setString(19, theDocument.getInfo());
-			myStmt.setInt(20, theDocument.getId());
+			myStmt.setString(19, theDocument.getInfo1());
+			myStmt.setString(20, theDocument.getInfo2());
+			myStmt.setString(21, theDocument.getInfo3());
+			myStmt.setString(22, theDocument.getInfo4());
+			myStmt.setString(23, theDocument.getInfo5());
+			myStmt.setString(24, theDocument.getInfo6());
+			myStmt.setString(25, theDocument.getInfo7());
+			myStmt.setInt(26, theDocument.getId());
 
 			// execute SQL statement
 			myStmt.execute();

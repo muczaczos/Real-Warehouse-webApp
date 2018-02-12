@@ -22,7 +22,13 @@ public class Document implements Serializable {
 	private String product5;
 	private String product6;
 	private String product7;
-	private String info;
+	private String info1;
+	private String info2;
+	private String info3;
+	private String info4;
+	private String info5;
+	private String info6;
+	private String info7;
 
 
 	/////////////////////////////////////////////////////////////////////
@@ -30,7 +36,8 @@ public class Document implements Serializable {
 	////////////////////////////////////////////////////////////////////
 	public Document(Boolean check, int id, String customer, String reciepient, int noOfDoc, String date, String product1, int qty1,
 			String product2, int qty2, String product3, int qty3, String product4, int qty4, String product5, int qty5,
-			String product6, int qty6, String product7, int qty7, String info) {
+			String product6, int qty6, String product7, int qty7, String info1, String info2, String info3, String info4,
+			String info5, String info6, String info7) {
 
 		this.check = check;
 		this.id = id;
@@ -52,13 +59,20 @@ public class Document implements Serializable {
 		this.qty6 = qty6;
 		this.product7 = product7;
 		this.qty7 = qty7;
-		this.info = info;
+		this.info1 = info1;
+		this.info2 = info2;
+		this.info3 = info3;
+		this.info4 = info4;
+		this.info5 = info5;
+		this.info6 = info6;
+		this.info7 = info7;
 
 	}
 
 	public Document(Boolean check, String customer, String reciepient, int noOfDoc, String date, String product1, int qty1,
 			String product2, int qty2, String product3, int qty3, String product4, int qty4, String product5, int qty5,
-			String product6, int qty6, String product7, int qty7, String info) {
+			String product6, int qty6, String product7, int qty7, String info1, String info2, String info3, String info4,
+			String info5, String info6, String info7) {
 
 		this.check = check;
 		this.customer = customer;
@@ -79,7 +93,13 @@ public class Document implements Serializable {
 		this.qty6 = qty6;
 		this.product7 = product7;
 		this.qty7 = qty7;
-		this.info = info;
+		this.info1 = info1;
+		this.info2 = info2;
+		this.info3 = info3;
+		this.info4 = info4;
+		this.info5 = info5;
+		this.info6 = info6;
+		this.info7 = info7;
 
 	}
 	
@@ -244,13 +264,63 @@ public class Document implements Serializable {
 		this.qty7 = qty7;
 	}
 
-	public String getInfo() {
-		return info;
+	public String getInfo1() {
+		return info1;
 	}
 
-	public void setInfo(String info) {
-		this.info = info;
+	public void setInfo1(String info1) {
+		this.info1 = info1;
 	}
+
+	public String getInfo2() {
+		return info2;
+	}
+
+	public void setInfo2(String info2) {
+		this.info2 = info2;
+	}
+
+	public String getInfo3() {
+		return info3;
+	}
+
+	public void setInfo3(String info3) {
+		this.info3 = info3;
+	}
+
+	public String getInfo4() {
+		return info4;
+	}
+
+	public void setInfo4(String info4) {
+		this.info4 = info4;
+	}
+
+	public String getInfo5() {
+		return info5;
+	}
+
+	public void setInfo5(String info5) {
+		this.info5 = info5;
+	}
+
+	public String getInfo6() {
+		return info6;
+	}
+
+	public void setInfo6(String info6) {
+		this.info6 = info6;
+	}
+
+	public String getInfo7() {
+		return info7;
+	}
+
+	public void setInfo7(String info7) {
+		this.info7 = info7;
+	}
+
+
 
 	
 

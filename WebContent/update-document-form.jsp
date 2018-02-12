@@ -142,8 +142,32 @@
 					</tr>
 
 					<tr>
-						<td><label><fmt:message key="label.info" />:</label></td>
-						<td><input name="info" value="${THE_DOCUMENT.info}" /></td>
+						<td><label><fmt:message key="label.info" />: 1</label></td>
+						<td><input name="info1" value="${THE_DOCUMENT.info1}" /></td>
+					</tr>
+					<tr>
+						<td><label><fmt:message key="label.info" />: 2</label></td>
+						<td><input name="info2" value="${THE_DOCUMENT.info2}" /></td>
+					</tr>
+						<tr>
+						<td><label><fmt:message key="label.info" />: 3</label></td>
+						<td><input name="info3" value="${THE_DOCUMENT.info3}" /></td>
+					</tr>
+						<tr>
+						<td><label><fmt:message key="label.info" />: 4</label></td>
+						<td><input name="info4" value="${THE_DOCUMENT.info4}" /></td>
+					</tr>
+						<tr>
+						<td><label><fmt:message key="label.info" />: 5</label></td>
+						<td><input name="info5" value="${THE_DOCUMENT.info5}" /></td>
+					</tr>
+						<tr>
+						<td><label><fmt:message key="label.info" />: 6</label></td>
+						<td><input name="info6" value="${THE_DOCUMENT.info6}" /></td>
+					</tr>
+						<tr>
+						<td><label><fmt:message key="label.info" />: 7</label></td>
+						<td><input name="info7" value="${THE_DOCUMENT.info7}" /></td>
 					</tr>
 
 					<tr>

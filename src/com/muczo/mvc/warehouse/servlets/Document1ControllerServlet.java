@@ -1,6 +1,8 @@
 package com.muczo.mvc.warehouse.servlets;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -135,11 +137,11 @@ public class Document1ControllerServlet extends HttpServlet {
 					case "DELETE-DOCUMENT":
 						deleteDocument(request, response);
 						break;
-						
+
 					case "PRINT-DOCUMENT":
 						printDocument(request, response);
 						break;
-
+				
 					default:
 						firstList(request, response);
 					}
@@ -195,7 +197,7 @@ public class Document1ControllerServlet extends HttpServlet {
 			request.setAttribute("CUSTOMERS_LIST", customers);
 
 			session.setAttribute("Customers", customers);
-			
+
 			// get invoices from db util
 			List<Invoice> invoices = invoiceDbUtil.getInvoices();
 			// add invoices to the request
@@ -349,11 +351,18 @@ public class Document1ControllerServlet extends HttpServlet {
 			if (!request.getParameter("qty7").equals("")) {
 				qty7 = Integer.parseInt(request.getParameter("qty7"));
 			}
-			String info = request.getParameter("info");
+			String info1 = request.getParameter("info1");
+			String info2 = request.getParameter("info2");
+			String info3 = request.getParameter("info3");
+			String info4 = request.getParameter("info4");
+			String info5 = request.getParameter("info5");
+			String info6 = request.getParameter("info6");
+			String info7 = request.getParameter("info7");
 
 			// create a new document object
 			Document theDocument = new Document(true, customer, reciepient, docId, formatDate, product1, qty1, product2,
-					qty2, product3, qty3, product4, qty4, product5, qty5, product6, qty6, product7, qty7, info);
+					qty2, product3, qty3, product4, qty4, product5, qty5, product6, qty6, product7, qty7, info1, 
+					info2, info3, info4, info5, info6, info7);
 
 			// add the document to the database
 			documents1DbUtil.addDocument(theDocument);
@@ -361,7 +370,7 @@ public class Document1ControllerServlet extends HttpServlet {
 			// write activity to db
 			List<Document> documents = documents1DbUtil.getDocuments();
 			int id = documents.get(0).getId();
-			
+
 			Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
 					"add doc1", id);
 
@@ -417,11 +426,18 @@ public class Document1ControllerServlet extends HttpServlet {
 			int qty6 = Integer.parseInt(request.getParameter("qty6"));
 			String product7 = request.getParameter("product7");
 			int qty7 = Integer.parseInt(request.getParameter("qty7"));
-			String info = request.getParameter("info");
+			String info1 = request.getParameter("info1");
+			String info2 = request.getParameter("info2");
+			String info3 = request.getParameter("info3");
+			String info4 = request.getParameter("info4");
+			String info5 = request.getParameter("info5");
+			String info6 = request.getParameter("info6");
+			String info7 = request.getParameter("info7");
 
 			// create a new document object
 			Document theDocument = new Document(true, id, customer, reciepient, docId, date, product1, qty1, product2,
-					qty2, product3, qty3, product4, qty4, product5, qty5, product6, qty6, product7, qty7, info);
+					qty2, product3, qty3, product4, qty4, product5, qty5, product6, qty6, product7, qty7, info1, 
+					info2, info3, info4, info5, info6, info7);
 
 			// perform update on database
 			documents1DbUtil.updateDocument(theDocument);
@@ -429,7 +445,7 @@ public class Document1ControllerServlet extends HttpServlet {
 			// write activity to db
 			Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
 					"update doc1", id);
-			
+
 			firstList(request, response);
 
 		}
@@ -460,8 +476,8 @@ public class Document1ControllerServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		if (session.getAttribute("userName") != null) {
-			
-			PrintDocument.printDocument(dataSource, request.getParameter("documentId"));
+
+			PrintDocument.printDocument(dataSource, request.getParameter("documentId"), request);
 
 			// write activity to db
 			int id = Integer.parseInt(request.getParameter("documentId"));
@@ -476,5 +492,6 @@ public class Document1ControllerServlet extends HttpServlet {
 		}
 
 	}
+
 
 }

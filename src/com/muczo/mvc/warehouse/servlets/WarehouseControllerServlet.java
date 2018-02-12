@@ -116,9 +116,9 @@ public class WarehouseControllerServlet extends HttpServlet {
 				out.print("Proszê siê najpierw zalogowaæ!");
 			}
 		} catch (Exception e) {
-			System.out.println(e.toString());
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/index.html");
-			dispatcher.forward(request, response);
+		//	System.out.println(e.toString());
+		///	RequestDispatcher dispatcher = request.getRequestDispatcher("/index.html");
+		//	dispatcher.forward(request, response);
 		}
 		out.close();
 	}

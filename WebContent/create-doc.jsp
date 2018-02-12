@@ -70,7 +70,7 @@
 							key="label.menu.rec" /></a></li>
 				<li><a href="ProductControllerServlet"><fmt:message
 							key="label.menu.pro" /></a></li>
-				<li><a href="PriceControllerServlet"><fmt:message
+				<li><a href="PriceControllerServlet2"><fmt:message
 							key="label.menu.pri" /></a></li>
 				<li><a href="EmployeesControllerServlet"><fmt:message
 							key="label.menu.emp" /></a></li>
@@ -187,6 +187,7 @@
 									<option>${tempProduct.productName}</option>
 								</c:forEach>
 						</select> -<fmt:message key="label.qty" />: <input type="text" name="qty1" />
+						-info: <input type="text" name="info1" />
 							<br> -<fmt:message key="label.product" /> 2 : <select
 							style="width: 15em" name="product2">
 								<option>---select---</option>
@@ -194,6 +195,7 @@
 									<option>${tempProduct.productName}</option>
 								</c:forEach>
 						</select> -<fmt:message key="label.qty" />: <input type="text" name="qty2" />
+						-info: <input type="text" name="info2" />
 							<br> -<fmt:message key="label.product" /> 3 : <select
 							style="width: 15em" name="product3">
 								<option>---select---</option>
@@ -201,6 +203,7 @@
 									<option>${tempProduct.productName}</option>
 								</c:forEach>
 						</select> -<fmt:message key="label.qty" />: <input type="text" name="qty3" />
+						-info: <input type="text" name="info3" />
 							<br> -<fmt:message key="label.product" /> 4 : <select
 							style="width: 15em" name="product4">
 								<option>---select---</option>
@@ -208,6 +211,7 @@
 									<option>${tempProduct.productName}</option>
 								</c:forEach>
 						</select> -<fmt:message key="label.qty" />: <input type="text" name="qty4" />
+						-info: <input type="text" name="info4" />
 							<br> -<fmt:message key="label.product" /> 5 : <select
 							style="width: 15em" name="product5">
 								<option>---select---</option>
@@ -215,6 +219,7 @@
 									<option>${tempProduct.productName}</option>
 								</c:forEach>
 						</select> -<fmt:message key="label.qty" />: <input type="text" name="qty5" />
+						-info: <input type="text" name="info5" />
 							<br> -<fmt:message key="label.product" /> 6 : <select
 							style="width: 15em" name="product6">
 								<option>---select---</option>
@@ -222,6 +227,7 @@
 									<option>${tempProduct.productName}</option>
 								</c:forEach>
 						</select> -<fmt:message key="label.qty" />: <input type="text" name="qty6" />
+						-info: <input type="text" name="info6" />
 							<br> -<fmt:message key="label.product" /> 7 : <select
 							style="width: 15em" name="product7">
 								<option>---select---</option>
@@ -229,12 +235,11 @@
 									<option>${tempProduct.productName}</option>
 								</c:forEach>
 						</select> -<fmt:message key="label.qty" />: <input type="text" name="qty7" />
+						-info: <input type="text" name="info7" />
 
 							<br> <br> <input type="submit"
 							value="<fmt:message key="label.button.save"/>">
-						<td align="left"><label><fmt:message key="label.info" />:</label>
-							<textarea name="info" cols="60" rows="10"></textarea></td>
-
+						
 
 					</tr>
 
@@ -270,7 +275,13 @@
 					</c:url>
 
 					<!-- set up a link to delete a document -->
-					<c:url var="printLink" value="Document1ControllerServlet">
+					<c:url var="generateLink" value="Document1ControllerServlet">
+						<c:param name="command" value="PRINT-DOCUMENT" />
+						<c:param name="documentId" value="${tempDoc.id}" />
+					</c:url>
+					
+						<!-- set up a link to delete a document -->
+					<c:url var="downloadLink" value="DownloadControllerServlet">
 						<c:param name="command" value="PRINT-DOCUMENT" />
 						<c:param name="documentId" value="${tempDoc.id}" />
 					</c:url>
@@ -287,7 +298,8 @@
 							| <a href="${deleteLink}"
 							onClick="if (!(confirm('<fmt:message key="label.delete.message"/>'))) return false">
 								<fmt:message key="label.delete" />
-						</a> | <a href="${printLink}"><fmt:message key="label.print" /></a></td>
+						</a> | <a href="${generateLink}"><fmt:message key="label.generate.doc" /></a>
+						| <a href="${downloadLink}"><fmt:message key="label.download.doc" /></a></td>
 
 					</tr>
 
