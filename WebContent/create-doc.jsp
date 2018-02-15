@@ -90,7 +90,7 @@ body, h1, h2, h3, h4, h5, h6 {
 
 		<!-- Navbar on small screens -->
 		<div id="navDemo"
-			class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+			class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium">
 			<a href="Document2ControllerServlet"
 				class="w3-bar-item w3-button w3-padding-large"><fmt:message
 					key="label.menu.doc2" /></a> <a href="InvoiceControllerServlet"
@@ -108,9 +108,9 @@ body, h1, h2, h3, h4, h5, h6 {
 					key="label.menu.pri" /></a> <a href="EmployeesControllerServlet"
 				class="w3-bar-item w3-button w3-padding-large"><fmt:message
 					key="label.menu.emp" /></a> <a href="WarehouseControllerServlet"
-				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"><fmt:message
+				class="w3-bar-item w3-button w3-padding-large"><fmt:message
 					key="label.menu.war" /></a> <a href="LogoutServlet"
-				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Logout</a>
+				class="w3-bar-item w3-button w3-padding-large">Logout</a>
 		</div>
 	</div>
 
@@ -129,6 +129,7 @@ body, h1, h2, h3, h4, h5, h6 {
 		<hr>
 
 	</header>
+	
 	<div class="w3-panel w3-border w3-border-green w3-margin">
 		<div class="w3-display-container" style="height: 50px;">
 			<div class="w3-display-left">Jesteś zalogowany jako ${userName}</div>
@@ -147,7 +148,9 @@ body, h1, h2, h3, h4, h5, h6 {
 
 		<div class="w3-container w3-third">
 <div class="w3-panel w3-border w3-border-red w3-padding-16">
+
 <h2><fmt:message key="label.which.warehouse" /></h2>
+
 			<form action="Document1ControllerServlet" method="GET">
 				<input type="hidden" name="command" value="FIRST-LIST" />
 
@@ -222,8 +225,14 @@ body, h1, h2, h3, h4, h5, h6 {
 					</c:forEach>
 				</select> <br> <br>
 				<!-- put new button: precreate doc -->
-				<input type="submit"
-					value="<fmt:message key="label.button.precreate"/>">
+				  <div class="w3-col s4 w3-center">
+  
+  <button type="submit" class="w3-button w3-green w3-hover-red w3-padding-large w3-large w3-margin-top">
+					
+		     <fmt:message key="label.button.precreate"/> </button>
+  
+  </div>
+				
 
 			</form>
 		</div>
@@ -232,6 +241,9 @@ body, h1, h2, h3, h4, h5, h6 {
 
 		<div class="w3-container w3-twothird">
 <div class="w3-panel w3-border w3-border-red w3-padding-16">
+
+<h2><fmt:message key="label.create-doc" /></h2>
+
 			<form action="Document1ControllerServlet" method="GET">
 				<input type="hidden" name="command" value="ADD-DOCUMENT" /> <br>
 				-
@@ -319,8 +331,13 @@ body, h1, h2, h3, h4, h5, h6 {
 				</select> -
 				<fmt:message key="label.qty" />
 				: <input type="text" name="qty7" /> -info: <input type="text"
-					name="info7" /> <br> <br> <input type="submit"
-					value="<fmt:message key="label.button.save"/>">
+					name="info7" /> <br> <br> 
+				
+  
+  <button type="submit" class="w3-button w3-green w3-hover-red w3-padding-large w3-large w3-margin-top">
+					
+		     <fmt:message key="label.button.save"/> </button>
+  
 
 
 
@@ -408,7 +425,7 @@ body, h1, h2, h3, h4, h5, h6 {
 						${tempDoc.noOfDoc}
 						</div>
 						<div class="w3-col m2 w3-center">
-
+<div class="w3-text-blue">
 						<a href="${tempLink}"><fmt:message key="label.update" /></a>
 							| <a href="${deleteLink}"
 							onClick="if (!(confirm('<fmt:message key="label.delete.message"/>'))) return false">
@@ -416,6 +433,7 @@ body, h1, h2, h3, h4, h5, h6 {
 						</a> | <a href="${generateLink}"><fmt:message
 									key="label.generate.doc" /></a> | <a href="${downloadLink}"><fmt:message
 									key="label.download.doc" /></a>
+									</div>
 									</div>
 									</div>
 									</div>
@@ -438,6 +456,19 @@ body, h1, h2, h3, h4, h5, h6 {
 			});
 		});
 	</script>
+	
+	<script>
+// Used to toggle the menu on small screens when clicking on the menu button
+function myFunction() {
+    var x = document.getElementById("navDemo");
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else { 
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
+	
+</script>
 
 </body>
 
