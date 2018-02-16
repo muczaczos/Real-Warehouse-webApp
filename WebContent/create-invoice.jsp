@@ -177,33 +177,59 @@ body, h1, h2, h3, h4, h5, h6 {
 
 					<option>${invcustomer}</option>
 				</select> <input type="hidden" name="command" value="CALCULATE-INVOICE" />
+<div class="w3-row">
 
-				<table>
-
-					<tr>
-						<th><fmt:message key="label.check" /></th>
-						<th>Id</th>
-						<th><fmt:message key="label.date" /></th>
-						<th><fmt:message key="label.customer" /></th>
-						<th><fmt:message key="label.reciepient" /></th>
-						<th><fmt:message key="label.docno" /></th>
-						<th><fmt:message key="label.action" /></th>
-
-					</tr>
+		   <div class="w3-col w3-container w3-green w3-center" style="width:14.29%">
+			
+						<fmt:message key="label.check" />
+						</div>
+						<div class="w3-col w3-container w3-green w3-center" style="width:14.28%">
+						Id
+						</div>
+						<div class="w3-col w3-container w3-green w3-center" style="width:14.28%">
+						<fmt:message key="label.date" />
+						</div>
+						<div class="w3-col w3-container w3-green w3-center" style="width:14.28%">
+						<fmt:message key="label.customer" />
+						</div>
+						<div class="w3-col w3-container w3-green w3-center" style="width:14.28%">
+						<fmt:message key="label.reciepient" />
+						</div>
+						<div class="w3-col w3-container w3-green w3-center" style="width:14.28%">
+						<fmt:message key="label.docno" />
+						</div>
+						<div class="w3-col w3-container w3-green w3-center" style="width:14.28%">
+						<fmt:message key="label.action" />
+</div>
+</div>
 
 
 					<c:forEach var="tempDoc" items="${CUSTOM_DOCUMENTS_LIST}">
 
-						<tr>
-							<td><input type="checkbox" name="docId"
-								value="${tempDoc.id}">
-							<td>${tempDoc.id}</td>
-							<td>${tempDoc.date}</td>
-							<td>${tempDoc.customer}</td>
-							<td>${tempDoc.reciepient}</td>
-							<td>${tempDoc.noOfDoc}</td>
+						<div class="w3-row">
 
-						</tr>
+		   <div class="w3-col w3-container w3-center" style="width:14.29%">
+							<input type="checkbox" name="docId"
+								value="${tempDoc.id}">
+								</div>
+								<div class="w3-col w3-container w3-center" style="width:14.29%">
+							${tempDoc.id}
+							</div>
+							<div class="w3-col w3-container w3-center" style="width:14.29%">
+							${tempDoc.date}
+							</div>
+							<div class="w3-col w3-container w3-center" style="width:14.29%">
+							${tempDoc.customer}
+							</div>
+							<div class="w3-col w3-container w3-center" style="width:14.29%">
+							${tempDoc.reciepient}
+							</div>
+							<div class="w3-col w3-container w3-center" style="width:14.29%">
+							${tempDoc.noOfDoc}
+							</div>
+
+					
+</div>
 
 					</c:forEach>
 
@@ -211,7 +237,7 @@ body, h1, h2, h3, h4, h5, h6 {
 
 
 
-				</table>
+			
 
 				<hr>
 
@@ -322,9 +348,7 @@ body, h1, h2, h3, h4, h5, h6 {
 
 
 
-		</div>
 
-	</div>
 
 	<script>
 		$(function() {

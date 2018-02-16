@@ -132,13 +132,19 @@ public class PrintDocument {
 		    font.setFontHeightInPoints((short)11);
 		    font.setFontName("Bookman Old Style");
 		    font.setItalic(false);
-		    font.setBold(true);
+		    font.setBold(false);
+		    
+		    Font customerFont = wb.createFont();
+		    customerFont.setFontHeightInPoints((short)15);
+		    customerFont.setFontName("Bookman Old Style");
+		    customerFont.setItalic(false);
+		    customerFont.setBold(false);
 		    
 		    Font font2 = wb.createFont();
 		    font2.setFontHeightInPoints((short)10);
 		    font2.setFontName("Bookman Old Style");
 		    font2.setItalic(false);
-		    font2.setBold(true);
+		    font2.setBold(false);
 		    
 			Sheet sheet = wb.createSheet("new sheet");
 
@@ -191,9 +197,9 @@ public class PrintDocument {
 			cell.setCellStyle(cellStyle);
 			
 			cell.setCellValue("KP-Karton K. Piekarniak Sp. J. \n" + "Kobylin 35, 05-600 Grójec \n"
-					+ " NIP 797 18 60 878 \n " + "tel. 502 04 04 05");
+					+ " NIP 797 18 60 878 \n " + "tel. 502 04 04 05 \n");
 			cellRangeAddress1 = new CellRangeAddress(0, // first row (0-based)
-					3, // last row (0-based)
+					4, // last row (0-based)
 					0, // first column (0-based)
 					3 // last column (0-based)
 			);
@@ -202,13 +208,13 @@ public class PrintDocument {
 
 			cell2 = row.createCell((short) 4);
 			CellStyle cellStyle2 = wb.createCellStyle();
-			cellStyle2.setFont(font);
+			cellStyle2.setFont(customerFont);
 			cellStyle2.setAlignment(CellStyle.ALIGN_CENTER);
 			cellStyle2.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
 			cellStyle2.setVerticalAlignment(CellStyle.VERTICAL_TOP);
 			cell2.setCellStyle(cellStyle2);
-			cell2.setCellValue("Nabywca: \n" + customer);
-			cellRangeAddress2 = new CellRangeAddress(0, 3, 4, 6);
+			cell2.setCellValue("Odbiorca:\n" + customer +"\n");
+			cellRangeAddress2 = new CellRangeAddress(0, 4, 4, 6);
 			sheet.addMergedRegion(cellRangeAddress2);
 			borderToRegion(cellRangeAddress2, sheet, wb);
 
@@ -221,14 +227,14 @@ public class PrintDocument {
 			cell0.setCellStyle(cellStyle0);
 			Calendar now = Calendar.getInstance();   // Gets the current date and time       
 			cell0.setCellValue("WZ " + noOfDoc + "/K/" + now.get(Calendar.YEAR) +"\n"+ "  Dnia " + date);
-			CellRangeAddress cellRangeAddress0 = new CellRangeAddress(0, 3, 7, 9);
+			CellRangeAddress cellRangeAddress0 = new CellRangeAddress(0, 4, 7, 9);
 			sheet.addMergedRegion(cellRangeAddress0);
 			borderToRegion(cellRangeAddress0, sheet, wb);
 
 			cell5 = row2.createCell((short) 0);
 			cell5.setCellStyle(cellStyle2);
 			try {
-				cell5.setCellValue("Odbiorca: " + selectFromReciepientsQuery(reciepient, "name") + "; "
+				cell5.setCellValue("Roz³adunek: " + selectFromReciepientsQuery(reciepient, "name") + "; "
 						+ selectFromReciepientsQuery(reciepient, "address") + "; " + selectFromReciepientsQuery(reciepient, "telephone"));
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
