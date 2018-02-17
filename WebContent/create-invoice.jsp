@@ -163,8 +163,9 @@ body, h1, h2, h3, h4, h5, h6 {
 
 				<br> <br>
 				<!-- put new button: precreate doc -->
-				<input type="submit"
-					value="<fmt:message key="label.button.precreate"/>">
+				<button type="submit" class="w3-button w3-green w3-hover-red w3-padding-large w3-large w3-margin-top">
+					<fmt:message key="label.button.precreate"/> </button>
+			
 			</form>
 </div>
 </div>
@@ -179,28 +180,26 @@ body, h1, h2, h3, h4, h5, h6 {
 				</select> <input type="hidden" name="command" value="CALCULATE-INVOICE" />
 <div class="w3-row">
 
-		   <div class="w3-col w3-container w3-green w3-center" style="width:14.29%">
+		   <div class="w3-col w3-container w3-green w3-center" style="width:16.65%">
 			
 						<fmt:message key="label.check" />
 						</div>
-						<div class="w3-col w3-container w3-green w3-center" style="width:14.28%">
+						<div class="w3-col w3-container w3-green w3-center" style="width:16.65%">
 						Id
 						</div>
-						<div class="w3-col w3-container w3-green w3-center" style="width:14.28%">
+						<div class="w3-col w3-container w3-green w3-center" style="width:16.65%">
 						<fmt:message key="label.date" />
 						</div>
-						<div class="w3-col w3-container w3-green w3-center" style="width:14.28%">
+						<div class="w3-col w3-container w3-green w3-center" style="width:16.65%">
 						<fmt:message key="label.customer" />
 						</div>
-						<div class="w3-col w3-container w3-green w3-center" style="width:14.28%">
+						<div class="w3-col w3-container w3-green w3-center" style="width:16.65%">
 						<fmt:message key="label.reciepient" />
 						</div>
-						<div class="w3-col w3-container w3-green w3-center" style="width:14.28%">
+						<div class="w3-col w3-container w3-green w3-center" style="width:16.65%">
 						<fmt:message key="label.docno" />
 						</div>
-						<div class="w3-col w3-container w3-green w3-center" style="width:14.28%">
-						<fmt:message key="label.action" />
-</div>
+				
 </div>
 
 
@@ -208,23 +207,23 @@ body, h1, h2, h3, h4, h5, h6 {
 
 						<div class="w3-row">
 
-		   <div class="w3-col w3-container w3-center" style="width:14.29%">
+		   <div class="w3-col w3-container w3-center" style="width:16.65%">
 							<input type="checkbox" name="docId"
 								value="${tempDoc.id}">
 								</div>
-								<div class="w3-col w3-container w3-center" style="width:14.29%">
+								<div class="w3-col w3-container w3-center" style="width:16.65%">
 							${tempDoc.id}
 							</div>
-							<div class="w3-col w3-container w3-center" style="width:14.29%">
+							<div class="w3-col w3-container w3-center" style="width:16.65%">
 							${tempDoc.date}
 							</div>
-							<div class="w3-col w3-container w3-center" style="width:14.29%">
+							<div class="w3-col w3-container w3-center" style="width:16.65%">
 							${tempDoc.customer}
 							</div>
-							<div class="w3-col w3-container w3-center" style="width:14.29%">
+							<div class="w3-col w3-container w3-center" style="width:16.65%">
 							${tempDoc.reciepient}
 							</div>
-							<div class="w3-col w3-container w3-center" style="width:14.29%">
+							<div class="w3-col w3-container w3-center" style="width:16.65%">
 							${tempDoc.noOfDoc}
 							</div>
 
@@ -242,17 +241,19 @@ body, h1, h2, h3, h4, h5, h6 {
 				<hr>
 
 
+	<button type="submit" class="w3-button w3-green w3-hover-red w3-padding-large w3-large w3-margin">
+					<fmt:message key="label.button.calculate"/> </button>
 
-				<input type="submit"
-					value="<fmt:message key="label.button.calculate"/>">
-
-				<textarea name="info" cols="60" rows="10"><c:out
-						value="${amount}" /></textarea>
 
 			</form>
-
-			<hr>
-
+<div class="w3-row">
+  <div class="w3-half w3-container">
+  
+				<textarea name="info" cols="60" rows="10"><c:out
+						value="${amount}" /></textarea>
+  	
+</div>
+<div class="w3-half w3-container">
 			<form action="InvoiceControllerServlet" method="GET">
 				<input type="hidden" name="command" value="ADD-INVOICE" /> <input
 					type="hidden" name="grossAmount" value="${grossAmount}" /> <input
@@ -280,34 +281,49 @@ body, h1, h2, h3, h4, h5, h6 {
 								id="datepicker2"></td>
 						</tr>
 						<tr>
-
-							<td><label></label></td>
-							<td><input type="submit"
-								value="<fmt:message key="label.button.save"/>" class="save" /></td>
+<td>
+							<button type="submit" class="w3-button w3-green w3-hover-red w3-padding-large w3-large w3-margin-top">
+					<fmt:message key="label.button.save"/> </button></td>
+						
 						</tr>
 
 					</tbody>
 				</table>
 			</form>
-
+			</div>
+</div>
 
 			<hr>
 
 			<form action="InvoiceControllerServlet" method="GET">
 
-				<table>
+			<div class="w3-row w3-margin-left">
 
-					<tr>
-						<th>Id</th>
-						<th><fmt:message key="label.customer.name" /></th>
-						<th><fmt:message key="label.date" /></th>
-						<th><fmt:message key="label.invoice.no" /></th>
-						<th><fmt:message key="label.invoice.first.document" /></th>
-						<th><fmt:message key="label.invoice.last.document" /></th>
-						<th><fmt:message key="label.invoice.gross.amount" /></th>
-						<th><fmt:message key="label.action" /></th>
-					</tr>
-
+		   <div class="w3-col w3-container w3-green w3-center" style="width:12.5%">
+						Id
+						</div>
+						 <div class="w3-col w3-container w3-green w3-center" style="width:12.5%">
+						<fmt:message key="label.customer.name" />
+						</div>
+						 <div class="w3-col w3-container w3-green w3-center" style="width:12.5%">
+						<fmt:message key="label.date" />
+						</div>
+						 <div class="w3-col w3-container w3-green w3-center" style="width:12.5%">
+						<fmt:message key="label.invoice.no" />
+						</div>
+						 <div class="w3-col w3-container w3-green w3-center" style="width:12.5%">
+						<fmt:message key="label.invoice.first.document" />
+						</div>
+						 <div class="w3-col w3-container w3-green w3-center" style="width:12.5%">
+						<fmt:message key="label.invoice.last.document" />
+						</div>
+						 <div class="w3-col w3-container w3-green w3-center" style="width:12.5%">
+						<fmt:message key="label.invoice.gross.amount" />
+						</div>
+						 <div class="w3-col w3-container w3-green w3-center" style="width:12.5%">
+						<fmt:message key="label.action" />
+				</div>	
+		</div>
 					<c:forEach var="tempInvoice" items="${Invoices}">
 						<!-- set up a link for each customers  -->
 						<c:url var="updateLink" value="InvoiceControllerServlet">
@@ -321,28 +337,44 @@ body, h1, h2, h3, h4, h5, h6 {
 							<c:param name="invoiceId" value="${tempInvoice.id}" />
 						</c:url>
 
-						<tr>
+					
+			<div class="w3-row">
 
-							<td>${tempInvoice.id}</td>
-							<td>${tempInvoice.customer}</td>
-							<td>${tempInvoice.date}</td>
-							<td>${tempInvoice.invNumber}</td>
-							<td>${tempInvoice.startDocRange}</td>
-							<td>${tempInvoice.endDocRange}</td>
-							<td>${tempInvoice.grossAmount}</td>
-
-							<td><a href="${updateLink}"><fmt:message
+		   <div class="w3-col w3-container w3-center" style="width:12.5%">
+							${tempInvoice.id}
+							</div>
+							  <div class="w3-col w3-container w3-center" style="width:12.5%">
+							${tempInvoice.customer}
+							</div>
+							  <div class="w3-col w3-container w3-center" style="width:12.5%">
+							${tempInvoice.date}
+							</div>
+							  <div class="w3-col w3-container w3-center" style="width:12.5%">
+							${tempInvoice.invNumber}
+							</div>
+							  <div class="w3-col w3-container w3-center" style="width:12.5%">
+							${tempInvoice.startDocRange}
+							</div>
+							  <div class="w3-col w3-container w3-center" style="width:12.5%">
+							${tempInvoice.endDocRange}
+							</div>
+							  <div class="w3-col w3-container w3-center" style="width:12.5%">
+							${tempInvoice.grossAmount}
+</div>
+  <div class="w3-col w3-container w3-center" style="width:12.5%">
+  <div class="w3-text-blue">
+							<a href="${updateLink}"><fmt:message
 										key="label.update" /></a> | <a href="${deleteLink}"
 								onClick="if (!(confirm('<fmt:message key="label.delete.message"/>'))) return false">
 									<fmt:message key="label.delete" />
-							</a></td>
-
-						</tr>
-
+							</a>
+							</div>
+</div>
+					
+</div>
 					</c:forEach>
 
 
-				</table>
 
 			</form>
 

@@ -341,13 +341,13 @@ body, h1, h2, h3, h4, h5, h6 {
 						</div>
 						
 						 <div class="w3-col w3-container w3-center" style="width:20%">
-
+<div class="w3-text-blue">
 						<a href="${tempLink}"><fmt:message key="label.update" /></a>
 							| <a href="${deleteLink}"
 							onClick="if (!(confirm('<fmt:message key="label.delete.message"/>'))) return false">
 								<fmt:message key="label.delete" />
 						</a>
-
+</div>
 </div>
 </div>
 					
