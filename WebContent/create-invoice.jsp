@@ -74,7 +74,7 @@ body, h1, h2, h3, h4, h5, h6 {
 				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"><fmt:message
 					key="label.menu.rec" /></a> <a href="ProductControllerServlet"
 				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"><fmt:message
-					key="label.menu.pro" /></a> <a href="PriceControllerServlet2"
+					key="label.menu.pro" /></a> <a href="PriceControllerServlet"
 				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"><fmt:message
 					key="label.menu.pri" /></a> <a href="EmployeesControllerServlet"
 				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"><fmt:message
@@ -101,7 +101,7 @@ body, h1, h2, h3, h4, h5, h6 {
 				class="w3-bar-item w3-button w3-padding-large"><fmt:message
 					key="label.menu.rec" /></a> <a href="ProductControllerServlet"
 				class="w3-bar-item w3-button w3-padding-large"><fmt:message
-					key="label.menu.pro" /></a> <a href="PriceControllerServlet2"
+					key="label.menu.pro" /></a> <a href="PriceControllerServlet"
 				class="w3-bar-item w3-button w3-padding-large"><fmt:message
 					key="label.menu.pri" /></a> <a href="EmployeesControllerServlet"
 				class="w3-bar-item w3-button w3-padding-large"><fmt:message
@@ -246,10 +246,10 @@ body, h1, h2, h3, h4, h5, h6 {
 
 
 			</form>
-<div class="w3-row">
+<div class="w3-row ">
   <div class="w3-half w3-container">
   
-				<textarea name="info" cols="60" rows="10"><c:out
+				<textarea name="info" cols="80" rows="10"><c:out
 						value="${amount}" /></textarea>
   	
 </div>

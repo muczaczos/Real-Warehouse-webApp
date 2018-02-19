@@ -10,64 +10,142 @@
 <fmt:setBundle
 	basename="com.muczo.mvc.warehouse.i18h.resources.mylabels" />
 
+
 <!DOCTYPE html>
+
 <html>
-
-<head>
-<head>
 <title><fmt:message key="label.title.create-product" /></title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<link type="text/css" rel="stylesheet" href="css/style2.css">
-<link type="text/css" rel="stylesheet" href="css/add.css">
-</head>
+<style>
+body, h1, h2, h3, h4, h5, h6 {
+	font-family: "Lato", sans-serif
+}
+
+.w3-bar, h1, button {
+	font-family: "Montserrat", sans-serif
+}
+
+.fa-anchor, .fa-coffee, .fa-question, .fa-info-circle {
+	font-size: 200px
+}
+
+.fa-hourglass-start, .fa-balance-scale, .fa-phone, .fa-envelope {
+	font-size: 100px
+}
+
+.fa-facebook-official, .fa-youtube, .fa-twitter-square,
+	.fa-google-plus-square {
+	font-size: 35px
+}
+</style>
 
 <body>
-	<form action="LogoutServlet" method="GET">
-		<input type="submit" value="Wyloguj" class="logout" />
 
-	</form>
-	<hr>
-	<a href="ProductControllerServlet?theLocale=en_US">Polski (PL)</a> |
-	<a href="ProductControllerServlet?theLocale=pl_PL">English (US)</a>
+	<!-- Navbar -->
+	<div class="w3-top">
+		<div class="w3-bar w3-green w3-card w3-left-align w3-large">
+			<a
+				class="w3-bar-item w3-button w3-hover-green w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red"
+				href="javascript:void(0);" onclick="myFunction()"
+				title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a> <a
+				href="Document1ControllerServlet"
+				class="w3-bar-item w3-button w3-padding-large w3-white"><fmt:message
+					key="label.menu.doc" /></a> <a href="Document2ControllerServlet"
+				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"><fmt:message
+					key="label.menu.doc2" /></a> <a href="InvoiceControllerServlet"
+				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"><fmt:message
+					key="label.menu.inv" /></a> <a href="ProviderControllerServlet"
+				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"><fmt:message
+					key="label.menu.prov" /></a> <a href="CustomerControllerServlet"
+				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"><fmt:message
+					key="label.menu.cus" /></a> <a href="ReciepientControllerServlet"
+				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"><fmt:message
+					key="label.menu.rec" /></a> <a href="ProductControllerServlet"
+				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"><fmt:message
+					key="label.menu.pro" /></a> <a href="PriceControllerServlet"
+				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"><fmt:message
+					key="label.menu.pri" /></a> <a href="EmployeesControllerServlet"
+				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"><fmt:message
+					key="label.menu.emp" /></a> <a href="WarehouseControllerServlet"
+				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"><fmt:message
+					key="label.menu.war" /></a> <a href="ProductionControllerServlet"
+				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"><fmt:message
+					key="label.production" /></a> <a href="LogoutServlet"
+				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Logout</a>
+		</div>
 
-	<hr>
-
-	<div id="wrapper">
-		<div id="header">
-			<h2>
-				<fmt:message key="label.h2.create-product" />
-			</h2>
+		<!-- Navbar on small screens -->
+		<div id="navDemo"
+			class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium">
+			<a href="Document2ControllerServlet"
+				class="w3-bar-item w3-button w3-padding-large"><fmt:message
+					key="label.menu.doc2" /></a> <a href="InvoiceControllerServlet"
+				class="w3-bar-item w3-button w3-padding-large"><fmt:message
+					key="label.menu.inv" /></a> <a href="ProviderControllerServlet"
+				class="w3-bar-item w3-button w3-padding-large"><fmt:message
+					key="label.menu.prov" /></a> <a href="CustomerControllerServlet"
+				class="w3-bar-item w3-button w3-padding-large"><fmt:message
+					key="label.menu.cus" /></a> <a href="ReciepientControllerServlet"
+				class="w3-bar-item w3-button w3-padding-large"><fmt:message
+					key="label.menu.rec" /></a> <a href="ProductControllerServlet"
+				class="w3-bar-item w3-button w3-padding-large"><fmt:message
+					key="label.menu.pro" /></a> <a href="PriceControllerServlet"
+				class="w3-bar-item w3-button w3-padding-large"><fmt:message
+					key="label.menu.pri" /></a> <a href="EmployeesControllerServlet"
+				class="w3-bar-item w3-button w3-padding-large"><fmt:message
+					key="label.menu.emp" /></a> <a href="WarehouseControllerServlet"
+				class="w3-bar-item w3-button w3-padding-large"><fmt:message
+					key="label.menu.war" /></a> <a href="LogoutServlet"
+				class="w3-bar-item w3-button w3-padding-large">Logout</a>
 		</div>
 	</div>
 
-	<div id="container">
 
-		<br>
-		<ul>
-			<li><a href="Document1ControllerServlet"><fmt:message
-						key="label.menu.doc" /></a></li>
-			<li><a href="Document2ControllerServlet"><fmt:message
-						key="label.menu.doc2" /></a></li>
-			<li><a href="InvoiceControllerServlet"><fmt:message
-						key="label.menu.inv" /></a></li>
-			<li><a href="ProviderControllerServlet"><fmt:message
-						key="label.menu.prov" /></a></li>
-			<li><a href="CustomerControllerServlet"><fmt:message
-						key="label.menu.cus" /></a></li>
-			<li><a href="ReciepientControllerServlet"><fmt:message
-						key="label.menu.rec" /></a></li>
-			<li><a href="ProductControllerServlet"><fmt:message
-						key="label.menu.pro" /></a></li>
-			<li><a href="PriceControllerServlet"><fmt:message
-						key="label.menu.pri" /></a></li>
-			<li><a href="EmployeesControllerServlet"><fmt:message
-						key="label.menu.emp" /></a></li>
-			<li><a href="WarehouseControllerServlet"><fmt:message
-						key="label.menu.war" /></a></li>
-			<li><a href="ProductionControllerServlet"><fmt:message
-						key="label.production" /></a></li>
-		</ul>
-		<br> <br>
+	<!-- Header -->
+	<header class="w3-container w3-green w3-center w3-margin-bottom "
+		style="padding: 75px 16px; background-image: url(images/tektura.jpg)">
+
+
+
+
+		<hr>
+		<h1>
+			<fmt:message key="label.h2.create-product" />
+		</h1>
+
+		<hr>
+
+	</header>
+	<div class="w3-panel w3-border w3-border-green w3-margin">
+		<div class="w3-display-container" style="height: 50px;">
+			<div class="w3-display-left">Jesteś zalogowany jako ${userName}</div>
+			<div class="w3-display-right">
+<a href="ProductControllerServlet?theLocale=en_US">Polski (PL)</a> |
+	<a href="ProductControllerServlet?theLocale=pl_PL">English (US)</a>
+			</div>
+		</div>
+	</div>
+	
+<!-- First Grid -->
+	<div
+		class="w3-row-padding w3-light-grey w3-padding-64 w3-container">
+<div class="w3-content w3-third">
+		
+<div class="w3-panel w3-border w3-border-red w3-padding-16">
+
 		<form action="ProductControllerServlet" method="GET">
 			<input type="hidden" name="command" value="ADD-PRODUCT" />
 
@@ -98,21 +176,32 @@
 				</tbody>
 			</table>
 		</form>
+</div>
+</div>
+</div>
 
-
-		<br> <br>
+<!-- Second Grid -->
+	<div class="w3-row-padding w3-padding-64 w3-container">
 		<form action="ProductControllerServlet" method="GET">
+<div class="w3-row">
+<div class="w3-col w3-container w3-green w3-center" style="width:20%">
+			Id
+			</div>
+			<div class="w3-col w3-container w3-green w3-center" style="width:20%">
+					<fmt:message key="label.customer.name" />
+					</div>
+					<div class="w3-col w3-container w3-green w3-center" style="width:20%">
+				<fmt:message key="label.warehouse" />
+				</div>
+				<div class="w3-col w3-container w3-green w3-center" style="width:20%">
+					<fmt:message key="label.qty" />
+					</div>
+					<div class="w3-col w3-container w3-green w3-center" style="width:20%">
+					<fmt:message key="label.action" />
+					</div>
 
-			<table>
-
-				<tr>
-					<th>Id</th>
-					<th><fmt:message key="label.customer.name" /></th>
-					<th><fmt:message key="label.warehouse" /></th>
-					<th><fmt:message key="label.qty" /></th>
-					<th><fmt:message key="label.action" /></th>
-
-				</tr>
+			</div>
+		
 
 				<c:forEach var="tempPro" items="${Products}">
 					<!-- set up a link for each customers  -->
@@ -126,36 +215,40 @@
 						<c:param name="command" value="DELETE-PRODUCT" />
 						<c:param name="productId" value="${tempPro.id}" />
 					</c:url>
-
-					<tr>
-
-						<td>${tempPro.id}</td>
-						<td>${tempPro.productName}</td>
-						<td>${tempPro.warehouse}</td>
-						<td>${tempPro.qty}</td>
-
-						<td><a href="${tempLink}"><fmt:message key="label.update" /></a>
+<div class="w3-row">
+<div class="w3-col w3-container w3-center" style="width:20%">
+					${tempPro.id}
+					</div>
+					<div class="w3-col w3-container  w3-center" style="width:20%">
+						${tempPro.productName}
+						</div>
+						<div class="w3-col w3-container  w3-center" style="width:20%">
+						${tempPro.warehouse}
+						</div>
+						<div class="w3-col w3-container w3-center" style="width:20%">
+						${tempPro.qty}
+						</div>
+<div class="w3-col w3-container w3-center" style="width:20%">
+						<a href="${tempLink}"><fmt:message key="label.update" /></a>
 							| <a href="${deleteLink}"
 							onClick="if (!(confirm('<fmt:message key="label.delete.message"/>'))) return false">
 								<fmt:message key="label.delete" />
-						</a></td>
+						</a>
 
-					</tr>
-
+					</div>
+					</div>
 				</c:forEach>
 
 
-			</table>
-
+			
 		</form>
+	</div>
 
-		<div style="clear: both;"></div>
 
 		<p>
 			<a href="Document1ControllerServlet"><fmt:message
 					key="label.back.home" /></a>
 		</p>
-	</div>
 
 
 

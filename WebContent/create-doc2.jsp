@@ -75,7 +75,7 @@ body, h1, h2, h3, h4, h5, h6 {
 				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"><fmt:message
 					key="label.menu.rec" /></a> <a href="ProductControllerServlet"
 				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"><fmt:message
-					key="label.menu.pro" /></a> <a href="PriceControllerServlet2"
+					key="label.menu.pro" /></a> <a href="PriceControllerServlet"
 				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"><fmt:message
 					key="label.menu.pri" /></a> <a href="EmployeesControllerServlet"
 				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"><fmt:message
@@ -102,7 +102,7 @@ body, h1, h2, h3, h4, h5, h6 {
 				class="w3-bar-item w3-button w3-padding-large"><fmt:message
 					key="label.menu.rec" /></a> <a href="ProductControllerServlet"
 				class="w3-bar-item w3-button w3-padding-large"><fmt:message
-					key="label.menu.pro" /></a> <a href="PriceControllerServlet2"
+					key="label.menu.pro" /></a> <a href="PriceControllerServlet"
 				class="w3-bar-item w3-button w3-padding-large"><fmt:message
 					key="label.menu.pri" /></a> <a href="EmployeesControllerServlet"
 				class="w3-bar-item w3-button w3-padding-large"><fmt:message
@@ -145,7 +145,7 @@ body, h1, h2, h3, h4, h5, h6 {
 		<!-- First Grid -->
 	<div
 		class="w3-row-padding w3-light-grey w3-padding-64 w3-container">
-<div class="w3-content">
+<div class="w3-container w3-half">
 		
 <div class="w3-panel w3-border w3-border-red w3-padding-16">
 
@@ -153,7 +153,7 @@ body, h1, h2, h3, h4, h5, h6 {
 		<form action="Document2ControllerServlet" method="GET">
 			<input type="hidden" name="command" value="ADD-DOCUMENT2" />
 
-			<table class="w3-table">
+			<table>
 				<tbody>
 
 					<tr>

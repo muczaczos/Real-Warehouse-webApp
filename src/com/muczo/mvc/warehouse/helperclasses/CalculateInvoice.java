@@ -5,6 +5,7 @@ import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import com.muczo.mvc.warehouse.blueprint.Document;
 import com.muczo.mvc.warehouse.blueprint.ProductList;
@@ -97,24 +98,33 @@ public class CalculateInvoice {
 
 		for (ProductList element : sumList) {
 
-			sb.append(element.getProduct() + "    szt." + element.getQty() + "     "
-					+ priceDbUtil.loadPriceForCustomer(element.getProduct(), theCustomer) + "z³" + "\n");
+			sb.append(element.getProduct() + "    szt." + element.getQty() + "  x   "
+					+ priceDbUtil.loadPriceForCustomer(element.getProduct(), theCustomer) + "z³ \t = \t");
 			sb.append(element.getQty() * priceDbUtil.loadPriceForCustomer(element.getProduct(), theCustomer));
 			sum += element.getQty() * priceDbUtil.loadPriceForCustomer(element.getProduct(), theCustomer);
-
+			sb.append("\n");
 		}
 
 		sum *= 1.23;
-
+		
+		String docs = "Dotyczy wz: ";
+		int year = Calendar.getInstance().get(Calendar.YEAR);
+		
+		for(int i=0; i<documents.size(); i++) {
+			docs += documents.get(i).getNoOfDoc() +"/K/"+ year + ", ";
+		}
+		
 		
 		
 		// Rounding number to up and two digits after dot.
 		NumberFormat fmt = NumberFormat.getNumberInstance();
 		fmt.setMaximumFractionDigits(2);
 		fmt.setRoundingMode(RoundingMode.CEILING);
-		sb.append("\n Gross amount: " + fmt.format(sum));
+		sb.append("\n Gross amount: " + fmt.format(sum) + "\n");
 		grossAmount = fmt.format(sum).toString();
 	    this.grossAmount = round(sum,2);
+	    
+	    sb.append(docs);
 	    
 		// Convert from NumberFormat to Double
 		try {

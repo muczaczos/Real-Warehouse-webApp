@@ -6,4 +6,7 @@
     <welcome-file>index.jsp</welcome-file>
     <welcome-file>Document1ControllerServlet</welcome-file>
   </welcome-file-list>
+  <session-config>
+  <session-timeout>1440</session-timeout><!-- 24hours -->
+</session-config>
 </web-app>
