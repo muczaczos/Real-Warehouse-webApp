@@ -141,10 +141,16 @@ public class PrintDocument {
 		    customerFont.setBold(false);
 		    
 		    Font font2 = wb.createFont();
-		    font2.setFontHeightInPoints((short)10);
+		    font2.setFontHeightInPoints((short)11);
 		    font2.setFontName("Bookman Old Style");
 		    font2.setItalic(false);
 		    font2.setBold(false);
+		    
+		    Font font3 = wb.createFont();
+		    font3.setFontHeightInPoints((short)12);
+		    font3.setFontName("Bookman Old Style");
+		    font3.setItalic(false);
+		    font3.setBold(false);
 		    
 			Sheet sheet = wb.createSheet("new sheet");
 
@@ -167,7 +173,7 @@ public class PrintDocument {
 			Row row10 = sheet.createRow((short) 15);
 			
 			Cell cell0, cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8, cell9, cell10, cell11, cell12, cell13,
-					cell14, cell15, cell16, cell17, cell18, cell19, cell20, cell21, cell22, cell23, cell24, cell25, cell26, cell27;
+					cell14, cell15, cell16, cell17, cell18, cell19, cell20, cell21, cell22, cell23, cell24, cell25, cell26, cell27, cell28;
 			cell0 = cell1 = cell2 = cell3 = cell4 = cell5 = cell6 = cell7 = cell8 = cell9 = cell10 = cell11 = cell12 = cell13 = 
 					cell14 = cell15 = cell16 = cell17 = cell18 = cell19 = cell20 = cell21 = cell22 = 
 					cell23 = cell24 = cell25 = cell26 = cell27= null;
@@ -220,7 +226,7 @@ public class PrintDocument {
 
 			cell0 = row.createCell((short) 7);
 			CellStyle cellStyle0 = wb.createCellStyle();
-			cellStyle0.setFont(font);
+			cellStyle0.setFont(font3);
 			cellStyle0.setAlignment(CellStyle.ALIGN_CENTER);
 			cellStyle0.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
 			cellStyle0.setVerticalAlignment(CellStyle.VERTICAL_TOP);
@@ -245,7 +251,7 @@ public class PrintDocument {
 			borderToRegion(cellRangeAddress5, sheet, wb);
 
 			CellStyle cellStyle00 = wb.createCellStyle();
-			cellStyle00.setFont(font);
+			cellStyle00.setFont(font3);
 			cellStyle00.setAlignment(CellStyle.ALIGN_LEFT);
 			cellStyle00.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
 			cellStyle00.setVerticalAlignment(CellStyle.VERTICAL_TOP);
@@ -265,8 +271,8 @@ public class PrintDocument {
 		//	borderToRegion(cellRangeAddress15, sheet, wb);
 			
 			cell14 = row10.createCell((short) 0);
-			cell14.setCellStyle(cellStyle00);
-			cell14.setCellValue("Wystawi³:                                                              Odebra³: ");
+			cell14.setCellStyle(cellStyle2);
+			cell14.setCellValue("Wystawi³:                                  Odebra³: ");
 			cellRangeAddress14 = new CellRangeAddress(15, 15, 0, 9);
 			sheet.addMergedRegion(cellRangeAddress14);
 			borderToRegion(cellRangeAddress14, sheet, wb);

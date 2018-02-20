@@ -351,7 +351,7 @@ body, h1, h2, h3, h4, h5, h6 {
 <!-- Second Grid -->
 	<div
 		class="w3-row-padding w3-padding-64 w3-container">
-
+<div class="w3-panel w3-border w3-border-green w3-margin">
 <ul class="w3-ul">
 
 
@@ -445,6 +445,7 @@ body, h1, h2, h3, h4, h5, h6 {
 				</c:forEach>
 
 </ul>
+</div>
 		
 </div>
 
