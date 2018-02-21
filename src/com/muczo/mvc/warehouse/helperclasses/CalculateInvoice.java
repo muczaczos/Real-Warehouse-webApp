@@ -95,17 +95,7 @@ public class CalculateInvoice {
 		
 		this.startDocRange = documents.get(0).getNoOfDoc();
 		this.endDocRange = documents.get(documents.size()-1).getNoOfDoc();
-
-		for (ProductList element : sumList) {
-
-			sb.append(element.getProduct() + "    szt." + element.getQty() + "  x   "
-					+ priceDbUtil.loadPriceForCustomer(element.getProduct(), theCustomer) + "z³ \t = \t");
-			sb.append(element.getQty() * priceDbUtil.loadPriceForCustomer(element.getProduct(), theCustomer));
-			sum += element.getQty() * priceDbUtil.loadPriceForCustomer(element.getProduct(), theCustomer);
-			sb.append("\n");
-		}
-
-		sum *= 1.23;
+		int id = 1;
 		
 		String docs = "Dotyczy wz: ";
 		int year = Calendar.getInstance().get(Calendar.YEAR);
@@ -113,9 +103,21 @@ public class CalculateInvoice {
 		for(int i=0; i<documents.size(); i++) {
 			docs += documents.get(i).getNoOfDoc() +"/K/"+ year + ", ";
 		}
-		
-		
-		
+		sb.append(docs);
+		sb.append("\n");
+		sb.append("\n");
+		for (ProductList element : sumList) {
+			sb.append(id + ". ");
+			sb.append(element.getProduct() + "    szt." + element.getQty() + "  x   "
+					+ priceDbUtil.loadPriceForCustomer(element.getProduct(), theCustomer) + "z³ \t = \t");
+			sb.append(element.getQty() * priceDbUtil.loadPriceForCustomer(element.getProduct(), theCustomer));
+			sum += element.getQty() * priceDbUtil.loadPriceForCustomer(element.getProduct(), theCustomer);
+			sb.append("\n");
+			id++;
+		}
+
+		sum *= 1.23;
+
 		// Rounding number to up and two digits after dot.
 		NumberFormat fmt = NumberFormat.getNumberInstance();
 		fmt.setMaximumFractionDigits(2);
@@ -123,8 +125,6 @@ public class CalculateInvoice {
 		sb.append("\n Gross amount: " + fmt.format(sum) + "\n");
 		grossAmount = fmt.format(sum).toString();
 	    this.grossAmount = round(sum,2);
-	    
-	    sb.append(docs);
 	    
 		// Convert from NumberFormat to Double
 		try {

@@ -50,7 +50,7 @@
 
 		<!-- Navbar -->
 		<div class="w3-top">
-			<div class="w3-bar w3-green w3-card w3-left-align w3-large">
+			<div class="w3-bar w3-black w3-card w3-left-align w3-large">
 				<a class="w3-bar-item w3-button w3-hover-green w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red"
 				href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a> 
 				
@@ -185,8 +185,8 @@
 						</tr>
 
 						<tr>
-							<td><label></label></td>
-							<td><input type="submit" value="<fmt:message key="label.button.save"/>" class="save" /></td>
+							<td><button type="submit" class="w3-button w3-green w3-hover-red w3-padding-large w3-large w3-margin-top">
+		     							<fmt:message key="label.button.save"/> </button></td>
 						</tr>
 
 					</tbody>
@@ -196,7 +196,7 @@
 		</div>
 		</div>
 		
-			<!-- Second Grid -->
+		<!-- Second Grid -->
 		<div class="w3-row-padding w3-padding-64 w3-container w3-light-gray">
 			<div class="w3-panel w3-border w3-border-green w3-margin">
 			<form action="PriceControllerServlet" method="GET">
@@ -277,12 +277,14 @@
 			</div>
 		</div>
 	  </div>
-	
+	  
+	<hr>
 	  <div class="w3-text-blue w3-margin">
 			<a href="Document1ControllerServlet"><fmt:message
 					key="label.back.home" /></a>
 	 </div>
-		
+	<hr>
+	
   </body>
 
 </html>

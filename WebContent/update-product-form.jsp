@@ -2,14 +2,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 
-<c:set var="theLocale"
-	value="${not empty param.theLocale ? param.theLocale : not empty theLocale ? theLocale
- : pageContext.request.locale}"
-	scope="session" />
+<c:set var="theLocale" value="${not empty param.theLocale ? param.theLocale : not empty theLocale ? theLocale : pageContext.request.locale}" scope="session" />
 <fmt:setLocale value="${theLocale}" />
-<fmt:setBundle
-	basename="com.muczo.mvc.warehouse.i18h.resources.mylabels" />
-
+<fmt:setBundle basename="com.muczo.mvc.warehouse.i18h.resources.mylabels" />
 
 <!DOCTYPE html>
 
@@ -54,7 +49,7 @@
 
 		<!-- Navbar -->
 		<div class="w3-top">
-			<div class="w3-bar w3-green w3-card w3-left-align w3-large">
+			<div class="w3-bar w3-black w3-card w3-left-align w3-large">
 				<a class="w3-bar-item w3-button w3-hover-green w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red"
 				href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a> 
 				
