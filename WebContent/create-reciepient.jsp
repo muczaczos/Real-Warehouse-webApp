@@ -149,9 +149,9 @@
 		
 
 		<!-- First Grid -->
-		<div class="w3-row-padding w3-padding-16 w3-container w3-light-gray">
+		<div class="w3-row-padding w3-padding-16 w3-container w3-dark-gray">
 			<div class="w3-content w3-third">
-				<div class="w3-panel w3-border w3-border-red w3-padding-16">
+				<div class="w3-panel w3-gray w3-padding-16">
 					<form action="ReciepientControllerServlet" method="GET">
 						<input type="hidden" name="command" value="ADD-RECIEPIENT" />
 
@@ -186,69 +186,69 @@
 
 	<!-- Second Grid -->
 	<div class="w3-row-padding w3-padding-64 w3-container w3-light-gray">
-		<div class="w3-panel w3-border w3-border-green w3-margin">
+		<div class="w3-panel w3-margin">
 			<form action="ReciepientControllerServlet" method="GET">
 			
 			  <table class="w3-table w3-bordered">
-   				 <tr>
-   				 			<th>
-									Id
-							</th>
-										<th>
-									<fmt:message key="label.customer.name" />
-							</th>
-								<th>
-									<fmt:message key="label.address" />
-						</th>
-						<th>
-									<fmt:message key="label.telephone" />
-								</th>
-								<th>
-									<fmt:message key="label.action" />
-								</th>
-					</tr>
+   				 <tr class="w3-light-green">
+   				 	<th>
+						Id
+					</th>
+					<th>
+						<fmt:message key="label.customer.name" />
+					</th>
+					<th>
+						<fmt:message key="label.address" />
+					</th>
+					<th>
+						<fmt:message key="label.telephone" />
+					</th>
+					<th>
+						<fmt:message key="label.action" />
+					</th>
+				</tr>
 					
 
-					<c:forEach var="tempRec" items="${Reciepients}">
-						<!-- set up a link for each customers  -->
-						<c:url var="tempLink" value="ReciepientControllerServlet">
-						<c:param name="command" value="LOAD-RECIEPIENT" />
-						<c:param name="reciepientId" value="${tempRec.id}" />
-						</c:url>
+				<c:forEach var="tempRec" items="${Reciepients}">
+					<!-- set up a link for each customers  -->
+					<c:url var="tempLink" value="ReciepientControllerServlet">
+					<c:param name="command" value="LOAD-RECIEPIENT" />
+					<c:param name="reciepientId" value="${tempRec.id}" />
+					</c:url>
 
-						<!-- set up a link to delete a document -->
-						<c:url var="deleteLink" value="ReciepientControllerServlet">
-						<c:param name="command" value="DELETE-RECIEPIENT" />
-						<c:param name="reciepientId" value="${tempRec.id}" />
-						</c:url>
+					<!-- set up a link to delete a document -->
+					<c:url var="deleteLink" value="ReciepientControllerServlet">
+					<c:param name="command" value="DELETE-RECIEPIENT" />
+					<c:param name="reciepientId" value="${tempRec.id}" />
+					</c:url>
 
-				<tr>
-<td>
-										${tempRec.id}
-								</td>
-								<td>
-										${tempRec.name}
-									</td>
-									<td>
-										${tempRec.address}
-									</td>
-									<td>
-										${tempRec.telephone}
-									</td>
-							<td>
-							<div class="w3-text-blue>
-										<a href="${tempLink}"><fmt:message key="label.update" /></a> | 
-										<a href="${deleteLink}" onClick="if (!(confirm('<fmt:message key="label.delete.message"/>'))) return false">
-										<fmt:message key="label.delete" /></a>
-										</div>
-										</td>
-						</tr>
+					<tr>
+						<td>
+							${tempRec.id}
+						</td>
+						<td>
+							${tempRec.name}
+						</td>
+						<td>
+							${tempRec.address}
+						</td>
+						<td>
+							${tempRec.telephone}
+						</td>
+						<td>
+						 <div class="w3-text-blue">
+							<a href="${tempLink}"><fmt:message key="label.update" /></a> | 
+							<a href="${deleteLink}" onClick="if (!(confirm('<fmt:message key="label.delete.message"/>'))) return false">
+							<fmt:message key="label.delete" /></a>
+						</div>
+						</td>
+				   </tr>
 					
-					</c:forEach>
-				</table>
-			</form>
-			</div>
+				</c:forEach>
+			</table>
+		  </form>
 		</div>
+	    </div>
 
 		<hr>
 		<div class="w3-text-blue w3-margin"> 

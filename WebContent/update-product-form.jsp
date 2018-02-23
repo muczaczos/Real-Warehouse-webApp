@@ -125,7 +125,7 @@
 
 			<hr>
 			
-			<h1>	<fmt:message key="label.h2.update-product" />	</h1>
+			<h1>	<fmt:message key="label.title.update-product" />	</h1>
 			
 			<hr>
 

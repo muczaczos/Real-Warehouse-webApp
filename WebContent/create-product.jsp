@@ -148,9 +148,9 @@
 	
 	
 		<!-- First Grid -->
-		<div class="w3-row-padding w3-padding-16 w3-container w3-light-gray">
+		<div class="w3-row-padding w3-padding-16 w3-container w3-dark-gray">
 			<div class="w3-content w3-third">
-				<div class="w3-panel w3-border w3-border-red w3-padding-16">
+				<div class="w3-panel w3-gray w3-padding-16">
 
 					<form action="ProductControllerServlet" method="GET">
 						<input type="hidden" name="command" value="ADD-PRODUCT" />
@@ -186,7 +186,7 @@
 
 		<!-- Second Grid -->
 		<div class="w3-row-padding w3-padding-64 w3-container w3-light-gray">
-			<div class="w3-panel w3-border w3-border-green w3-margin">
+			<div class="w3-panel w3-margin">
 			<form action="ProductControllerServlet" method="GET">
 				
 				<ul class="w3-ul">

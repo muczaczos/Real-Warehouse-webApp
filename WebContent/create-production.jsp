@@ -149,9 +149,9 @@
 
 
 		<!-- First Grid -->
-		<div class="w3-row-padding w3-padding-16 w3-container w3-light-gray">
+		<div class="w3-row-padding w3-padding-16 w3-container w3-dark-gray">
 			<div class="w3-content w3-half">
-				<div class="w3-panel w3-border w3-border-red w3-padding-16">
+				<div class="w3-panel w3-gray w3-padding-16">
 					<form action="ProductionControllerServlet" method="GET">
 						<input type="hidden" name="command" value="FIRST-LIST" />
 
@@ -177,7 +177,7 @@
 			</div>
 			
 			<div class="w3-content w3-half">
-				<div class="w3-panel w3-border w3-border-red w3-padding-16">
+				<div class="w3-panel w3-gray w3-padding-16">
 					<form action="ProductionControllerServlet" method="GET">
 						<input type="hidden" name="command" value="ADD-PRODUCTION" />
 

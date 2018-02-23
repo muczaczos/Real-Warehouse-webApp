@@ -147,9 +147,9 @@
 		</div>
 
 		<!-- First Grid -->
-		<div class="w3-row-padding w3-padding-16 w3-container w3-light-gray">
+		<div class="w3-row-padding w3-padding-16 w3-container w3-dark-gray">
 			<div class="w3-content w3-third">
-				<div class="w3-panel w3-border w3-border-red w3-padding-16">
+				<div class="w3-panel w3-gray w3-padding-16">
 
 				<form action="PriceControllerServlet" method="GET">
 				<input type="hidden" name="command" value="ADD-PRICE" />
@@ -192,13 +192,13 @@
 					</tbody>
 				</table>
 				</form>
-		
-		</div>
+			</div>
+			</div>
 		</div>
 		
 		<!-- Second Grid -->
 		<div class="w3-row-padding w3-padding-64 w3-container w3-light-gray">
-			<div class="w3-panel w3-border w3-border-green w3-margin">
+	
 			<form action="PriceControllerServlet" method="GET">
 			
 				<ul class="w3-ul">
@@ -275,8 +275,7 @@
 				</ul>
 			</form>
 			</div>
-		</div>
-	  </div>
+	
 	  
 	<hr>
 	  <div class="w3-text-blue w3-margin">

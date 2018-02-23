@@ -147,9 +147,9 @@
 		</div>
 
 		<!-- First Grid -->
-		<div class="w3-row-padding w3-padding-16 w3-container w3-light-gray">
+		<div class="w3-row-padding w3-padding-16 w3-container w3-dark-gray">
 			<div class="w3-content w3-third">
-				<div class="w3-panel w3-border w3-border-red w3-padding-16">
+				<div class="w3-panel w3-gray w3-padding-16">
 				
 				<form action="EmployeesControllerServlet" method="GET">
 					<input type="hidden" name="command" value="ADD-EMPLOYEE" />
@@ -206,10 +206,11 @@
 				</form>
 			</div>
 			</div>
+		</div>
 
 		<!-- Second Grid -->
 		<div class="w3-row-padding w3-padding-64 w3-container w3-light-gray">
-			<div class="w3-panel w3-border w3-border-green w3-margin">
+			<div class="w3-panel w3-margin">
 			<form action="EmployeesControllerServlet" method="GET">
 
 				<ul class="w3-ul">
@@ -324,7 +325,7 @@
 
 	</div>
 	</div>
-	</div>
+
 	<hr>
 	  <div class="w3-text-blue w3-margin">
 			<a href="Document1ControllerServlet"><fmt:message key="label.back.home" /></a>
