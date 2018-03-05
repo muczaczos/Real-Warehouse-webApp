@@ -174,26 +174,18 @@
 			<div class="w3-panel w3-margin">
 			<form action="WarehouseControllerServlet" method="GET">
 
-			<ul class="w3-ul">
-				
-					<li>
-					
-						<div class="w3-row w3-container">
-						
-		 					<div class="w3-row">
-		 					
-		   						<div class="w3-col s4 w3-green">
-		   						Id
-		   						</div>
-		   						<div class="w3-col s4 w3-green">
-								<fmt:message key="label.customer.name" />
-								</div>
-								<div class="w3-col s4 w3-green">
-								<fmt:message key="label.action" />
-								</div>
-							</div>
-						</div>
-					</li>
+			<table class="w3-table w3-bordered">
+   				 	<tr class="w3-light-green">
+   				 		<th>
+		   					Id
+		   				</th>
+		   				<th>
+							<fmt:message key="label.customer.name" />
+						</th>
+						<th>
+							<fmt:message key="label.action" />
+						</th>
+					</tr>
 				
 					
 					<c:forEach var="tempWar" items="${Warehouses}">
@@ -209,30 +201,24 @@
 						<c:param name="warehouseId" value="${tempWar.id}" />
 						</c:url>
 
-						<li>
-							<div class="w3-row w3-container">
-						
-								<div class="w3-row">
-									
-									<div class="w3-col s4">
-										${tempWar.id}
-									</div>
-									<div class="w3-col s4">
-										${tempWar.name}
-									</div>
-									<div class="w3-col s4">
-										<div class="w3-text-blue w3-margin">
-											<a href="${tempLink}"><fmt:message key="label.update" /></a> | 
-											<a href="${deleteLink}" onClick="if (!(confirm('<fmt:message key="label.delete.message"/>'))) return false">
-												<fmt:message key="label.delete" /></a>
-										</div>
-									</div>
+						<tr>
+							<td>
+								${tempWar.id}
+							</td>
+							<td>
+								${tempWar.name}
+							</td>
+							<td>
+								<div class="w3-text-blue w3-margin">
+									<a href="${tempLink}"><fmt:message key="label.update" /></a> | 
+									<a href="${deleteLink}" onClick="if (!(confirm('<fmt:message key="label.delete.message"/>'))) return false">
+									<fmt:message key="label.delete" /></a>
 								</div>
-							</div>
-						</li>
+							</td>
+						</tr>
 
 					</c:forEach>
-				</ul>
+				</table>
 				</form>
 
 			</div>

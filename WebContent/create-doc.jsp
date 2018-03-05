@@ -157,186 +157,246 @@
 
 					<form action="Document1ControllerServlet" method="GET">
 						<input type="hidden" name="command" value="FIRST-LIST" />
+							<table>
+								<tbody>
+									<tr>
+										<td><fmt:message key="label.customer" /> : </td>
+										<td> 
+											<select style="width: 12em" name="customer">
+												<option>---select---</option>
+												<c:forEach var="tempCustomer" items="${CUSTOMERS_LIST}">
+													<option>${tempCustomer.name}</option>
+												</c:forEach>
+											</select> 
+										</td>
+									</tr>
+									<tr>
+										<td><fmt:message key="label.product" /> 1</td>
+										<td>
+											<select style="width: 15em" name="warehouse1">
+												<option>---select---</option>
+												<c:forEach var="tempCombo" items="${WAREHOUSES_LIST}">
+													<option>${tempCombo.name}</option>
+												</c:forEach>
+											</select> 
+										</td>
+									</tr>
+									<tr>
+										<td><fmt:message key="label.product" /> 2</td>
+										<td>
+											<select style="width: 15em" name="warehouse2">
+												<option>---select---</option>
+												<c:forEach var="tempCombo" items="${WAREHOUSES_LIST}">
+													<option>${tempCombo.name}</option>
+												</c:forEach>
+											</select> 
+										</td>
+									</tr>
+									<tr>
+										<td> <fmt:message key="label.product" /> 3</td>
+										<td>
+											<select style="width: 15em" name="warehouse3">
+												<option>---select---</option>
+												<c:forEach var="tempCombo" items="${WAREHOUSES_LIST}">
+													<option>${tempCombo.name}</option>
+												</c:forEach>
+											</select> 
+										</td>
+									</tr>
+									<tr>
+										<td><fmt:message key="label.product" /> 4</td>
+										<td>
+										    <select style="width: 15em" name="warehouse4">
+												<option>---select---</option>
+												<c:forEach var="tempCombo" items="${WAREHOUSES_LIST}">
+													<option>${tempCombo.name}</option>
+												</c:forEach>
+											</select> 
+										</td>
+									</tr>
+									<tr>
+										<td><fmt:message key="label.product" /> 5 </td>
+										<td>
+											<select style="width: 15em" name="warehouse5">
+												<option>---select---</option>
+												<c:forEach var="tempCombo" items="${WAREHOUSES_LIST}">
+													<option>${tempCombo.name}</option>
+												</c:forEach>
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<td><fmt:message key="label.product" /> 6</td>
+										<td>
+				 							<select style="width: 15em" name="warehouse6">
+												<option>---select---</option>
+												<c:forEach var="tempCombo" items="${WAREHOUSES_LIST}">
+													<option>${tempCombo.name}</option>
+												</c:forEach>
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<td><fmt:message key="label.product" /> 7</td>
+										<td>
+											<select style="width: 15em" name="warehouse7">
+												<option>---select---</option>
+												<c:forEach var="tempCombo" items="${WAREHOUSES_LIST}">
+													<option>${tempCombo.name}</option>
+												</c:forEach>
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<!-- put new button: precreate doc -->
+										<td>
+ 											  <button type="submit" class="w3-button w3-green w3-hover-red w3-padding-large w3-large w3-margin-top">
+		    								  <fmt:message key="label.button.precreate"/> </button>
+		    							</td>
+		    						</tr>
+		    					</tbody>
+		    				</table>
+							</form>
+						</div>
+					</div>
 
-						<fmt:message key="label.customer" />
-						: <select style="width: 12em" name="customer">
-						<option>---select---</option>
-						<c:forEach var="tempCustomer" items="${CUSTOMERS_LIST}">
-						<option>${tempCustomer.name}</option>
-						</c:forEach>
-						</select> <br>
-						<fmt:message key="label.product" />
-						1
-				
-						<select style="width: 15em" name="warehouse1">
-						<option>---select---</option>
-						<c:forEach var="tempCombo" items="${WAREHOUSES_LIST}">
-						<option>${tempCombo.name}</option>
-						</c:forEach>
-						</select> <br>
-						<fmt:message key="label.product" />
-						2
-		
-						<select style="width: 15em" name="warehouse2">
-						<option>---select---</option>
-						<c:forEach var="tempCombo" items="${WAREHOUSES_LIST}">
-						<option>${tempCombo.name}</option>
-						</c:forEach>
-						</select> <br>
-						<fmt:message key="label.product" />
-						3
-		
-						<select style="width: 15em" name="warehouse3">
-						<option>---select---</option>
-						<c:forEach var="tempCombo" items="${WAREHOUSES_LIST}">
-						<option>${tempCombo.name}</option>
-						</c:forEach>
-						</select> <br>
-						<fmt:message key="label.product" />
-						4
-		
-						<select style="width: 15em" name="warehouse4">
-						<option>---select---</option>
-						<c:forEach var="tempCombo" items="${WAREHOUSES_LIST}">
-						<option>${tempCombo.name}</option>
-						</c:forEach>
-						</select> <br>
-						<fmt:message key="label.product" />
-						5
-			
-						<select style="width: 15em" name="warehouse5">
-						<option>---select---</option>
-						<c:forEach var="tempCombo" items="${WAREHOUSES_LIST}">
-						<option>${tempCombo.name}</option>
-						</c:forEach>
-						</select> <br>
-						<fmt:message key="label.product" />
-						6
-			
-						<select style="width: 15em" name="warehouse6">
-						<option>---select---</option>
-						<c:forEach var="tempCombo" items="${WAREHOUSES_LIST}">
-						<option>${tempCombo.name}</option>
-						</c:forEach>
-						</select> <br>
-						<fmt:message key="label.product" />
-						7
-				
-						<select style="width: 15em" name="warehouse7">
-						<option>---select---</option>
-						<c:forEach var="tempCombo" items="${WAREHOUSES_LIST}">
-						<option>${tempCombo.name}</option>
-						</c:forEach>
-						</select> <br> <br>
-						<!-- put new button: precreate doc -->
-						  <div class="w3-col s4 w3-center">
- 							 <button type="submit" class="w3-button w3-green w3-hover-red w3-padding-large w3-large w3-margin-top">
-		    				 <fmt:message key="label.button.precreate"/> </button>
-  						</div>
-				</form>
-			</div>
-		</div>
 
+					<div class="w3-container w3-twothird">
+						<div class="w3-panel w3-gray w3-padding-16">
 
-		<div class="w3-container w3-twothird">
-			<div class="w3-panel w3-gray w3-padding-16">
+						<h2><fmt:message key="label.create-doc" /></h2>
 
-				<h2><fmt:message key="label.create-doc" /></h2>
-
-				<form action="Document1ControllerServlet" method="GET">
-					<input type="hidden" name="command" value="ADD-DOCUMENT" /> <br>
-					-
-					<fmt:message key="label.customer" />
-					: <input type="text" name="preCustomer" value="${preCustomer}" /> <label
-					for="datepicker"><fmt:message key="label.enter.date" />:</label> <input
-					type="text" name="date" value="${TODAY_DATE}" id="datepicker"><br>
-					<br> -
-					<fmt:message key="label.noOfDoc" />
-					: <input type="text" name="docId" value="${noOfDoc}" /> 
-					<br> -
-					<fmt:message key="label.reciepient" />
-					: <select style="width: 12em" name="reciepient">
-					<option>---select---</option>
-					<c:forEach var="tempReciepient" items="${RECIEPIENTS_LIST}">
-						<option>${tempReciepient.name}</option>
-					</c:forEach>
-					</select> <br> -
-					<fmt:message key="label.product" />
-					1 : <select style="width: 15em" name="product1">
-					<option>---select---</option>
-					<c:forEach var="tempProduct" items="${PRODUCT_LIST1}">
-						<option>${tempProduct.productName}</option>
-					</c:forEach>
-					</select> -
-					<fmt:message key="label.qty" />
-					: <input type="text" name="qty1" /> -info: <input type="text"
-					name="info1" /> <br> -
-					<fmt:message key="label.product" />
-					2 : <select style="width: 15em" name="product2">
-					<option>---select---</option>
-					<c:forEach var="tempProduct" items="${PRODUCT_LIST2}">
-						<option>${tempProduct.productName}</option>
-					</c:forEach>
-					</select> -
-					<fmt:message key="label.qty" />
-					: <input type="text" name="qty2" /> -info: <input type="text"
-					name="info2" /> <br> -
-					<fmt:message key="label.product" />
-					3 : <select style="width: 15em" name="product3">
-					<option>---select---</option>
-					<c:forEach var="tempProduct" items="${PRODUCT_LIST3}">
-						<option>${tempProduct.productName}</option>
-					</c:forEach>
-					</select> -
-					<fmt:message key="label.qty" />
-					: <input type="text" name="qty3" /> -info: <input type="text"
-					name="info3" /> <br> -
-					<fmt:message key="label.product" />
-					4 : <select style="width: 15em" name="product4">
-					<option>---select---</option>
-					<c:forEach var="tempProduct" items="${PRODUCT_LIST4}">
-						<option>${tempProduct.productName}</option>
-					</c:forEach>
-					</select> -
-					<fmt:message key="label.qty" />
-					: <input type="text" name="qty4" /> -info: <input type="text"
-					name="info4" /> <br> -
-					<fmt:message key="label.product" />
-					5 : <select style="width: 15em" name="product5">
-					<option>---select---</option>
-					<c:forEach var="tempProduct" items="${PRODUCT_LIST5}">
-						<option>${tempProduct.productName}</option>
-					</c:forEach>
-					</select> -
-					<fmt:message key="label.qty" />
-					: <input type="text" name="qty5" /> -info: <input type="text"
-					name="info5" /> <br> -
-					<fmt:message key="label.product" />
-					6 : <select style="width: 15em" name="product6">
-					<option>---select---</option>
-					<c:forEach var="tempProduct" items="${PRODUCT_LIST6}">
-						<option>${tempProduct.productName}</option>
-					</c:forEach>
-					</select> -
-					<fmt:message key="label.qty" />
-					: <input type="text" name="qty6" /> -info: <input type="text"
-					name="info6" /> <br> -
-					<fmt:message key="label.product" />
-					7 : <select style="width: 15em" name="product7">
-					<option>---select---</option>
-					<c:forEach var="tempProduct" items="${PRODUCT_LIST7}">
-						<option>${tempProduct.productName}</option>
-					</c:forEach>
-					</select> -
-					<fmt:message key="label.qty" />
-					: <input type="text" name="qty7" /> -info: <input type="text"
-					name="info7" /> <br> <br> 
-				
-  
- 					 <button type="submit" class="w3-button w3-green w3-hover-red w3-padding-large w3-large w3-margin-top">
-					
-		    			 <fmt:message key="label.button.save"/> </button>
-				</form>
+						<form action="Document1ControllerServlet" method="GET">
+							<input type="hidden" name="command" value="ADD-DOCUMENT" /> 
+							<table>
+								<tbody>
+									<tr>
+										<td>- <fmt:message key="label.customer" /> :</td>
+										<td> <input type="text" name="preCustomer" value="${preCustomer}" /></td>
+										<td> <label for="datepicker"><fmt:message key="label.enter.date" />:</label></td>
+										<td><input type="text" name="date" value="${TODAY_DATE}" id="datepicker"></td>
+									</tr>
+									<tr>
+										<td>- <fmt:message key="label.noOfDoc" /> : </td> 
+										<td> <input type="text" name="docId" value="${noOfDoc}" /> </td> 
+									</tr>
+									<tr>
+										<td>- <fmt:message key="label.reciepient" /> : </td>
+										<td>
+											<select style="width: 12em" name="reciepient">
+												<option>---select---</option>
+												<c:forEach var="tempReciepient" items="${RECIEPIENTS_LIST}">
+													<option>${tempReciepient.name}</option>
+												</c:forEach>
+											</select> 
+										</td>
+									</tr>
+									<tr>
+										<td> - <fmt:message key="label.product" /> 1 :</td>
+										<td>
+											<select style="width: 15em" name="product1">
+												<option>---select---</option>
+												<c:forEach var="tempProduct" items="${PRODUCT_LIST1}">
+													<option>${tempProduct.productName}</option>
+												</c:forEach>
+											</select> 
+										</td>
+										<td>- <fmt:message key="label.qty" /> : </td>
+										<td><input type="text" name="qty1" /> </td>
+										<td>-info: <input type="text" name="info1" /></td>
+									 </tr>
+									 <tr>
+									 	<td> - <fmt:message key="label.product" /> 2 :</td>
+									 	<td>
+									 		<select style="width: 15em" name="product2">
+												<option>---select---</option>
+												<c:forEach var="tempProduct" items="${PRODUCT_LIST2}">
+													<option>${tempProduct.productName}</option>
+												</c:forEach>
+											</select> 
+										</td>
+										<td>- <fmt:message key="label.qty" /> : </td>
+										<td><input type="text" name="qty2" /> </td>
+										<td>-info: <input type="text" name="info2" /></td>
+									 </tr>
+									 <tr>
+									 	<td> - <fmt:message key="label.product" /> 3 :</td>
+									 	<td>
+									 		<select style="width: 15em" name="product3">
+												<option>---select---</option>
+												<c:forEach var="tempProduct" items="${PRODUCT_LIST3}">
+													<option>${tempProduct.productName}</option>
+												</c:forEach>
+											</select> 
+										</td>	
+										<td>- <fmt:message key="label.qty" /> : </td>
+										<td><input type="text" name="qty3" /> </td>
+										<td>-info: <input type="text" name="info3" /> </td> 
+									</tr>
+									<tr>
+										<td> - <fmt:message key="label.product" /> 4 :</td>
+										<td>
+											<select style="width: 15em" name="product4">
+												<option>---select---</option>
+												<c:forEach var="tempProduct" items="${PRODUCT_LIST4}">
+													<option>${tempProduct.productName}</option>
+												</c:forEach>
+											</select>
+										</td>
+										<td> - <fmt:message key="label.qty" /> : </td>
+										<td><input type="text" name="qty4" /> </td>
+										<td>-info: <input type="text"name="info4" /></td>
+									</tr>
+									<tr>
+										<td> - <fmt:message key="label.product" /> 5 :</td>
+										<td>
+											<select style="width: 15em" name="product5">
+												<option>---select---</option>
+												<c:forEach var="tempProduct" items="${PRODUCT_LIST5}">
+													<option>${tempProduct.productName}</option>
+												</c:forEach>
+											</select> 
+										</td>
+										<td> - <fmt:message key="label.qty" /> : </td>
+										<td> <input type="text" name="qty5" /></td>
+										<td>-info: <input type="text" name="info5" /></td> 
+									</tr>
+									<tr>
+										<td> - <fmt:message key="label.product" /> 6 : </td>
+										<td>
+											<select style="width: 15em" name="product6">
+												<option>---select---</option>
+												<c:forEach var="tempProduct" items="${PRODUCT_LIST6}">
+													<option>${tempProduct.productName}</option>
+												</c:forEach>
+											</select> 
+										</td>
+										<td> - <fmt:message key="label.qty" /> : </td>
+										<td><input type="text" name="qty6" /></td>
+										<td>-info: <input type="text" name="info6" /></td>
+									</tr>
+									<tr>
+										<td> - <fmt:message key="label.product" /> 7 : </td>
+										<td>
+											<select style="width: 15em" name="product7">
+												<option>---select---</option>
+												<c:forEach var="tempProduct" items="${PRODUCT_LIST7}">
+													<option>${tempProduct.productName}</option>
+												</c:forEach>
+											</select>
+										</td>
+										<td> - <fmt:message key="label.qty" /> : </td>
+										<td><input type="text" name="qty7" /></td>
+										<td> -info: <input type="text" name="info7" /></td>
+									</tr>
+									<tr>
+										<td><button type="submit" class="w3-button w3-green w3-hover-red w3-padding-large w3-large w3-margin-top">
+					 						<fmt:message key="label.button.save"/> </button>
+					 					</td>
+					 				</tr>
+					 			</tbody>
+					 		</table>
+							</form>
 
 			</div>
 		</div>
@@ -345,32 +405,27 @@
 
 		<!-- Second Grid -->
 		<div class="w3-row-padding w3-padding-64 w3-container w3-light-gray">
-			<div class="w3-panel w3-border w3-border-green w3-margin">
-				<ul class="w3-ul">
-					<li>
-						<div class="w3-row w3-container">
-						 <div class="w3-row">
-		  					 <div class="w3-col m2 w3-green w3-center">
+				 <table class="w3-table w3-bordered">
+   				 	<tr class="w3-light-green">
+   				 		<th>
 								Id
-							</div>
-							<div class="w3-col m2 w3-green w3-center">
+						</th>
+						<th>
 								<fmt:message key="label.date" />
-							</div>
-							<div class="w3-col m2 w3-green w3-center">
+						</th>
+						<th>
 								<fmt:message key="label.customer" />
-							</div>
-							<div class="w3-col m2 w3-green w3-center">
+						</th>
+						<th>
 								<fmt:message key="label.reciepient" />
-							</div>
-							<div class="w3-col m2 w3-green w3-center">
+						</th>
+						<th>
 								<fmt:message key="label.docno" />
-							</div>
-							<div class="w3-col m2 w3-green w3-center">
+						</th>
+						<th>
 								<fmt:message key="label.action" />
-							</div>
-						</div>
-					  </div>
-					</li>
+						</th>
+					</tr>
 
 					<c:forEach var="tempDoc" items="${DOCUMENTS_LIST}">
 
@@ -398,25 +453,23 @@
 						<c:param name="documentId" value="${tempDoc.id}" />
 						</c:url>
 
-						<li>
-						<div class="w3-row w3-container">
-						 <div class="w3-row">
-		  					 <div class="w3-col m2 w3-center">
+						<tr>
+							<td>
 								${tempDoc.id}
-							</div>
-							<div class="w3-col m2 w3-center">
+							</td>
+							<td>
 								${tempDoc.date}
-							</div>
-							<div class="w3-col m2 w3-center">
+							</td>
+							<td>
 								${tempDoc.customer}
-							</div>
-							<div class="w3-col m2 w3-center">
+							</td>
+							<td>
 								${tempDoc.reciepient}
-							</div>
-							<div class="w3-col m2 w3-center">
+							</td>
+							<td>
 								${tempDoc.noOfDoc}
-							</div>
-							<div class="w3-col m2 w3-center">
+							</td>
+							<td>
 								<div class="w3-text-blue">
 									<a href="${tempLink}"><fmt:message key="label.update" /></a> | 
 									<a href="${deleteLink}" onClick="if (!(confirm('<fmt:message key="label.delete.message"/>'))) return false">
@@ -424,16 +477,11 @@
 									<a href="${generateLink}"><fmt:message key="label.generate.doc" /></a> | 
 									<a href="${downloadLink}"><fmt:message key="label.download.doc" /></a>
 							   </div>
-						   </div>
-						 </div>
-					    </div>			
-					   </li>
+							 </td>
+							</tr>
 					</c:forEach>
-
-				</ul>
+				</table>
 			</div>
-		
-		</div>
 		
 		<!-- Third Grid -->
 		<div class="w3-row-padding w3-padding-64 w3-container">

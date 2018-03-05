@@ -39,7 +39,7 @@ public class PriceDbUtil {
 			myConn = dataSource.getConnection();
 
 			// create sql statement
-			String sql = "select * from prices";
+			String sql = "select * from prices ORDER BY customer";
 
 			myStmt = myConn.createStatement();
 

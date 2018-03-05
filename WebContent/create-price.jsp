@@ -201,35 +201,24 @@
 	
 			<form action="PriceControllerServlet" method="GET">
 			
-				<ul class="w3-ul">
-				
-					<li>
-					
-						<div class="w3-row w3-container">
-						
-		 					<div class="w3-row">
-		 					
-		   						<div class="w3-col m2 w3-green">
-		   							Id
-		   						</div>
-		   						<div class="w3-col m2 w3-green">
-									<fmt:message key="label.customer" />
-								</div>
-								<div class="w3-col m2 w3-green">
-									<fmt:message key="label.product" />
-								</div>
-								<div class="w3-col m2 w3-green">
-									<fmt:message key="label.price" />
-								</div>
-								<div class="w3-col m2 w3-green">
-									<fmt:message key="label.action" />
-								</div>
-								<div class="w3-col m2 w3-green">
-									...
-								</div>
-							</div>
-						</div>
-					</li>
+				 <table class="w3-table w3-bordered">
+   				 	<tr class="w3-light-green">
+   				 		<th>
+		   					Id
+		   				</th>
+		   				<th>
+							<fmt:message key="label.customer" />
+						</th>
+						<th>
+							<fmt:message key="label.product" />
+						</th>
+						<th>
+							<fmt:message key="label.price" />
+						</th>
+						<th>
+							<fmt:message key="label.action" />
+						</th>
+					</tr>
 			
 
 					<c:forEach var="tempPri" items="${Prices}">
@@ -245,34 +234,31 @@
 						<c:param name="priceId" value="${tempPri.id}" />
 						</c:url>
 					
-						<li>
-							<div class="w3-row w3-container">
-						
-								<div class="w3-row">
-									
-									<div class="w3-col m2">
-										${tempPri.id}
-									</div>
-									<div class="w3-col m2">
-										${tempPri.customer}
-									</div>
-									<div class="w3-col m2">
-										${tempPri.product}
-									</div>
-									<div class="w3-col m2">
-										${tempPri.price}
-									</div>
-									<div class="w3-col m2 w3-text-blue">
-										<a href="${tempLink}"><fmt:message key="label.update" /></a>
+						<tr>
+							<td>
+								${tempPri.id}
+							</td>
+							<td>
+								${tempPri.customer}
+							</td>
+							<td>
+								${tempPri.product}
+							</td>
+							<td>
+								${tempPri.price}
+							</td>
+							<td>
+								<div class="w3-text-blue">
+									<a href="${tempLink}"><fmt:message key="label.update" /></a>
 										| <a href="${deleteLink}"
 										onClick="if (!(confirm('<fmt:message key="label.delete.message"/>'))) return false">
 										<fmt:message key="label.delete" />
-										</a>
-									</div>
+									</a>
 								</div>
-							</div>
+							</td>
+						</tr>
 					</c:forEach>
-				</ul>
+				</table>
 			</form>
 			</div>
 	

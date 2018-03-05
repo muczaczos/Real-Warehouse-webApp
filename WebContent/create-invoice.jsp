@@ -151,25 +151,40 @@
 
 			<div class="w3-third">
 				<div class="w3-panel w3-gray w3-padding-16">
-					<form action="InvoiceControllerServlet?invcustomer=${invcustomer}&theLocale=pl_PL" method="GET">
-					<input type="hidden" name="command" value="PRECREATE-INVOICE" />
+					<form class="w3-container" action="InvoiceControllerServlet?invcustomer=${invcustomer}&theLocale=pl_PL" method="GET">
+						<input type="hidden" name="command" value="PRECREATE-INVOICE" />
 
-					<fmt:message key="label.customer" />
-					: <select style="width: 12em" name="invcustomer">
-					<option>---select---</option>
-					<c:forEach var="tempCustomer" items="${Customers}">
-						<option>${tempCustomer.name}</option>
-					</c:forEach>
-					</select> <br> <label for="datepicker"><fmt:message
-						key="label.enter.date" />:</label> <input type="text" name="invdate"
-					value="${Date}" id="datepicker"> <br> <label><fmt:message
-						key="label.invoice.no" />: </label> <input type="text" name="invnumber" />
-
-					<br> <br>
-					<!-- put new button: precreate doc -->
-					<button type="submit" class="w3-button w3-green w3-hover-red w3-padding-large w3-large w3-margin-top">
-					<fmt:message key="label.button.precreate"/> </button>
-			
+						<table>
+							<tbody>
+								<tr>
+									<td><fmt:message key="label.customer" />:</td>
+									<td><select style="width: 12em" name="invcustomer">
+										<option>---select---</option>
+										<c:forEach var="tempCustomer" items="${Customers}">
+										<option>${tempCustomer.name}</option>
+										</c:forEach>			
+										</select> 
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label for="datepicker"><fmt:message key="label.enter.date" />:</label></td>
+									<td>
+										<input class="w3-input" type="text" name="invdate" value="${Date}" id="datepicker"></td>
+								</tr>	
+								<tr>
+									<td><label><fmt:message key="label.invoice.no" />: </label> 
+									<td><input type="text" name="invnumber" /></td>
+								</tr>
+								<tr>
+									<td>
+										<!-- put new button: precreate doc -->
+										<button type="submit" class="w3-button w3-green w3-hover-red w3-padding-large w3-large w3-margin-top">
+										<fmt:message key="label.button.precreate"/> </button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
 					</form>
 				</div>
 			</div>
@@ -179,67 +194,74 @@
 		<div class="w3-row-padding w3-padding-64 w3-container w3-light-gray">
 			<div class="w3-panel w3-margin">
 				<form action="InvoiceControllerServlet" method="GET">
-					<fmt:message key="label.customer" />
-					: <select style="width: 12em" name="inv2customer">
-					<option>${invcustomer}</option>
-					</select> <input type="hidden" name="command" value="CALCULATE-INVOICE" />
+					<input type="hidden" name="inv2customer" value="${invcustomer}" />
+					<input type="hidden" name="command" value="CALCULATE-INVOICE" />
 					
-					<div class="w3-row">
-		  		 		<div class="w3-col w3-container w3-green w3-center" style="width:16.65%">
-							<fmt:message key="label.check" />
-						</div>
-						<div class="w3-col w3-container w3-green w3-center" style="width:16.65%">
-						Id
-						</div>
-						<div class="w3-col w3-container w3-green w3-center" style="width:16.65%">
-						<fmt:message key="label.date" />
-						</div>
-						<div class="w3-col w3-container w3-green w3-center" style="width:16.65%">
-						<fmt:message key="label.customer" />
-						</div>
-						<div class="w3-col w3-container w3-green w3-center" style="width:16.65%">
-						<fmt:message key="label.reciepient" />
-						</div>
-						<div class="w3-col w3-container w3-green w3-center" style="width:16.65%">
-						<fmt:message key="label.docno" />
-						</div>
-				
-					</div>
-
-
-					<c:forEach var="tempDoc" items="${CUSTOM_DOCUMENTS_LIST}">
-						<div class="w3-row">
-		  				 <div class="w3-col w3-container w3-center" style="width:16.65%">
-							<input type="checkbox" name="docId" value="${tempDoc.id}">
-							</div>
-							<div class="w3-col w3-container w3-center" style="width:16.65%">
+					 <table class="w3-table w3-bordered">
+   				 		<tr class="w3-light-green">
+   				 			<th>
+								<fmt:message key="label.check" />
+							</th>
+							<th>
+								Id
+							</th>
+							<th>
+								<fmt:message key="label.date" />
+							</th>
+							<th>
+								<fmt:message key="label.customer" />
+							</th>
+							<th>
+								<fmt:message key="label.reciepient" />
+							</th>
+							<th>
+								<fmt:message key="label.docno" />
+							</th>
+						</tr>
+					
+						<c:forEach var="tempDoc" items="${CUSTOM_DOCUMENTS_LIST}">
+						<tr>
+							<td>
+								<input type="checkbox" name="docId" value="${tempDoc.id}">
+							</td>
+							<td>
 								${tempDoc.id}
-							</div>
-							<div class="w3-col w3-container w3-center" style="width:16.65%">
+							</td>
+							<td>
 								${tempDoc.date}
-							</div>
-							<div class="w3-col w3-container w3-center" style="width:16.65%">
+							</td>
+							<td>
 								${tempDoc.customer}
-							</div>
-							<div class="w3-col w3-container w3-center" style="width:16.65%">
+							</td>
+							<td>
 								${tempDoc.reciepient}
-							</div>
-							<div class="w3-col w3-container w3-center" style="width:16.65%">
+							</td>
+							<td>
 								${tempDoc.noOfDoc}
-							</div>				
-						</div>
-					</c:forEach>
-
+							</td>
+						</tr>
+						</c:forEach>
+					</table>
 					<!-- put new button: precreate doc -->
 					<hr>
 					<button type="submit" class="w3-button w3-green w3-hover-red w3-padding-large w3-large w3-margin">
 					<fmt:message key="label.button.calculate"/> </button>
-				</form>
 				
+				</form>
+			</div>	
+		</div>
+		
+		<!-- Third Grid -->
+		<div class="w3-row-padding w3-padding-64 w3-container w3-light-gray">
+			<div class="w3-panel w3-margin">
 				<div class="w3-row ">
+				
+				<div class="w3-panel w3-gray w3-padding-16">
   					<div class="w3-half w3-container">
-						<textarea name="info" cols="80" rows="10"><c:out value="${amount}" /></textarea>
+						<textarea name="info" cols="60" rows="20"><c:out value="${amount}" /></textarea>
 					</div>
+				</div>
+				<div class="w3-panel w3-gray w3-padding-16">
 					<div class="w3-half w3-container">
 						<form action="InvoiceControllerServlet" method="GET">
 						<input type="hidden" name="command" value="ADD-INVOICE" /> <input
@@ -273,103 +295,119 @@
 						  </table>
 						</form>
 					</div>
+					</div>
 				</div>
 			</div>
-			</div>
-				<hr>
-
+		</div>
+		
+			
+		<!-- Forth Grid -->
+		<div class="w3-row-padding w3-padding-64 w3-container w3-light-gray">
+			<div class="w3-panel w3-margin">
 				<form action="InvoiceControllerServlet" method="GET">
-					<div class="w3-row w3-margin-left">
-		  				 <div class="w3-col w3-container w3-green w3-center" style="width:12.5%">
-							Id
-						</div>
-					 	<div class="w3-col w3-container w3-green w3-center" style="width:12.5%">
-							<fmt:message key="label.customer.name" />
-						</div>
-						 <div class="w3-col w3-container w3-green w3-center" style="width:12.5%">
-							<fmt:message key="label.date" />
-						</div>
-						 <div class="w3-col w3-container w3-green w3-center" style="width:12.5%">
-							<fmt:message key="label.invoice.no" />
-						</div>
-						 <div class="w3-col w3-container w3-green w3-center" style="width:12.5%">
-							<fmt:message key="label.invoice.first.document" />
-						</div>
-						 <div class="w3-col w3-container w3-green w3-center" style="width:12.5%">
-							<fmt:message key="label.invoice.last.document" />
-						</div>
-						<div class="w3-col w3-container w3-green w3-center" style="width:12.5%">
-							<fmt:message key="label.invoice.gross.amount" />
-						</div>
-						<div class="w3-col w3-container w3-green w3-center" style="width:12.5%">
-							<fmt:message key="label.action" />
-						</div>	
-					</div>
-					<c:forEach var="tempInvoice" items="${Invoices}">
-						<!-- set up a link for each customers  -->
-						<c:url var="updateLink" value="InvoiceControllerServlet">
-						<c:param name="command" value="LOAD-INVOICE" />
-						<c:param name="invoiceId" value="${tempInvoice.id}" />
-						</c:url>
-
-						<!-- set up a link to delete a document -->
-						<c:url var="deleteLink" value="InvoiceControllerServlet">
-						<c:param name="command" value="DELETE-INVOICE" />
-						<c:param name="invoiceId" value="${tempInvoice.id}" />
-						</c:url>
-						
-						<div class="w3-row">
-		   					<div class="w3-col w3-container w3-center" style="width:12.5%">
-								${tempInvoice.id}
-							</div>
-							  <div class="w3-col w3-container w3-center" style="width:12.5%">
-								${tempInvoice.customer}
-							</div>
-							  <div class="w3-col w3-container w3-center" style="width:12.5%">
-								${tempInvoice.date}
-							</div>
-							  <div class="w3-col w3-container w3-center" style="width:12.5%">
-								${tempInvoice.invNumber}
-							</div>
-							  <div class="w3-col w3-container w3-center" style="width:12.5%">
-								${tempInvoice.startDocRange}
-							</div>
-							  <div class="w3-col w3-container w3-center" style="width:12.5%">
-								${tempInvoice.endDocRange}
-							</div>
-							  <div class="w3-col w3-container w3-center" style="width:12.5%">
-								${tempInvoice.grossAmount}
-							</div>
-  							<div class="w3-col w3-container w3-center" style="width:12.5%">
- 								 <div class="w3-text-blue">
-									<a href="${updateLink}"><fmt:message key="label.update" /></a> | 
-									<a href="${deleteLink}" onClick="if (!(confirm('<fmt:message key="label.delete.message"/>'))) return false">
-									<fmt:message key="label.delete" /></a>
-								</div>
-							</div>
+					 <table class="w3-table w3-bordered">
+   				 		<tr class="w3-light-green">
+   				 			<th>   
+								Id
+							</th>
+							<th>
+								<fmt:message key="label.customer.name" />
+							</th>
+							<th>
+								<fmt:message key="label.date" />
+							<th>
+								<fmt:message key="label.invoice.no" />
+							</th>
+							<th>
+								<fmt:message key="label.invoice.first.document" />
+							</th>
+							<th>
+								<fmt:message key="label.invoice.last.document" />
+							</th>
+							<th>
+								<fmt:message key="label.invoice.gross.amount" />
+							</th>
+							<th>
+								<fmt:message key="label.action" />
+							</th>
+						</tr>
 					
-						</div>
-					</c:forEach>
-			</form>
-			<script>
-				$(function() {
+						<c:forEach var="tempInvoice" items="${Invoices}">
+							<!-- set up a link for each customers  -->
+							<c:url var="updateLink" value="InvoiceControllerServlet">
+							<c:param name="command" value="LOAD-INVOICE" />
+							<c:param name="invoiceId" value="${tempInvoice.id}" />
+							</c:url>
 
-					$('#datepicker').datepicker({
+							<!-- set up a link to delete a document -->
+							<c:url var="deleteLink" value="InvoiceControllerServlet">
+							<c:param name="command" value="DELETE-INVOICE" />
+							<c:param name="invoiceId" value="${tempInvoice.id}" />
+							</c:url>
+						
+							<tr>
+								<td>
+									${tempInvoice.id}
+								</td>
+								<td>
+									${tempInvoice.customer}
+								</td>
+								<td>
+									${tempInvoice.date}
+								</td>
+								<td>
+									${tempInvoice.invNumber}
+								</td>
+								<td>
+									${tempInvoice.startDocRange}
+								</td>
+								<td>
+									${tempInvoice.endDocRange}
+								</td>
+								<td>
+									${tempInvoice.grossAmount}
+								</td>
+								<td>
+ 								 	<div class="w3-text-blue">
+										<a href="${updateLink}"><fmt:message key="label.update" /></a> | 
+										<a href="${deleteLink}" onClick="if (!(confirm('<fmt:message key="label.delete.message"/>'))) return false">
+										<fmt:message key="label.delete" /></a>
+									</div>
+								</td>
+							</tr>
+						</c:forEach>
+						</table>
+				</form>
+			</div>
+		</div>
+		
+		<hr>
+		
+		<div class="w3-text-blue w3-margin">
+			<a href="Document1ControllerServlet"><fmt:message key="label.back.home" /></a>
+		</div>
+		
+		<hr>
+		
+		<script>
+		$(function() {
+
+			$('#datepicker').datepicker({
 					dateFormat : 'dd/mm/yy'
 					});
 				});
-			</script>
+		</script>
 
-			<script>
+		<script>
 				$(function() {
 
 					$('#datepicker2').datepicker({
 					dateFormat : 'dd/mm/yy'
 				});
 			});
-			</script>
+		</script>
 
-		</body>
+	</body>
 
 </html>
 

@@ -189,44 +189,26 @@
 			<div class="w3-panel w3-margin">
 			<form action="ProductControllerServlet" method="GET">
 				
-				<ul class="w3-ul">
+				 <table class="w3-table w3-bordered">
+   				 	<tr class="w3-light-green">
+   				 		<th>
+							Id
+						</th>
+								
+						<th>
+							<fmt:message key="label.customer.name" />
+						</th>
+						<th>
+							<fmt:message key="label.warehouse" />
+						</th>
+						<th>
+							<fmt:message key="label.qty" />
+						</th>
+						<th>
+							<fmt:message key="label.action" />
+						</th>
 				
-					<li>
-					
-						<div class="w3-row w3-container">
-						
-		 					<div class="w3-row">
-		 					
-		   						<div class="w3-col m2 w3-green">
-									Id
-								</div>
-								
-								<div class="w3-col m2 w3-green">
-									<fmt:message key="label.customer.name" />
-								</div>
-								
-								<div class="w3-col m2 w3-green">
-									<fmt:message key="label.warehouse" />
-								</div>
-									
-								<div class="w3-col m2 w3-green">
-									<fmt:message key="label.qty" />
-								</div>
-								
-								<div class="w3-col m2 w3-green">
-									<fmt:message key="label.action" />
-								</div>
-								
-								<div class="w3-col m2 w3-green">
-									...
-								</div>
-								
-							</div>
-							
-						</div>
-						
-					</li>
-		
+					</tr>
 					
 					<c:forEach var="tempPro" items="${Products}">
 					
@@ -241,43 +223,32 @@
 							<c:param name="command" value="DELETE-PRODUCT" />
 							<c:param name="productId" value="${tempPro.id}" />
 						</c:url>
-					
-						<li>
-					
-							<div class="w3-row w3-container">
 						
-								<div class="w3-row">
-									
-									<div class="w3-col m2">
-										${tempPro.id}
-									</div>
-								
-									<div class="w3-col m2">
-										${tempPro.productName}
-									</div>
-								
-									<div class="w3-col m2">
-										${tempPro.warehouse}
-									</div>
-								
-									<div class="w3-col m2">
-										${tempPro.qty}
-									</div>
-
-									<div class="w3-col m2">
+						<tr>
+							<td>
+								${tempPro.id}
+							</td>
+							<td>
+								${tempPro.productName}
+							<td>
+								${tempPro.warehouse}
+							</td>
+							<td>
+								${tempPro.qty}
+							</td>
+							<td>
 										<div class="w3-text-blue">
 											<a href="${tempLink}"><fmt:message key="label.update" /></a>
 												| <a href="${deleteLink}"
 												onClick="if (!(confirm('<fmt:message key="label.delete.message"/>'))) return false">
 												<fmt:message key="label.delete" />
 											</a>
-											</div>
-										</div>
-									</div>
-								</div>
-							</li>	
-						</c:forEach>
-					</ul>
+										</div>		
+							</td>
+						</tr>
+					</c:forEach>
+				</table>	
+					
 			</form>
 			</div>
 		</div>

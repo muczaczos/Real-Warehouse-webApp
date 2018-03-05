@@ -213,54 +213,40 @@
 			<div class="w3-panel w3-margin">
 			<form action="EmployeesControllerServlet" method="GET">
 
-				<ul class="w3-ul">
+				<table class="w3-table w3-bordered">
+   				 	<tr class="w3-light-green">
+   				 		<th>
+		   					Id
+		   				</th>
+		   				<th>
+							<fmt:message key="label.employee.name" />
+						</th>
+						<th>
+							<fmt:message key="label.employee.surname" />
+						</th>
+						<th>
+							<fmt:message key="label.employee.address" />
+						</th>
+						<th>
+							<fmt:message key="label.employee.telephone" />
+						</th>
+						<th>
+							<fmt:message key="label.employee.profession" />
+						</th>
+						<th>
+							<fmt:message key="label.employee.safetyTraining" />
+						</th>
+						<th>
+							<fmt:message key="label.employee.medicalVisit" />
+						</th>
+						<th>
+							<fmt:message key="label.employee.contractDate" />
+						</th>
+						<th>
+							<fmt:message key="label.action" />
+						</th>
+					</tr>
 				
-					<li>
-					
-						<div class="w3-row w3-container">
-						
-		 					<div class="w3-row">
-		 					
-		   						<div class="w3-col m1 w3-green">
-		   							Id
-		   						</div>
-		   						<div class="w3-col m1 w3-green">
-									<fmt:message key="label.employee.name" />
-								</div>
-								<div class="w3-col m1 w3-green">
-									<fmt:message key="label.employee.surname" />
-								</div>
-								<div class="w3-col m1 w3-green">
-									<fmt:message key="label.employee.address" />
-								</div>
-								<div class="w3-col m1 w3-green">
-									<fmt:message key="label.employee.telephone" />
-								</div>
-								<div class="w3-col m1 w3-green">
-									<fmt:message key="label.employee.profession" />
-								</div>
-								<div class="w3-col m1 w3-green">
-									<fmt:message key="label.employee.safetyTraining" />
-								</div>
-								<div class="w3-col m1 w3-green">
-									<fmt:message key="label.employee.medicalVisit" />
-								</div>
-								<div class="w3-col m1 w3-green">
-									<fmt:message key="label.employee.contractDate" />
-								</div>
-								<div class="w3-col m1 w3-green">
-									<fmt:message key="label.action" />
-								</div>
-								<div class="w3-col m1 w3-green">
-									...
-								</div>
-								<div class="w3-col m1 w3-green">
-									...
-								</div>
-							</div>
-						</div>
-					</li>
-			
 					<c:forEach var="tempEmploy" items="${Employees}">
 						<!-- set up a link for each customers  -->
 						<c:url var="tempLink" value="EmployeesControllerServlet">
@@ -274,52 +260,44 @@
 						<c:param name="employeeId" value="${tempEmploy.id}" />
 						</c:url>
 
-						<li>
-					
-							<div class="w3-row w3-container">
-						
-		 						<div class="w3-row">
-		 					
-		   							<div class="w3-col m1">
-										${tempEmploy.id}
-									</div>
-									<div class="w3-col m1">
-										${tempEmploy.name}
-									</div>
-									<div class="w3-col m1">
-										${tempEmploy.surname}
-									</div>
-									<div class="w3-col m1">
-										${tempEmploy.address}
-									</div>
-									<div class="w3-col m1">
-										${tempEmploy.telephone}
-									</div>
-									<div class="w3-col m1">
-										${tempEmploy.profession}
-									</div>
-									<div class="w3-col m1">
-										${tempEmploy.safetyTraining}	
-									</div>
-									<div class="w3-col m1">
-										${tempEmploy.medicalVisit}
-									</div>
-									<div class="w3-col m1">
-										${tempEmploy.contractDate}
-									</div>
-									<div class="w3-col m1">
-
+						<tr>
+							<td>
+								${tempEmploy.id}
+							</td>
+							<td>
+								${tempEmploy.name}
+							<td>
+								${tempEmploy.surname}
+							</td>
+							<td>
+								${tempEmploy.address}
+							</td>
+							<td>
+								${tempEmploy.telephone}
+							</td>
+							<td>
+								${tempEmploy.profession}
+							</td>
+							<td>
+								${tempEmploy.safetyTraining}	
+							</td>
+							<td>
+								${tempEmploy.medicalVisit}
+							</td>
+							<td>
+								${tempEmploy.contractDate}
+							</td>
+							<td>
+								<div class="w3-text-blue">
 										<a href="${tempLink}"><fmt:message key="label.update" /></a> | 
 										<a href="${deleteLink}" onClick="if (!(confirm('<fmt:message key="label.delete.message"/>'))) return false">
 											<fmt:message key="label.delete" /></a>
-									</div>
 								</div>
-							</div>
-						</li>
-
+							</td>
+							
 					</c:forEach>
 
-			</ul>
+			</table>
 
 		</form>
 

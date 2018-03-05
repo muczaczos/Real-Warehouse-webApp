@@ -48,7 +48,7 @@ public class Documents1DbUtil {
 			myConn = dataSource.getConnection();
 
 			// create sql statement
-			String sql = "select * from documents ORDER BY id DESC LIMIT 100";
+			String sql = "select * from documents ORDER BY id DESC LIMIT 1000";
 
 			myStmt = myConn.createStatement();
 
@@ -115,7 +115,7 @@ public class Documents1DbUtil {
 			myConn = dataSource.getConnection();
 
 			// create sql to get selected product
-			String sql = "select * from documents where customer=? ORDER BY id DESC LIMIT 100";
+			String sql = "select * from documents where customer=? ORDER BY id DESC LIMIT 1000";
 
 			// create prepared statement
 			myStmt = myConn.prepareStatement(sql);
