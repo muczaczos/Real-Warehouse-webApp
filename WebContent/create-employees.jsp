@@ -54,7 +54,7 @@
 				<a class="w3-bar-item w3-button w3-hover-green w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red"
 				href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a> 
 				
-				<a	href="Document1ControllerServlet" class="w3-bar-item w3-button w3-padding-large w3-white">
+				<a	href="Document1ControllerServlet" class="w3-bar-item w3-button w3-padding-large">
 				<fmt:message key="label.menu.doc" /></a> 
 			
 				<a href="Document2ControllerServlet" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">
@@ -78,7 +78,7 @@
 				<a href="PriceControllerServlet" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">
 				<fmt:message key="label.menu.pri" /></a> 
 			
-				<a href="EmployeesControllerServlet" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">
+				<a href="EmployeesControllerServlet" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white w3-white">
 				<fmt:message key="label.menu.emp" /></a> 
 			
 				<a href="WarehouseControllerServlet" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">

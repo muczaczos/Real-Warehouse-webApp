@@ -53,7 +53,7 @@
 				<a class="w3-bar-item w3-button w3-hover-green w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red"
 				href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a> 
 				
-				<a	href="Document1ControllerServlet" class="w3-bar-item w3-button w3-padding-large w3-white">
+				<a href="Document1ControllerServlet" class="w3-bar-item w3-button w3-padding-large w3-white">
 				<fmt:message key="label.menu.doc" /></a> 
 			
 				<a href="Document2ControllerServlet" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">
@@ -153,7 +153,7 @@
 			<div class="w3-container w3-third">
 				<div class="w3-panel w3-gray w3-padding-16">
 
-					<h2><fmt:message key="label.which.warehouse" /></h2>
+					<h2><fmt:message key="label.menu.cus" /></h2>
 
 					<form action="Document1ControllerServlet" method="GET">
 						<input type="hidden" name="command" value="FIRST-LIST" />
@@ -170,6 +170,7 @@
 											</select> 
 										</td>
 									</tr>
+									<!-- warehouses
 									<tr>
 										<td><fmt:message key="label.product" /> 1</td>
 										<td>
@@ -246,8 +247,8 @@
 												</c:forEach>
 											</select>
 										</td>
-									</tr>
-									<tr>
+									</tr> -->
+									<tr>	
 										<!-- put new button: precreate doc -->
 										<td>
  											  <button type="submit" class="w3-button w3-green w3-hover-red w3-padding-large w3-large w3-margin-top">
@@ -296,7 +297,7 @@
 										<td>
 											<select style="width: 15em" name="product1">
 												<option>---select---</option>
-												<c:forEach var="tempProduct" items="${PRODUCT_LIST1}">
+												<c:forEach var="tempProduct" items="${PRODUCTS_LIST}">
 													<option>${tempProduct.productName}</option>
 												</c:forEach>
 											</select> 
@@ -310,7 +311,7 @@
 									 	<td>
 									 		<select style="width: 15em" name="product2">
 												<option>---select---</option>
-												<c:forEach var="tempProduct" items="${PRODUCT_LIST2}">
+												<c:forEach var="tempProduct" items="${PRODUCTS_LIST}">
 													<option>${tempProduct.productName}</option>
 												</c:forEach>
 											</select> 
@@ -324,7 +325,7 @@
 									 	<td>
 									 		<select style="width: 15em" name="product3">
 												<option>---select---</option>
-												<c:forEach var="tempProduct" items="${PRODUCT_LIST3}">
+												<c:forEach var="tempProduct" items="${PRODUCTS_LIST}">
 													<option>${tempProduct.productName}</option>
 												</c:forEach>
 											</select> 
@@ -338,7 +339,7 @@
 										<td>
 											<select style="width: 15em" name="product4">
 												<option>---select---</option>
-												<c:forEach var="tempProduct" items="${PRODUCT_LIST4}">
+												<c:forEach var="tempProduct" items="${PRODUCTS_LIST}">
 													<option>${tempProduct.productName}</option>
 												</c:forEach>
 											</select>
@@ -352,7 +353,7 @@
 										<td>
 											<select style="width: 15em" name="product5">
 												<option>---select---</option>
-												<c:forEach var="tempProduct" items="${PRODUCT_LIST5}">
+												<c:forEach var="tempProduct" items="${PRODUCTS_LIST}">
 													<option>${tempProduct.productName}</option>
 												</c:forEach>
 											</select> 
@@ -366,7 +367,7 @@
 										<td>
 											<select style="width: 15em" name="product6">
 												<option>---select---</option>
-												<c:forEach var="tempProduct" items="${PRODUCT_LIST6}">
+												<c:forEach var="tempProduct" items="${PRODUCTS_LIST}">
 													<option>${tempProduct.productName}</option>
 												</c:forEach>
 											</select> 
@@ -380,7 +381,7 @@
 										<td>
 											<select style="width: 15em" name="product7">
 												<option>---select---</option>
-												<c:forEach var="tempProduct" items="${PRODUCT_LIST7}">
+												<c:forEach var="tempProduct" items="${PRODUCTS_LIST}">
 													<option>${tempProduct.productName}</option>
 												</c:forEach>
 											</select>
@@ -404,7 +405,32 @@
 		</div>
 
 		<!-- Second Grid -->
-		<div class="w3-row-padding w3-padding-64 w3-container w3-light-gray">
+		<div class="w3-row-padding w3-padding-16 w3-container w3-light-gray">
+			<div class="w3-container w3-third w3-border w3-padding-16 w3-border-green w3-margin">
+				 <form action="" class="w3-container">
+				 	
+				 	<h2>Search documents by...</h2>
+
+					<label class="w3-text-black"><b>Customer</b></label>
+					<select class="w3-select" name="customer">
+						<option value="" disabled selected>Choose your customer</option>
+						<c:forEach var="tempCustomer" items="${CUSTOMERS_LIST}">
+							<option>${tempCustomer.name}</option>
+						</c:forEach>
+					</select> 
+			
+ 
+					<label class="w3-text-black"><b>Last Name</b></label>
+					<input class="w3-input w3-border" type="text">
+
+					<button class="w3-btn w3-green w3-margin">Filtruj</button>
+				</form>
+			</div>
+		</div>
+			
+		<!-- Third Grid -->
+		<div class="w3-row-padding w3-padding-16 w3-container w3-light-gray">
+		
 				 <table class="w3-table w3-bordered">
    				 	<tr class="w3-light-green">
    				 		<th>
@@ -474,8 +500,8 @@
 									<a href="${tempLink}"><fmt:message key="label.update" /></a> | 
 									<a href="${deleteLink}" onClick="if (!(confirm('<fmt:message key="label.delete.message"/>'))) return false">
 									<fmt:message key="label.delete" /> </a> | 
-									<a href="${generateLink}"><fmt:message key="label.generate.doc" /></a> | 
-									<a href="${downloadLink}"><fmt:message key="label.download.doc" /></a>
+									<a href="${generateLink}"><fmt:message key="label.generate.doc" /></a> 
+									<!--Remember!!!  <a href="${downloadLink}"><fmt:message key="label.download.doc" /></a> -->
 							   </div>
 							 </td>
 							</tr>

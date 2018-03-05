@@ -94,7 +94,10 @@ public class Document1ControllerServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
+		
+		//remember!
+		//PrintWriter out = response.getWriter();
+		
 		request.getRequestDispatcher("link.html").include(request, response);
 
 		HttpSession session = request.getSession(false);
@@ -152,12 +155,16 @@ public class Document1ControllerServlet extends HttpServlet {
 				}
 
 			} else {
-				out.print("Proszê siê najpierw zalogowaæ!");
+				
+				//remember!
+				//out.print("Proszê siê najpierw zalogowaæ!");
 			}
 		} catch (Exception e) {
 		
 		}
-		out.close();
+		
+		//remember!
+	//	out.close();
 	}
 
 	private void firstList(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -486,7 +493,11 @@ public class Document1ControllerServlet extends HttpServlet {
 			// Process p = Runtime.getRuntime().exec("wscript test.vbs");
 
 			// send back to main page (the documents list)
-			firstList(request, response);
+		//	firstList(request, response);
+			
+			//remember! 
+			RequestDispatcher rd = request.getRequestDispatcher("DownloadControllerServlet");
+			rd.forward(request,response);
 		}
 
 	}
