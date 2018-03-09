@@ -98,7 +98,6 @@ public class ProductionControllerServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
 		request.getRequestDispatcher("link.html").include(request, response);
 
 		HttpSession session = request.getSession(false);
@@ -135,14 +134,12 @@ public class ProductionControllerServlet extends HttpServlet {
 				}
 
 			} else {
-				out.print("Proszê siê najpierw zalogowaæ!");
+	
 			}
 		} catch (Exception e) {
-			System.out.println(e.toString());
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/index.html");
-			dispatcher.forward(request, response);
+		
 		}
-		out.close();
+		
 	}
 
 	private void firstList(HttpServletRequest request, HttpServletResponse response) throws Exception {
