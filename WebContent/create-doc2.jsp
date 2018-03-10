@@ -119,7 +119,7 @@
 
 			<hr>
 			
-			<h1>	<fmt:message key="label.h2.create-doc2" />	</h1>
+			<h1>	<fmt:message key="label.title.create-doc2" />	</h1>
 			
 			<hr>
 
