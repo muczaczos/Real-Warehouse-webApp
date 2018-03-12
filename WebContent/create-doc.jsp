@@ -194,7 +194,7 @@
 										</td>
 									</tr>
 									<tr>
-										<td><label class="w3-text-black"><b><fmt:message key="label.product" /> 1</b></label>
+										<td><label class="w3-text-black"><b><fmt:message key="label.product" /></b></label>
 										
 											<select class="w3-select" name="product1">
 												<option>---select---</option>
@@ -208,7 +208,7 @@
 										<td><label class="w3-text-black"><b>info</b></label> <input class="w3-input" type="text" name="info1" /></td>
 									 </tr>
 									 <tr>
-									 	<td><label class="w3-text-black"><b><fmt:message key="label.product" /> 2</b></label>
+									 	<td>
 									 
 									 		<select class="w3-select" name="product2">
 												<option>---select---</option>
@@ -217,12 +217,12 @@
 												</c:forEach>
 											</select> 
 										</td>
-										<td><label class="w3-text-black"><b><fmt:message key="label.qty" /></b></label>
+										<td>
 										<input class="w3-input" type="text" name="qty2" /> </td>
-										<td><label class="w3-text-black"><b>info</b></label><input class="w3-input" type="text" name="info2" /></td>
+										<td><input class="w3-input" type="text" name="info2" /></td>
 									 </tr>
 									 <tr>
-									 	<td><label class="w3-text-black"><b><fmt:message key="label.product" /> 3</b></label>
+									 	<td>
 									 	
 									 		<select class="w3-select" name="product3">
 												<option>---select---</option>
@@ -231,12 +231,12 @@
 												</c:forEach>
 											</select> 
 										</td>	
-										<td><label class="w3-text-blak"><b><fmt:message key="label.qty" /></b></label>
+										<td>
 										<input class="w3-input" type="text" name="qty3" /> </td>
-										<td><label class="w3-text-black"><b>info</b></label><input class="w3-input" type="text" name="info3" /> </td> 
+										<td><input class="w3-input" type="text" name="info3" /> </td> 
 									</tr>
 									<tr>
-										<td><label class="w3-text-black"><b><fmt:message key="label.product" /> 4</b></label>
+										<td>
 										
 											<select class="w3-select" name="product4">
 												<option>---select---</option>
@@ -245,12 +245,12 @@
 												</c:forEach>
 											</select>
 										</td>
-										<td><label class="w3-text-black"><b><fmt:message key="label.qty" /></b></label>
+										<td>
 										<input class="w3-input" type="text" name="qty4" /> </td>
-										<td><label class="w3-text-black"><b>info</b></label> <input class="w3-input" type="text"name="info4" /></td>
+										<td> <input class="w3-input" type="text"name="info4" /></td>
 									</tr>
 									<tr>
-										<td><label class="w3-text-black"><b><fmt:message key="label.product" /> 5</b></label>
+										<td>
 										
 											<select class="w3-select"  name="product5">
 												<option>---select---</option>
@@ -259,12 +259,12 @@
 												</c:forEach>
 											</select> 
 										</td>
-										<td><label class="w3-text-black"><b><fmt:message key="label.qty" /></b></label>
+										<td>
 										 <input class="w3-input" type="text" name="qty5" /></td>
-										<td><label class="w3-text-black"><b>info</b></label><input class="w3-input" type="text" name="info5" /></td> 
+										<td><input class="w3-input" type="text" name="info5" /></td> 
 									</tr>
 									<tr>
-										<td><label class="w3-text-black"><b><fmt:message key="label.product" /> 6</b></label>
+										<td>
 										
 											<select class="w3-select" name="product6">
 												<option>---select---</option>
@@ -273,12 +273,12 @@
 												</c:forEach>
 											</select> 
 										</td>
-										<td><label class="w3-text-black"><b><fmt:message key="label.qty" /></b></label>
+										<td>
 										<input class="w3-input" type="text" name="qty6" /></td>
-										<td><label class="w3-text-black"><b>info</b></label><input class="w3-input" type="text" name="info6" /></td>
+										<td><input class="w3-input" type="text" name="info6" /></td>
 									</tr>
 									<tr>
-										<td><label class="w3-text-black"><b><fmt:message key="label.product" /> 7</b></label>
+										<td>
 										
 											<select class="w3-select" name="product7">
 												<option>---select---</option>
@@ -287,9 +287,9 @@
 												</c:forEach>
 											</select>
 										</td>
-										<td><label class="w3-text-black"><b><fmt:message key="label.qty" /></b></label>
+										<td>
 										<input class="w3-input" type="text" name="qty7" /></td>
-										<td><label class="w3-text-black"><b>info</b></label><input class="w3-input" type="text" name="info7" /></td>
+										<td><input class="w3-input" type="text" name="info7" /></td>
 									</tr>
 									<tr>
 										<td><button type="submit" class="w3-button w3-green w3-hover-red w3-padding-large w3-large w3-margin-top">

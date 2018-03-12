@@ -449,7 +449,7 @@ public class Document1ControllerServlet extends HttpServlet {
 
 			// write activity to db
 			Activity.monitorSpecificActivity(session, request, dataSource, session.getAttribute("userName").toString(),
-					"update doc1", id);
+				"update doc1", id);
 
 			firstList(request, response);
 
