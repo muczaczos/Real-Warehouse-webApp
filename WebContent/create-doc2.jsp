@@ -144,24 +144,25 @@
 		<div class="w3-row-padding w3-padding-16 w3-container w3-dark-gray">
 			<div class="w3-content w3-half">
 				<div class="w3-panel w3-gray w3-padding-16">
-				<form action="Document2ControllerServlet" method="GET">
+				<form action="Document2ControllerServlet" method="GET" class="w3-container">
 				<input type="hidden" name="command" value="ADD-DOCUMENT2" />
-
 				<table>
 					<tbody>
 						<tr>
-							<td><label for="datepicker1"><fmt:message key="label.date" />:</label></td>
-							<td><input type="text" name="date" value="${Date}" id="datepicker1"></td>
+							<td><label class="w3-text-black" for="datepicker1"><b><fmt:message key="label.date" /></b></label>
+								<input class="w3-input" type="text" name="date" value="${Date}" id="datepicker1">
+							</td>
 						</tr>
 						<tr>
-							<td><label><fmt:message key="label.noOfDoc" />: </label></td>
-							<td><input type="text" name="documentNumber" /></td>
+							<td><label class="w3-text-black"><b><fmt:message key="label.noOfDoc" /></b> </label>
+								<input class="w3-input" type="text" name="documentNumber" />
+							</td>
 						</tr>
 
 						<tr>
-							<td><fmt:message key="label.provider" /></td>
-							<td>
-								<select style="width: 12em" name="provider">
+							<td><label class="w3-text-black"><b><fmt:message key="label.provider" /></b></label>
+							
+								<select class="w3-input" name="provider">
 									<option>---select---</option>
 									<c:forEach var="tempProvider" items="${Providers}">
 										<option>${tempProvider.name}</option>
@@ -171,99 +172,87 @@
 						</tr>
 
 						<tr>
-							<td><fmt:message key="label.product" />: 1</td>
-							<td>
-								<select style="width: 12em" name="product1">
+							<td><label class="w3-text-black"><b><fmt:message key="label.product" /></b></label>
+							
+								<select class="w3-input" name="product1">
 									<option>---select---</option>
 									<c:forEach var="tempProduct" items="${Products}">
 										<option>${tempProduct.productName}</option>
 									</c:forEach>
 								</select>
 							</td>
-							<td><label><fmt:message key="label.qty" />: </label></td>
-							<td><input type="text" name="qty1" /></td>
+							<td><label class="w3-text-black"><b><fmt:message key="label.qty" /></b></label>
+								<input class="w3-input" type="text" name="qty1" /></td>
 						</tr>
 
 						<tr>
-							<td><fmt:message key="label.product" />: 2</td>
 							<td>
-								<select style="width: 12em" name="product2">
+								<select class="w3-input" name="product2">
 									<option>---select---</option>
 									<c:forEach var="tempProduct" items="${Products}">
 										<option>${tempProduct.productName}</option>
 									</c:forEach>
 								</select>
 							</td>
-							<td><label><fmt:message key="label.qty" />: </label></td>
-							<td><input type="text" name="qty2" /></td>
+							<td><input class="w3-input" type="text" name="qty2" /></td>
 						</tr>
 
 						<tr>
-							<td><fmt:message key="label.product" />: 3</td>
 							<td>
-								<select style="width: 12em" name="product3">
+								<select class="w3-input" name="product3">
 									<option>---select---</option>
 									<c:forEach var="tempProduct" items="${Products}">
 										<option>${tempProduct.productName}</option>
 									</c:forEach>
 								</select>
 							</td>
-							<td><label><fmt:message key="label.qty" />: </label></td>
-							<td><input type="text" name="qty3" /></td>
+							<td><input class="w3-input" type="text" name="qty3" /></td>
 						</tr>
 
 						<tr>
-							<td><fmt:message key="label.product" />: 4</td>
 							<td>
-								<select style="width: 12em" name="product4">
+								<select class="w3-input" name="product4">
 									<option>---select---</option>
 									<c:forEach var="tempProduct" items="${Products}">
 										<option>${tempProduct.productName}</option>
 									</c:forEach>
 								</select>
 							</td>
-							<td><label><fmt:message key="label.qty" />: </label></td>
-							<td><input type="text" name="qty4" /></td>
+							<td><input class="w3-input" type="text" name="qty4" /></td>
 						</tr>
 
 						<tr>
-							<td><fmt:message key="label.product" />: 5</td>
 							<td>
-								<select style="width: 12em" name="product5">
+								<select class="w3-input" name="product5">
 									<option>---select---</option>
 									<c:forEach var="tempProduct" items="${Products}">
 										<option>${tempProduct.productName}</option>
 									</c:forEach>
 							</select>
 							</td>
-							<td><label><fmt:message key="label.qty" />: </label></td>
-							<td><input type="text" name="qty5" /></td>
+							<td><input class="w3-input" type="text" name="qty5" /></td>
 						</tr>
 						<tr>
-							<td><fmt:message key="label.product" />: 6</td>
 							<td>
-								<select style="width: 12em" name="product6">
+								<select class="w3-input" name="product6">
 									<option>---select---</option>
 									<c:forEach var="tempProduct" items="${Products}">
 										<option>${tempProduct.productName}</option>
 									</c:forEach>
 								</select>
 							</td>
-							<td><label><fmt:message key="label.qty" />: </label></td>
-							<td><input type="text" name="qty6" /></td>
+							<td><input class="w3-input" type="text" name="qty6" /></td>
 						</tr>
 						<tr>
-							<td><fmt:message key="label.product" />: 7</td>
 							<td>
-								<select style="width: 12em" name="product7">
+								<select class="w3-input" name="product7">
 									<option>---select---</option>
 									<c:forEach var="tempProduct" items="${Products}">
 										<option>${tempProduct.productName}</option>
 									</c:forEach>
 								</select>
 							</td>
-							<td><label><fmt:message key="label.qty" />: </label></td>
-							<td><input type="text" name="qty7" /></td>
+							<td><input class="w3-input" type="text" name="qty7" /></td>
 						</tr>
 						<tr>
 							<td>
@@ -278,9 +267,7 @@
 		</div>
 		
 		<!-- Second Grid -->
-			<div class="w3-row-padding w3-padding-64 w3-container w3-light-gray">
-				<div class="w3-panel w3-margin">
-					<form action="Document2ControllerServlet" method="GET">
+			<div class="w3-row-padding w3-padding-16 w3-container w3-light-gray">
 					 <table class="w3-table w3-bordered">
    				 		<tr class="w3-light-green">
    				 			<th>
@@ -299,7 +286,6 @@
 								<fmt:message key="label.action" />
 							</th>
 						</tr>
-					</table>
 
 					<c:forEach var="tempDoc2" items="${documents2}">
 						<!-- set up a link for each customers  -->
@@ -336,26 +322,26 @@
 							</td>
 						</tr>
 					</c:forEach>
-				</form>
+				</table>
+				
 			</div>
-		</div>
+			
+			<hr>
 		
-		<hr>
+			<div class="w3-text-blue w3-margin">
+				<a href="Document1ControllerServlet"><fmt:message key="label.back.home" /></a>
+			</div>
 		
-		<div class="w3-text-blue w3-margin">
-			<a href="Document1ControllerServlet"><fmt:message key="label.back.home" /></a>
-		</div>
-		
-		<hr>
+			<hr>
 
-		<script>
-			$(function() {
+			<script>
+				$(function() {
 
-			$('#datepicker1').datepicker({
-				dateFormat : 'dd/mm/yy'
-			});
-			});
-		</script>
+				$('#datepicker1').datepicker({
+					dateFormat : 'dd/mm/yy'
+					});
+				});
+			</script>
 
 	</body>
 

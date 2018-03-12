@@ -175,7 +175,7 @@
 									<tr>
 										<td><label class="w3-text-black"><b><fmt:message key="label.customer" /></b></label>
 										 <input class="w3-input" type="text" name="preCustomer" value="${preCustomer}" /></td>
-										<td> <label class="w3 text-black" for="datepicker"><b><fmt:message key="label.enter.date" /></b></label>
+										<td> <label class="w3-text-black" for="datepicker"><b><fmt:message key="label.enter.date" /></b></label>
 										<input class="w3-input" type="text" name="date" value="${TODAY_DATE}" id="datepicker"></td>
 									</tr>
 									<tr>
