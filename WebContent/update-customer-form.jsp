@@ -141,26 +141,32 @@
 
 		<div class="w3-row-padding w3-light-grey w3-padding-64 w3-container">
 			<div class="w3-content w3-third">
-				<div class="w3-panel w3-border w3-border-red w3-padding-16">
-					<form action="CustomerControllerServlet" method="GET">
+				<div class="w3-panel w3-gray w3-padding-16">
+					<form action="CustomerControllerServlet" method="GET" class="w3-container">
 						<input type="hidden" name="command" value="UPDATE-CUSTOMER" /> 
 						<input type="hidden" name="customerId" value="${THE_CUSTOMER.id}" />
 
 						<table>
 							<tbody>
 								<tr>
-									<td><label><fmt:message key="label.customer.name" />:</label></td>
-									<td><input type="text" name="name" value="${THE_CUSTOMER.name}" /></td>
+									<td>
+										<label class="w3-text-black"><b><fmt:message key="label.customer.name" /></b></label>
+										<input class="w3-input" type="text" name="name" value="${THE_CUSTOMER.name}" />
+									</td>
 								</tr>
 
 								<tr>
-									<td><label><fmt:message key="label.address" />:</label></td>
-									<td><input type="text" name="address" value="${THE_CUSTOMER.address}" /></td>
+									<td>
+										<label class="w3-text-black"><b><fmt:message key="label.address" /></b></label>
+										<input class="w3-input" type="text" name="address" value="${THE_CUSTOMER.address}" />
+									</td>
 								</tr>
 
 								<tr>
-									<td><label><fmt:message key="label.telephone" />:</label></td>
-									<td><input type="text" name="telephone" value="${THE_CUSTOMER.telephone}" /></td>
+									<td>
+										<label class="w3-text-black"><b><fmt:message key="label.telephone" /></b></label>
+										<input class="w3-input" type="text" name="telephone" value="${THE_CUSTOMER.telephone}" />
+									</td>
 								</tr>
 
 								<tr>

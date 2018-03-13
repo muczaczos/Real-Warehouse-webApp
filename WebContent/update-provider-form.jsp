@@ -142,29 +142,36 @@
 
 		<div class="w3-row-padding w3-light-grey w3-padding-64 w3-container">
 			<div class="w3-content w3-third">
-				<div class="w3-panel w3-border w3-border-red w3-padding-16">
-					<form action="ProviderControllerServlet" method="GET">
+				<div class="w3-panel w3-gray w3-padding-16">
+					<form action="ProviderControllerServlet" method="GET" class="w3-container">
 						<input type="hidden" name="command" value="UPDATE-PROVIDER" /> <input type="hidden" name="providerId" value="${THE_PROVIDER.id}" />
 							<table>
 								<tbody>
 									<tr>
-										<td><label><fmt:message key="label.customer.name" />:</label></td>
-										<td><input type="text" name="name"value="${THE_PROVIDER.name}" /></td>
+										<td>
+											<label class="w3-text-black"><b><fmt:message key="label.customer.name" /></b></label>
+											<input class="w3-input" type="text" name="name"value="${THE_PROVIDER.name}" />
+										</td>
 									</tr>
 
 									<tr>
-										<td><label><fmt:message key="label.address" />:</label></td>
-										<td><input type="text" name="address"value="${THE_PROVIDER.address}" /></td>
+										<td>
+											<label class="w3-text-black"><b><fmt:message key="label.address" /></b></label>
+											<input class="w3-input" type="text" name="address"value="${THE_PROVIDER.address}" />
+										</td>
 									</tr>
 
 									<tr>
-										<td><label><fmt:message key="label.telephone" />:</label></td>
-										<td><input type="text" name="telephone" value="${THE_PROVIDER.telephone}" /></td>
+										<td>
+											<label class="w3-text-black"><b><fmt:message key="label.telephone" /></b></label>
+											<input class="w3-input" type="text" name="telephone" value="${THE_PROVIDER.telephone}" />
+										</td>
 									</tr>
 
 									<tr>
-										<td><label></label></td>
-										<td><input type="submit" value="<fmt:message key="label.button.save"/>" class="save" /></td>
+										<td><button type="submit" class="w3-button w3-green w3-hover-red w3-padding-large w3-large w3-margin-top">
+									<fmt:message key="label.button.save"/> </button>
+									</td>
 									</tr>
 								</tbody>
 							</table>

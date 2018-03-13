@@ -146,24 +146,30 @@
 			<div class="w3-content w3-third">
 				<div class="w3-panel w3-gray w3-padding-16">
 
-					<form action="CustomerControllerServlet" method="GET">
+					<form action="CustomerControllerServlet" method="GET" class="w3-container">
 					<input type="hidden" name="command" value="ADD-CUSTOMER" />
 
 					<table>
 						<tbody>
 							<tr>
-								<td><label><fmt:message key="label.customer.name" />:</label></td>
-								<td><input type="text" name="name" /></td>
+								<td>
+									<label class="w3-text-black"><b><fmt:message key="label.customer.name" /></b></label>
+									<input class="w3-input" type="text" name="name" />
+								</td>
 							</tr>
 
 							<tr>
-								<td><label><fmt:message key="label.address" />: </label></td>
-								<td><input type="text" name="address" /></td>
+								<td>
+									<label class="w3-text-black"><b><fmt:message key="label.address" /></b></label>
+									<input class="w3-input" type="text" name="address" />
+								</td>
 							</tr>
 
 							<tr>
-								<td><label><fmt:message key="label.telephone" />: </label></td>
-								<td><input type="text" name="telephone" /></td>
+								<td>
+									<label class="w3-text-black"><b><fmt:message key="label.telephone" /></b></label>
+									<input class="w3-input" type="text" name="telephone" />
+								</td>
 							</tr>
 
 							<tr>

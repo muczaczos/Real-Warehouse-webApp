@@ -146,67 +146,88 @@
 		<div class="w3-row-padding w3-padding-16 w3-container w3-dark-gray">
 			<div class="w3-content w3-half">
 				<div class="w3-panel w3-gray w3-padding-16">
-					<form action="ProductionControllerServlet" method="GET">
+					<form action="ProductionControllerServlet" method="GET" class="w3-container">
 						<input type="hidden" name="command" value="FIRST-LIST" />
-
-						<fmt:message key="label.menu.war" /> : <select style="width: 12em" name="warehouse1">
-						<option>---select---</option>
-						<c:forEach var="tempWarehouse" items="${WAREHOUSES_LIST}">
-						<option>${tempWarehouse.name}</option>
-						</c:forEach>
-						</select> <select style="width: 12em" name="warehouse2">
-					
-						<option>---select---</option>
-						<c:forEach var="tempWarehouse" items="${WAREHOUSES_LIST}">
-						<option>${tempWarehouse.name}</option>
-						</c:forEach>
-						</select> 
-						<br>
-						<!-- put new button: precreate doc -->
-						<button type="submit" class="w3-button w3-green w3-hover-red w3-padding-large w3-large w3-margin-top">
+						<table>
+							<tr>
+								<td>
+									<label class="w3-text-black"><b><fmt:message key="label.menu.war" /></b></label> 
+								<td>
+							</tr>
+							<tr>
+								<td>
+									<select class="w3-input" name="warehouse1">
+									<option>---select---</option>
+									<c:forEach var="tempWarehouse" items="${WAREHOUSES_LIST}">
+										<option>${tempWarehouse.name}</option>
+									</c:forEach>
+									</select> 
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<select class="w3-input" name="warehouse2">
+									<option>---select---</option>
+									<c:forEach var="tempWarehouse" items="${WAREHOUSES_LIST}">
+										<option>${tempWarehouse.name}</option>
+									</c:forEach>
+									</select> 
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<!-- put new button: precreate doc -->
+									<button type="submit" class="w3-button w3-green w3-hover-red w3-padding-large w3-large w3-margin-top">
 		     							ok</button>
-
+								</td>
+							</tr>
+						</table>
 					</form>
 				</div>
 			</div>
 			
 			<div class="w3-content w3-half">
 				<div class="w3-panel w3-gray w3-padding-16">
-					<form action="ProductionControllerServlet" method="GET">
+					<form action="ProductionControllerServlet" method="GET" class="w3-container">
 						<input type="hidden" name="command" value="ADD-PRODUCTION" />
 
 						<table>
 							<tbody>
 
 								<tr>
-									<td><fmt:message key="label.product" /></td>
-									<td><select style="width: 15em" name="product1">
-									<option>---select---</option>
-									<c:forEach var="tempProduct" items="${PRODUCT_LIST1}">
-										<option>${tempProduct.productName}</option>
-									</c:forEach>
-									</select></td>
+									<td>
+										<label class="w3-text-black"><b><fmt:message key="label.product" /></b></label>
+										<select class="w3-input" name="product1">
+										<option>---select---</option>
+										<c:forEach var="tempProduct" items="${PRODUCT_LIST1}">
+											<option>${tempProduct.productName}</option>
+										</c:forEach>
+										</select>
+									</td>
 								</tr>
 
 								<tr>
-									<td><fmt:message key="label.product" /></td>
-									<td><select style="width: 15em" name="product2">
-									<option>---select---</option>
-									<c:forEach var="tempProduct" items="${PRODUCT_LIST2}">
-										<option>${tempProduct.productName}</option>
-									</c:forEach>
-									</select></td>
+									<td>
+										<label class="w3-text-black"><b><fmt:message key="label.product" /></b></label>
+										<select class="w3-input" name="product2">
+										<option>---select---</option>
+										<c:forEach var="tempProduct" items="${PRODUCT_LIST2}">
+											<option>${tempProduct.productName}</option>
+										</c:forEach>
+										</select>
+									</td>
 								</tr>
 
-								<tr><td><fmt:message key="label.qty" /></td>
-								<td> <input type="text" name="qty" /></td>
-						
+								<tr>
+									<td>
+										<label class="w3-text-black"><b><fmt:message key="label.qty" /></b></label>
+										<input class="w3-input" type="text" name="qty" />
+									</td>
 								</tr>
 								<tr>
 									<td><button type="submit" class="w3-button w3-green w3-hover-red w3-padding-large w3-large w3-margin-top">
 		     							<fmt:message key="label.button.save"/> </button></td>
 								</tr>
-
 					</tbody>
 				</table>
 			</form>

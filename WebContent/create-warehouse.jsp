@@ -144,15 +144,20 @@
 		<div class="w3-row-padding w3-padding-16 w3-container w3-dark-gray">
 			<div class="w3-content w3-third">
 				<div class="w3-panel w3-gray w3-padding-16">
-					<form action="WarehouseControllerServlet" method="GET">
+					<form action="WarehouseControllerServlet" method="GET" class="w3-container">
 						<input type="hidden" name="command" value="ADD-WAREHOUSE" />
 
 						<table>
 							<tbody>
 								<tr>
-									<td><label><fmt:message key="label.customer.name" />: </label></td>
-									<td><input type="text" name="name" /></td>
-									<td><button type="submit" class="w3-button w3-green w3-hover-red w3-padding-large w3-large w3-margin-top">
+									<td>
+										<label class="w3-text-black"><b><fmt:message key="label.customer.name" /></b></label>
+										<input class="w3-input" type="text" name="name" />
+									</td>
+								</tr>
+								<tr>		
+									<td>
+										<button type="submit" class="w3-button w3-green w3-hover-red w3-padding-large w3-large w3-margin-top">
 		     							<fmt:message key="label.button.save"/> </button>
 		     						</td>
 								</tr>

@@ -118,7 +118,7 @@
 
 			<hr>
 			
-			<h1>	<fmt:message key="label.h2.update-employee" />	</h1>
+			<h1>	<fmt:message key="label.title.update-employee" />	</h1>
 			
 			<hr>
 
@@ -140,57 +140,75 @@
 
 		<div class="w3-row-padding w3-light-grey w3-padding-64 w3-container">
 			<div class="w3-content w3-third">
-				<div class="w3-panel w3-border w3-border-red w3-padding-16">
-					<form action="EmployeesControllerServlet" method="GET">
+				<div class="w3-panel w3-gray w3-padding-16">
+					<form action="EmployeesControllerServlet" method="GET" class="w3-container">
 
 						<input type="hidden" name="command" value="UPDATE-EMPLOYEE" /> 
 						<input type="hidden" name="employeeId" value="${THE_EMPLOYEE.id}" />
 
 							<table>
 								<tbody>
-									<tr>
-										<td><label><fmt:message key="label.employee.name" />: </label></td>
-										<td><input type="text" name="name" value="${THE_EMPLOYEE.name}" /></td>
+									<tr> 
+										<td>
+											<label class="w3-text-black"><b><fmt:message key="label.employee.name" /></b></label>
+											<input class="w3-input" type="text" name="name" value="${THE_EMPLOYEE.name}" />
+										</td>
 									</tr>
 
 									<tr>
-										<td><label><fmt:message key="label.employee.surname" />: </label></td>
-										<td><input type="text" name="surname" value="${THE_EMPLOYEE.surname}" /></td>
+										<td>
+											<label class="w3-text-black"><b><fmt:message key="label.employee.surname" /></b></label>
+											<input class="w3-input" type="text" name="surname" value="${THE_EMPLOYEE.surname}" />
+										</td>
 									</tr>
 
 									<tr>
-										<td><label><fmt:message key="label.employee.address" />: </label></td>
-										<td><input type="text" name="address" value="${THE_EMPLOYEE.address}" /></td>
+										<td>
+											<label class="w3-text-black"><b><fmt:message key="label.employee.address" /></b></label>
+											<input class="w3-input" type="text" name="address" value="${THE_EMPLOYEE.address}" />
+										</td>
 									</tr>
 
 									<tr>
-										<td><label><fmt:message key="label.employee.telephone" />: </label></td>
-										<td><input type="text" name="telephone" value="${THE_EMPLOYEE.telephone}" /></td>
+										<td>
+											<label class="w3-text-black"><b><fmt:message key="label.employee.telephone" /></b></label>
+											<input class="w3-input" type="text" name="telephone" value="${THE_EMPLOYEE.telephone}" />
+										</td>
 									</tr>
 
 									<tr>
-										<td><label><fmt:message key="label.employee.profession" />: </label></td>
-										<td><input type="text" name="profession" value="${THE_EMPLOYEE.profession}" /></td>
+										<td>
+											<label class="w3-text-black"><b><fmt:message key="label.employee.profession" /></b></label>
+											<input class="w3-input" type="text" name="profession" value="${THE_EMPLOYEE.profession}" />
+										</td>
+									</tr>
+			
+									<tr>
+										<td>
+											<label class="w3-text-black"><b><fmt:message key="label.employee.safetyTraining" /></b></label>
+											<input class="w3-input" type="text" name="safetyTraining" value="${THE_EMPLOYEE.safetyTraining}" />
+										</td>
 									</tr>
 
 									<tr>
-										<td><label><fmt:message key="label.employee.safetyTraining" />: </label></td>
-										<td><input type="text" name="safetyTraining" value="${THE_EMPLOYEE.safetyTraining}" /></td>
+										<td>
+											<label class="w3-text-black"><b><fmt:message key="label.employee.medicalVisit" /></b></label>
+											<input class="w3-input"  type="text" name="medicalVisit" value="${THE_EMPLOYEE.medicalVisit}" />
+										</td>
 									</tr>
 
 									<tr>
-										<td><label><fmt:message key="label.employee.medicalVisit" />: </label></td>
-										<td><input type="text" name="medicalVisit" value="${THE_EMPLOYEE.medicalVisit}" /></td>
+										<td>
+											<label class="w3-text-black"><b><fmt:message key="label.employee.contractDate" /></b></label>
+											<input class="w3-input"  type="text" name="contractDate" value="${THE_EMPLOYEE.contractDate}" />
+										</td>
 									</tr>
 
 									<tr>
-										<td><label><fmt:message key="label.employee.contractDate" />: </label></td>
-										<td><input type="text" name="contractDate" value="${THE_EMPLOYEE.contractDate}" /></td>
-									</tr>
-
-									<tr>
-										<td><label></label></td>
-										<td><input type="submit" value="<fmt:message key="label.button.save"/>" class="save" /></td>
+										<td>
+											<button type="submit" class="w3-button w3-green w3-hover-red w3-padding-large w3-large w3-margin-top">
+		     								<fmt:message key="label.button.save"/></button> 
+		     							</td>
 									</tr>
 
 								</tbody>

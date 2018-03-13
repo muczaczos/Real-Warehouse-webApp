@@ -145,19 +145,22 @@
 			<div class="w3-content w3-third">
 				<div class="w3-panel w3-gray w3-padding-16">
 
-					<form action="ProductControllerServlet" method="GET">
+					<form action="ProductControllerServlet" method="GET" class="w3-container">
 						<input type="hidden" name="command" value="ADD-PRODUCT" />
 
 							<table>
 								<tbody>
 									<tr>
-										<td><label><fmt:message key="label.customer.name" />:</label></td>
-										<td><input type="text" name="productName" /></td>
+										<td>
+											<label class="w3-text-black"><b><fmt:message key="label.customer.name" /></b></label>
+											<input class="w3-input" type="text" name="productName" />
+										</td>
 								   </tr>
 
 									<tr>
-										<td><fmt:message key="label.warehouse" /></td>
-										<td><select style="width: 15em" name="warehouse">
+										<td>
+											<label class="w3-text-black"><b><fmt:message key="label.warehouse" /></b></label>
+											<select class="w3-input" name="warehouse">
 											<option>---select---</option>
 											<c:forEach var="tempCombo" items="${Warehouses}">
 												<option>${tempCombo.name}</option>

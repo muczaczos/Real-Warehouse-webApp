@@ -145,49 +145,65 @@
 			<div class="w3-content w3-third">
 				<div class="w3-panel w3-gray w3-padding-16">
 				
-				<form action="EmployeesControllerServlet" method="GET">
+				<form action="EmployeesControllerServlet" method="GET" class="w3-container">
 					<input type="hidden" name="command" value="ADD-EMPLOYEE" />
 
 						<table>
 							<tbody>
 								<tr>
-									<td><label><fmt:message key="label.employee.name" />: </label></td>
-									<td><input type="text" name="name" /></td>
+									<td>
+										<label class="w3-text-black"><b><fmt:message key="label.employee.name" /></b></label>
+										<input class="w3-input" type="text" name="name" />
+									</td>
 								</tr>
 
 								<tr>
-									<td><label><fmt:message key="label.employee.surname" />: </label></td>
-									<td><input type="text" name="surname" /></td>
+									<td>
+										<label class="w3-text-black"><b><fmt:message key="label.employee.surname" /></b></label>
+										<input class="w3-input" type="text" name="surname" />
+									</td>
 								</tr>
 
 								<tr>
-									<td><label><fmt:message key="label.employee.address" />: </label></td>
-									<td><input type="text" name="address" /></td>
+									<td>
+										<label class="w3-text-black"><b><fmt:message key="label.employee.address" /></b></label>
+										<input class="w3-input" type="text" name="address" />
+									</td>
 								</tr>
 
 								<tr>
-									<td><label><fmt:message key="label.employee.telephone" />: </label></td>
-									<td><input type="text" name="telephone" /></td>
+									<td>
+										<label class="w3-text-black"><b><fmt:message key="label.employee.telephone" /></b></label>
+										<input class="w3-input" type="text" name="telephone" />
+									</td>
 								</tr>
 
 								<tr>
-									<td><label><fmt:message key="label.employee.profession" />: </label></td>
-									<td><input type="text" name="profession" /></td>
+									<td>
+										<label class="w3-text-black"><b><fmt:message key="label.employee.profession" /></b></label>
+										<input class="w3-input" type="text" name="profession" />
+									</td>
 								</tr>
 
 								<tr>
-									<td><label for="datepicker1"><fmt:message key="label.employee.safetyTraining" />:</label></td>
-									<td><input type="text" name="safetyTraining" value="${Date}" id="datepicker1"></td>
+									<td>
+										<label class="w3-text-black" for="datepicker1"><b><fmt:message key="label.employee.safetyTraining" /></b></label>
+										<input class="w3-input" type="text" name="safetyTraining" value="${Date}" id="datepicker1">
+									</td>
 								</tr>
 
 								<tr>
-									<td><label for="datepicker2"><fmt:message key="label.employee.medicalVisit" />:</label></td>
-									<td><input type="text" name="medicalVisit" value="${Date}" id="datepicker2"></td>
+									<td>
+										<label class="w3-text-black" for="datepicker2"><b><fmt:message key="label.employee.medicalVisit" /></b></label>
+										<input class="w3-input" type="text" name="medicalVisit" value="${Date}" id="datepicker2">
+									</td>
 								</tr>
 
 								<tr>
-									<td><label for="datepicker3"><fmt:message key="label.employee.contractDate" />:</label></td>
-									<td><input type="text" name="contractDate" value="${Date}" id="datepicker3"></td>
+									<td>
+										<label class="w3-text-black" for="datepicker3"><b><fmt:message key="label.employee.contractDate" /></b></label>
+										<input class= "w3-input" type="text" name="contractDate" value="${Date}" id="datepicker3">   
+									</td>
 								</tr>
 
 								<tr>

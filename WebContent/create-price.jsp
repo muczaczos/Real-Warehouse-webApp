@@ -145,15 +145,14 @@
 			<div class="w3-content w3-third">
 				<div class="w3-panel w3-gray w3-padding-16">
 
-				<form action="PriceControllerServlet" method="GET">
+				<form action="PriceControllerServlet" method="GET" class="w3-container">
 				<input type="hidden" name="command" value="ADD-PRICE" />
 
 				<table>
 					<tbody>
-					
 						<tr>
-							<td><label><fmt:message key="label.customer" />: </label></td>
-							<td><select style="width: 15em" name="customer">
+							<td><label class="w3-text-black"><b><fmt:message key="label.customer" /></b></label>
+								<select class="w3-input" name="customer">
 								<option>---select---</option>
 								<c:forEach var="tempCombo" items="${Customers }">
 									<option>${tempCombo.name}</option>
@@ -163,8 +162,8 @@
 					   </tr>
 
 					   <tr>
-							<td><label><fmt:message key="label.product" />: </label></td>
-							<td><select style="width: 15em" name="product">
+							<td><label class="w3-text-black"><b><fmt:message key="label.product" /></b></label>
+								<select class="w3-input" name="product">
 								<option>---select---</option>
 								<c:forEach var="tempCombo" items="${Products}">
 									<option>${tempCombo.productName}</option>
@@ -174,8 +173,10 @@
 						</tr>
 
 						<tr>
-							<td><label><fmt:message key="label.price" />: </label></td>
-							<td><input type="text" name="price" /></td>
+							<td>
+								<label class="w3-text-black"><b><fmt:message key="label.price" /></b></label>
+								<input class="w3-input" type="text" name="price" />
+							</td>
 						</tr>
 
 						<tr>

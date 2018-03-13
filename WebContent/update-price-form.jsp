@@ -117,7 +117,7 @@
 
 			<hr>
 			
-			<h1>	<fmt:message key="label.h2.update-price" />	</h1>
+			<h1>	<fmt:message key="label.title.update-price" />	</h1>
 			
 			<hr>
 
@@ -139,8 +139,8 @@
 
 		<div class="w3-row-padding w3-light-grey w3-padding-64 w3-container">
 			<div class="w3-content w3-third">
-				<div class="w3-panel w3-border w3-border-red w3-padding-16">
-					<form action="PriceControllerServlet" method="GET">
+				<div class="w3-panel w3-gray w3-padding-16">
+					<form action="PriceControllerServlet" method="GET" class="w3-container">
 
 						<input type="hidden" name="command" value="UPDATE-PRICE" /> 
 						<input type="hidden" name="priceId" value="${THE_PRICE.id}" />
@@ -148,18 +148,24 @@
 						<table>
 							<tbody>
 								<tr>
-									<td><label><fmt:message key="label.customer" />:</label></td>
-									<td><input type="text" name="customer" value="${THE_PRICE.customer}" /></td>
+									<td>
+										<label class="w3-text-black"><b><fmt:message key="label.customer" /></b></label>
+										<input class="w3-input" type="text" name="customer" value="${THE_PRICE.customer}" />
+									</td>
 								</tr>
 
 								<tr>
-									<td><label><fmt:message key="label.product" />:</label></td>
-									<td><input type="text" name="product" value="${THE_PRICE.product}" /></td>
+									<td>
+										<label class="w3-text-black"><b><fmt:message key="label.product" /></b></label>
+										<input class="w3-input" type="text" name="product" value="${THE_PRICE.product}" />
+									</td>
 								</tr>
 
 								<tr>
-									<td><label><fmt:message key="label.price" />:</label></td>
-									<td><input type="text" name="price" value="${THE_PRICE.price}" /></td>
+									<td>
+										<label class="w3-text-black"><b><fmt:message key="label.price" /></b></label>
+										<input class="w3-input" type="text" name="price" value="${THE_PRICE.price}" />
+									</td>
 								</tr>
 
 								<tr>

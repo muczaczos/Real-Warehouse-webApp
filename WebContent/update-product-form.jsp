@@ -140,8 +140,8 @@
 
 		<div class="w3-row-padding w3-light-grey w3-padding-64 w3-container">
 			<div class="w3-content w3-third">
-				<div class="w3-panel w3-border w3-border-red w3-padding-16">
-					<form action="ProductControllerServlet" method="GET">
+				<div class="w3-panel w3-gray w3-padding-16">
+					<form action="ProductControllerServlet" method="GET" class="w3-container">
 
 					<input type="hidden" name="command" value="UPDATE-PRODUCT" /> 
 						<input type="hidden" name="productId" value="${THE_PRODUCT.id}" />
@@ -149,13 +149,17 @@
 						<table>
 							<tbody>
 								<tr>
-									<td><label><fmt:message key="label.customer.name" />:</label></td>
-									<td><input type="text" name="productName" value="${THE_PRODUCT.productName}" /></td>
+									<td>
+										<label class="w3-text-black"><b><fmt:message key="label.customer.name" /></b></label>								
+										<input class="w3-input" type="text" name="productName" value="${THE_PRODUCT.productName}"/>
+									</td>
 								</tr>
 
 								<tr>
-									<td><label><fmt:message key="label.warehouse" />:</label></td>
-									<td><input type="text" name="warehouse" value="${THE_PRODUCT.warehouse}" /></td>
+									<td>
+										<label class="w3-text-black"><b><fmt:message key="label.warehouse" /></b></label>
+										<input class="w3-input" type="text" name="warehouse" value="${THE_PRODUCT.warehouse}" />
+									</td>
 								</tr>
 
 								<tr>

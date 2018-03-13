@@ -144,7 +144,7 @@
 
 			<div class="w3-third">
 				<div class="w3-panel w3-gray w3-padding-16">
-					<form class="w3-container" action="InvoiceControllerServlet?invcustomer=${invcustomer}&theLocale=pl_PL" method="GET" class="w3-container">
+					<form  action="InvoiceControllerServlet?invcustomer=${invcustomer}&theLocale=pl_PL" method="GET" class="w3-container">
 						<input type="hidden" name="command" value="PRECREATE-INVOICE" />
 
 						<table>
