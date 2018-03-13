@@ -40,7 +40,7 @@ public class InvoiceDbUtil {
 			myConn = dataSource.getConnection();
 
 			// create sql statement
-			String sql = "select * from invoices";
+			String sql = "select * from invoices ORDER BY id DESC LIMIT 1000";
 
 			myStmt = myConn.createStatement();
 

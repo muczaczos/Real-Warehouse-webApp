@@ -144,31 +144,27 @@
 
 			<div class="w3-third">
 				<div class="w3-panel w3-gray w3-padding-16">
-					<form class="w3-container" action="InvoiceControllerServlet?invcustomer=${invcustomer}&theLocale=pl_PL" method="GET">
+					<form class="w3-container" action="InvoiceControllerServlet?invcustomer=${invcustomer}&theLocale=pl_PL" method="GET" class="w3-container">
 						<input type="hidden" name="command" value="PRECREATE-INVOICE" />
 
 						<table>
 							<tbody>
 								<tr>
-									<td><fmt:message key="label.customer" />:</td>
-									<td><select style="width: 12em" name="invcustomer">
+									<td><label class="w3-text-black"><b><fmt:message key="label.customer" /></b></label>
+										<select class="w3-input" name="invcustomer">
 										<option>---select---</option>
 										<c:forEach var="tempCustomer" items="${Customers}">
-										<option>${tempCustomer.name}</option>
+											<option>${tempCustomer.name}</option>
 										</c:forEach>			
 										</select> 
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<label for="datepicker"><fmt:message key="label.enter.date" />:</label></td>
-									<td>
-										<input class="w3-input" type="text" name="invdate" value="${Date}" id="datepicker"></td>
+										<label class="w3-text-black" for="datepicker"><b><fmt:message key="label.enter.date" /></b></label>
+										<input class="w3-input" type="text" name="invdate" value="${Date}" id="datepicker">
+									</td>
 								</tr>	
-								<tr>
-									<td><label><fmt:message key="label.invoice.no" />: </label> 
-									<td><input type="text" name="invnumber" /></td>
-								</tr>
 								<tr>
 									<td>
 										<!-- put new button: precreate doc -->
@@ -251,12 +247,12 @@
 				
 				<div class="w3-panel w3-gray w3-padding-16">
   					<div class="w3-half w3-container">
-						<textarea name="info" cols="60" rows="20"><c:out value="${amount}" /></textarea>
+						<textarea name="info" cols="42" rows="20"><c:out value="${amount}" /></textarea>
 					</div>
 				</div>
 				<div class="w3-panel w3-gray w3-padding-16">
 					<div class="w3-half w3-container">
-						<form action="InvoiceControllerServlet" method="GET">
+						<form action="InvoiceControllerServlet" method="GET" class="w3-container">
 						<input type="hidden" name="command" value="ADD-INVOICE" /> <input
 							type="hidden" name="grossAmount" value="${grossAmount}" /> <input
 							type="hidden" name="startDocRange" value="${startDocRange}" /> <input
@@ -265,18 +261,17 @@
 							<table>
 								<tbody>
 									<tr>
-										<td><label><fmt:message key="label.employee.name" />:</label></td>
-										<td><input type="text" name="name" /></td>
+										<td>
+											<label class="w3-text-black"><b><fmt:message key="label.invoice.no" /></b></label>
+											<input class="w3-input" type="text" name="invNumber" />
+										</td>
 									</tr>
 
 									<tr>
-										<td><label><fmt:message key="label.invoice.no" />: </label></td>
-										<td><input type="text" name="invNumber" /></td>
-									</tr>
-
-									<tr>
-										<td><label for="datepicker2"><fmt:message key="label.date" />:</label></td>
-										<td><input type="text" name="date" value="${Date}" id="datepicker2"></td>
+										<td>
+											<label class="w3-text-black" for="datepicker2"><b><fmt:message key="label.date" /></b></label>
+											<input class="w3-input" type="text" name="date" value="${Date}" id="datepicker2">
+										</td>
 									</tr>
 									<tr>
 										<td>
