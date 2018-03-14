@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 
 <html>
-	<title><fmt:message key="label.title.create-doc" /></title>
+	<title><fmt:message key="label.title.update-document" /></title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -118,7 +118,7 @@
 
 			<hr>
 			
-			<h1>	<fmt:message key="label.h2.create-doc" />	</h1>
+			<h1>	<fmt:message key="label.title.update-document" />	</h1>
 			
 			<hr>
 

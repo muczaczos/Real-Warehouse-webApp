@@ -114,7 +114,7 @@
 
 
 		<!-- Header -->
-		<header class="w3-container w3-green w3-center w3-margin-bottom " style="padding: 75px 16px; background-image: url(images/tektura.jpg)">
+		<header class="w3-container w3-padding-16 w3-green w3-center w3-margin-bottom ">
 
 			<hr>
 			
@@ -125,7 +125,7 @@
 		</header>
 		
 		<div class="w3-panel w3-border w3-padding-16 w3-border-green w3-margin">
-			<div class="w3-display-container" style="height: 50px;">
+			<div class="w3-display-container">
 		
 				<div class="w3-display-left">Jesteś zalogowany jako ${userName}</div>
 			
@@ -142,12 +142,13 @@
 
 
 		<!-- First Grid -->
-		<div class="w3-row-padding w3-dark-grey w3-padding-64 w3-container">
-			<div class="w3-container w3-third ">
-				<div class="w3-panel w3-gray w3-padding-16">
-
+		<div class="w3-row-padding w3-dark-grey w3-padding-16 w3-container">
+			<div class="w3-container w3-third w3-padding-16">
+			
+				<div class="w3-border w3-border-green w3-padding-16">
 					 <form action="Document1ControllerServlet" method="GET" class="w3-container">
 					 	<input type="hidden" name="command" value="FIRST-LIST" />
+					 	
 					 	<h2><fmt:message key="label.menu.cus" /></h2>
 			
 						<label class="w3-text-black"><b><fmt:message key="label.customer" /></b></label>
@@ -156,17 +157,39 @@
 							<c:forEach var="tempCustomer" items="${CUSTOMERS_LIST}">
 								<option>${tempCustomer.name}</option>
 							</c:forEach>
-						</select> 			
+						</select> 	
+								
  						<button type="submit" class="w3-button w3-green w3-hover-red w3-padding-large w3-large w3-margin-top">
 		    			<fmt:message key="label.button.precreate"/> </button>
-						
+		    
 					</form>
-					
+				</div>
+				
+				<div class="w3-row-padding w3-dark-grey w3-padding-16 w3-container">
+				</div>
+				
+				<div class="w3-border w3-border-green w3-padding-16">
+					 <form action="Document1ControllerServlet" method="GET" class="w3-container">
+						<input type="hidden" name="command" value="SEARCH-DOCUMENT" />	
+						
+						<h2>Search documents by...</h2>
+
+						<label class="w3-text-black"><b>Customer</b></label>
+						<select class="w3-select" name="customer">
+							<option value="" disabled selected>Choose your customer</option>
+							<c:forEach var="tempCustomer" items="${CUSTOMERS_LIST}">
+								<option>${tempCustomer.name}</option>
+							</c:forEach>
+						</select> 
+			
+						<button type="submit" class="w3-button w3-green w3-hover-red w3-padding-large w3-large w3-margin-top">
+		    			Search </button>
+					</form>
 				</div>
 			</div>
-	
-			<div class="w3-container w3-twothird">
-				<div class="w3-panel w3-gray w3-padding-16">
+			
+			<div class="w3-container w3-twothird w3-padding-16">
+				<div class="w3-container w3-border w3-padding-16 w3-border-green">
 					<form action="Document1ControllerServlet" method="GET" class="w3-container">
 						<h2><fmt:message key="label.create-doc" /></h2>
 						<input type="hidden" name="command" value="ADD-DOCUMENT" /> 
@@ -299,36 +322,10 @@
 					 			</tbody>
 					 		</table>
 							</form>
-
+					</div>
 			</div>
 		</div>
-
-		</div>
-
-		<!-- Second Grid -->
-		<div class="w3-row-padding w3-padding-16 w3-container w3-light-gray">
-			<div class="w3-container w3-third w3-border w3-padding-16 w3-border-green w3-margin">
-				 <form action="" class="w3-container">
-				 	
-				 	<h2>Search documents by...</h2>
-
-					<label class="w3-text-black"><b>Customer</b></label>
-					<select class="w3-select" name="customer">
-						<option value="" disabled selected>Choose your customer</option>
-						<c:forEach var="tempCustomer" items="${CUSTOMERS_LIST}">
-							<option>${tempCustomer.name}</option>
-						</c:forEach>
-					</select> 
-			
- 
-					<label class="w3-text-black"><b>Last Name</b></label>
-					<input class="w3-input w3-border" type="text">
-
-					<button class="w3-btn w3-green w3-margin">Filtruj</button>
-				</form>
-			</div>
-		</div>
-			
+		
 		<!-- Third Grid -->
 		<div class="w3-row-padding w3-padding-16 w3-container w3-light-gray">
 		
