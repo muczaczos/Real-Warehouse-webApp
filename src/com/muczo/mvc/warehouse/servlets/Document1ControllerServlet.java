@@ -145,8 +145,13 @@ public class Document1ControllerServlet extends HttpServlet {
 						printDocument(request, response);
 						break;
 						
-					case "SEARCH-DOCUMENT":
-						searchDocument(request, response);
+					case "SEARCH-DOCUMENT-BY-CUSTOMER":
+						searchDocumentByCustomer(request, response);
+						break;
+						
+					case "SEARCH-DOCUMENT-BY-RECIEPIENT":
+						searchDocumentByReciepient(request, response);
+						break;
 				
 					default:
 						firstList(request, response);
@@ -170,6 +175,8 @@ public class Document1ControllerServlet extends HttpServlet {
 	//	out.close();
 	}
 
+
+	
 
 	private void firstList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
@@ -507,7 +514,7 @@ public class Document1ControllerServlet extends HttpServlet {
 	}
 	
 
-	private void searchDocument(HttpServletRequest request, HttpServletResponse response) throws Exception{
+	private void searchDocumentByCustomer(HttpServletRequest request, HttpServletResponse response) throws Exception{
 
 		HttpSession session = request.getSession();
 		
@@ -536,6 +543,45 @@ public class Document1ControllerServlet extends HttpServlet {
 			// get documents from db util
 			String customer = request.getParameter("customer");
 			List<Document> documents = documents1DbUtil.getCustomerDocuments(customer);
+			// add documents to the request
+			request.setAttribute("DOCUMENTS_LIST", documents);
+
+			// send to JSP page (view)
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/create-doc.jsp");
+			dispatcher.forward(request, response);
+		}
+		
+	}
+	
+	private void searchDocumentByReciepient(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		HttpSession session = request.getSession();
+		
+			if (session.getAttribute("userName") != null) {
+			
+			Date date = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyy");
+			request.setAttribute("TODAY_DATE", sdf.format(date).toString());
+			session.setAttribute("Date", sdf.format(date).toString());
+			
+			// get customers from db util
+			List<Customer> customers = customersDbUtil.getCustomers();
+			// add customers to the request
+			request.setAttribute("CUSTOMERS_LIST", customers);
+			
+			// get reciepients from db util
+			List<Reciepient> reciepients = reciepientsDbUtil.getReciepients();
+			// add reciepients to the request
+			request.setAttribute("RECIEPIENTS_LIST", reciepients);
+
+			// get products from db util
+			List<Product> products = productsDbUtil.getProducts();
+			// add producst to the request
+			request.setAttribute("PRODUCTS_LIST", products);
+
+			// get documents from db util
+			String reciepient = request.getParameter("reciepient");
+			List<Document> documents = documents1DbUtil.getReciepientsDocuments(reciepient);
 			// add documents to the request
 			request.setAttribute("DOCUMENTS_LIST", documents);
 

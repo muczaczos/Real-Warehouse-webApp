@@ -115,7 +115,7 @@ public class Documents1DbUtil {
 			myConn = dataSource.getConnection();
 
 			// create sql to get selected product
-			String sql = "select * from documents where customer=? ORDER BY id DESC LIMIT 1000";
+			String sql = "select * from documents where customer=? ORDER BY id DESC";
 
 			// create prepared statement
 			myStmt = myConn.prepareStatement(sql);
@@ -123,6 +123,82 @@ public class Documents1DbUtil {
 			// set params
 			myStmt.setString(1, theCustomer);
 
+			// execute statement
+			myRs = myStmt.executeQuery();
+
+			// retrive data from result set row
+			while (myRs.next()) {
+
+				String customer = myRs.getString("customer");
+				String reciepient = myRs.getString("reciepient");
+				int id = myRs.getInt("id");
+				int docId = myRs.getInt("docId");
+				String date = myRs.getString("date");
+				String product1 = myRs.getString("product1");
+				int qty1 = myRs.getInt("qty1");
+				String product2 = myRs.getString("product2");
+				int qty2 = myRs.getInt("qty2");
+				String product3 = myRs.getString("product3");
+				int qty3 = myRs.getInt("qty3");
+				String product4 = myRs.getString("product4");
+				int qty4 = myRs.getInt("qty4");
+				String product5 = myRs.getString("product5");
+				int qty5 = myRs.getInt("qty5");
+				String product6 = myRs.getString("product6");
+				int qty6 = myRs.getInt("qty6");
+				String product7 = myRs.getString("product7");
+				int qty7 = myRs.getInt("qty7");
+				String info1 = myRs.getString("info1");
+				String info2 = myRs.getString("info2");
+				String info3 = myRs.getString("info3");
+				String info4 = myRs.getString("info4");
+				String info5 = myRs.getString("info5");
+				String info6 = myRs.getString("info6");
+				String info7 = myRs.getString("info7");
+
+				// use the documentId during construction
+				Document theDocument = new Document(true, id, customer, reciepient, docId, date, product1, qty1,
+						product2, qty2, product3, qty3, product4, qty4, product5, qty5, product6, qty6, product7, qty7,
+						info1, info2, info3, info4, info5, info6, info7);
+				documents.add(theDocument);
+			}
+
+			return documents;
+
+		} finally {
+			// clean up JDBC objects
+			DbUtil.close(myConn, myStmt, myRs);
+		}
+	}
+	
+	public List<Document> getReciepientsDocuments(String theReciepient) throws Exception {
+		List<Document> documents = new ArrayList<>();
+		Connection myConn = null;
+		PreparedStatement myStmt = null;
+		ResultSet myRs = null;
+
+		try {
+
+			// get connection to database
+			myConn = dataSource.getConnection();
+
+			// create sql to get selected product
+			String sql = "SELECT * FROM documents WHERE info1 LIKE ? or info2 LIKE ? or info3 LIKE ? or info4 LIKE ? or info5 LIKE ?"
+					+ " or info6 LIKE ? or info7 LIKE ? or reciepient LIKE ? ORDER BY id DESC";
+
+			// create prepared statement
+			myStmt = myConn.prepareStatement(sql);
+
+			// set params
+			myStmt.setString(1,"%"+theReciepient+"%");
+			myStmt.setString(2,"%"+theReciepient+"%");
+			myStmt.setString(3,"%"+theReciepient+"%");
+			myStmt.setString(4,"%"+theReciepient+"%");
+			myStmt.setString(5,"%"+theReciepient+"%");
+			myStmt.setString(6,"%"+theReciepient+"%");
+			myStmt.setString(7,"%"+theReciepient+"%");
+			myStmt.setString(8,"%"+theReciepient+"%");
+	
 			// execute statement
 			myRs = myStmt.executeQuery();
 
@@ -567,5 +643,7 @@ public class Documents1DbUtil {
 
 		return idDoc;
 	}
+
+	
 
 }

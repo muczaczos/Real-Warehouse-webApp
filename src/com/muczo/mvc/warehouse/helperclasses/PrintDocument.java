@@ -278,67 +278,67 @@ public class PrintDocument {
 			borderToRegion(cellRangeAddress14, sheet, wb);
 
 			cell13 = row3.createCell((short) 7);
-			cell13.setCellStyle(cellStyle2);
+			cell13.setCellStyle(cellStyle00);
 			cell13.setCellValue(info1);
 			CellStyle cellStyle3 = wb.createCellStyle();
 			cellStyle3.setAlignment(CellStyle.ALIGN_CENTER);
 			cellStyle3.setVerticalAlignment(CellStyle.VERTICAL_TOP);
-			cell13.setCellStyle(cellStyle3);
+			cell13.setCellStyle(cellStyle00);
 			cellRangeAddress13 = new CellRangeAddress(7, 7, 7, 9);
 			sheet.addMergedRegion(cellRangeAddress13);
 			
 			cell22 = row4.createCell((short) 7);
-			cell22.setCellStyle(cellStyle2);
+			cell22.setCellStyle(cellStyle00);
 			cell22.setCellValue(info2);
 			CellStyle cellStyle22 = wb.createCellStyle();
 			cellStyle22.setAlignment(CellStyle.ALIGN_CENTER);
 			cellStyle22.setVerticalAlignment(CellStyle.VERTICAL_TOP);
-			cell22.setCellStyle(cellStyle22);
+			cell22.setCellStyle(cellStyle00);
 			cellRangeAddress22 = new CellRangeAddress(8, 8, 7, 9);
 			sheet.addMergedRegion(cellRangeAddress22);
 			
 			cell23 = row5.createCell((short) 7);
 			cell23.setCellValue(info3);
-			cell23.setCellStyle(cellStyle2);
+			cell23.setCellStyle(cellStyle00);
 			cellStyle3.setAlignment(CellStyle.ALIGN_CENTER);
 			cellStyle3.setVerticalAlignment(CellStyle.VERTICAL_TOP);
-			cell23.setCellStyle(cellStyle3);
+			cell23.setCellStyle(cellStyle00);
 			cellRangeAddress23 = new CellRangeAddress(9, 9, 7, 9);
 			sheet.addMergedRegion(cellRangeAddress23);
 			
 			cell24 = row6.createCell((short) 7);
 			cell24.setCellValue(info4);
-			cell24.setCellStyle(cellStyle2);
+			cell24.setCellStyle(cellStyle00);
 			cellStyle3.setAlignment(CellStyle.ALIGN_CENTER);
 			cellStyle3.setVerticalAlignment(CellStyle.VERTICAL_TOP);
-			cell24.setCellStyle(cellStyle3);
+			cell24.setCellStyle(cellStyle00);
 			cellRangeAddress24 = new CellRangeAddress(10, 10, 7, 9);
 			sheet.addMergedRegion(cellRangeAddress24);
 			
 			cell25 = row7.createCell((short) 7);
 			cell25.setCellValue(info5);
-			cell25.setCellStyle(cellStyle2);
+			cell25.setCellStyle(cellStyle00);
 			cellStyle3.setAlignment(CellStyle.ALIGN_CENTER);
 			cellStyle3.setVerticalAlignment(CellStyle.VERTICAL_TOP);
-			cell25.setCellStyle(cellStyle3);
+			cell25.setCellStyle(cellStyle00);
 			cellRangeAddress25 = new CellRangeAddress(11, 11, 7, 9);
 			sheet.addMergedRegion(cellRangeAddress25);
 			
 			cell26 = row8.createCell((short) 7);
 			cell26.setCellValue(info6);
-			cell26.setCellStyle(cellStyle2);
+			cell26.setCellStyle(cellStyle00);
 			cellStyle3.setAlignment(CellStyle.ALIGN_CENTER);
 			cellStyle3.setVerticalAlignment(CellStyle.VERTICAL_TOP);
-			cell26.setCellStyle(cellStyle3);
+			cell26.setCellStyle(cellStyle00);
 			cellRangeAddress26 = new CellRangeAddress(12, 12, 7, 9);
 			sheet.addMergedRegion(cellRangeAddress26);
 			
 			cell27 = row9.createCell((short) 7);
 			cell27.setCellValue(info7);
-			cell27.setCellStyle(cellStyle2);
+			cell27.setCellStyle(cellStyle00);
 			cellStyle3.setAlignment(CellStyle.ALIGN_CENTER);
 			cellStyle3.setVerticalAlignment(CellStyle.VERTICAL_TOP);
-			cell27.setCellStyle(cellStyle3);
+			cell27.setCellStyle(cellStyle00);
 			cellRangeAddress27 = new CellRangeAddress(13, 13, 7, 9);
 			sheet.addMergedRegion(cellRangeAddress27);
 			
