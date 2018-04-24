@@ -192,8 +192,9 @@
 								<fmt:message key="label.check" />
 							</th>
 							<th>
-								Id
+								<fmt:message key="label.docno" />
 							</th>
+						
 							<th>
 								<fmt:message key="label.date" />
 							</th>
@@ -203,9 +204,11 @@
 							<th>
 								<fmt:message key="label.reciepient" />
 							</th>
+							
 							<th>
-								<fmt:message key="label.docno" />
+								Id
 							</th>
+							
 						</tr>
 					
 						<c:forEach var="tempDoc" items="${CUSTOM_DOCUMENTS_LIST}">
@@ -213,8 +216,9 @@
 							<td>
 								<input type="checkbox" name="docId" value="${tempDoc.id}">
 							</td>
+							
 							<td>
-								${tempDoc.id}
+								${tempDoc.noOfDoc}
 							</td>
 							<td>
 								${tempDoc.date}
@@ -225,9 +229,11 @@
 							<td>
 								${tempDoc.reciepient}
 							</td>
+							
 							<td>
-								${tempDoc.noOfDoc}
+								${tempDoc.id}
 							</td>
+							
 						</tr>
 						</c:forEach>
 					</table>

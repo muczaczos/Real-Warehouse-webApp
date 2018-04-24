@@ -170,9 +170,9 @@
 				
 				<div class="w3-border w3-border-green w3-padding-16">
 					 <form action="Document1ControllerServlet" method="GET" class="w3-container">
-						<input type="hidden" name="command" value="SEARCH-DOCUMENT" />	
+						<input type="hidden" name="command" value="SEARCH-DOCUMENT-BY-CUSTOMER" />	
 						
-						<h2>Search documents by...</h2>
+						<h2>Search documents by customer</h2>
 
 						<label class="w3-text-black"><b>Customer</b></label>
 						<select class="w3-select" name="customer">
@@ -186,6 +186,23 @@
 		    			Search </button>
 					</form>
 				</div>
+				
+				<div class="w3-row-padding w3-dark-grey w3-padding-16 w3-container">
+				</div>
+				
+				<div class="w3-border w3-border-green w3-padding-16">
+					 <form action="Document1ControllerServlet" method="GET" class="w3-container">
+						<input type="hidden" name="command" value="SEARCH-DOCUMENT-BY-RECIEPIENT" />	
+						
+						<h2>Search documents by reciepient</h2>
+
+						<label class="w3-text-black"><b>Reciepient</b></label>
+						<input class="w3-input" type="text" name="reciepient"/>
+						<button type="submit" class="w3-button w3-green w3-hover-red w3-padding-large w3-large w3-margin-top">
+		    			Search </button>
+					</form>
+				</div>
+				
 			</div>
 			
 			<div class="w3-container w3-twothird w3-padding-16">
@@ -337,12 +354,15 @@
 						<th>
 								<fmt:message key="label.date" />
 						</th>
-						<th>
-								<fmt:message key="label.customer" />
-						</th>
+						
 						<th>
 								<fmt:message key="label.reciepient" />
 						</th>
+						
+						<th>
+								<fmt:message key="label.customer" />
+						</th>
+						
 						<th>
 								<fmt:message key="label.docno" />
 						</th>
@@ -378,20 +398,32 @@
 						</c:url>
 
 						<tr>
-							<td>
+							<td>	
 								${tempDoc.id}
 							</td>
 							<td>
 								${tempDoc.date}
 							</td>
+							
+							<td>
+								
+								${tempDoc.reciepient}
+								
+							</td>
+							
 							<td>
 								${tempDoc.customer}
 							</td>
+							
 							<td>
-								${tempDoc.reciepient}
-							</td>
-							<td>
-								${tempDoc.noOfDoc}
+							 <p class="w3-tooltip">${tempDoc.noOfDoc}
+										<span class="w3-text w3-tag w3-round-xlarge w3-green">${tempDoc.product1} szt. ${tempDoc.qty1} <br> ${tempDoc.product2} szt. ${tempDoc.qty2} <br>
+											${tempDoc.product3}  szt. ${tempDoc.qty3} <br> ${tempDoc.product4} szt. ${tempDoc.qty4} <br>
+											${tempDoc.product5}  szt. ${tempDoc.qty5} <br> ${tempDoc.product6} szt. ${tempDoc.qty6} <br>
+											${tempDoc.product7}  szt. ${tempDoc.qty7} 
+											                   </span>
+							</p> 
+								
 							</td>
 							<td>
 								<div class="w3-text-blue">
